@@ -1,0 +1,45 @@
+Usuario(Secretaria, “murphychica1”, colaborador);
+Usuario(Control, “control123”, colaborador);
+Usuario(FMarroquín, “fffmmm”, estudiante);
+Usuario(Ulises, “uliuli”, estudiante);
+
+Estudiante(200145785, “Fernando Marroquín”, “Quetzaltenango”);
+Estudiante(200745781, “Alfonso Antonio”, “Cantel”);
+Estudiante(200478542, “Mario Morales”, “La Esperanza”);
+
+Catedratico(12345,“Prof1”,“Ciudad”);
+Catedratico(47854, “Prof2”, “Ciudad”);
+Catedratico(12445, “Prof3”, “Ciudad”);
+Catedratico(47354, “Prof4”, “Ciudad”);
+Catedratico(12365, “Prof5”, “Ciudad”);
+
+Edificio(“G”);
+Edificio(“E”);
+Edificio(“D”);
+
+Salon(“G”, 12, 75);
+Salon (“E”, 10, 25);
+Salon (“D”, 5, 125);
+
+Curso (777,"compiladores1", 5,4);
+Curso (771,"programacion2", 4, 4);
+Curso (779,"Arquitectura de computadoras y ensambladores2", 7, 4);
+Curso (732,"Estadistica 1”, 4, 4);
+Curso (795,"Leguajes formales", 4, 4);
+
+Horario(1,"7:10am-8:00am","lunes",777,105,G,12345);
+Horario(2,"8:00am-8:50am","lunes",777,105,G,12345);
+Horario(3,"7:10am-8:00am","viernes",777,105,G,47854);
+Horario(4,"8:00am-8:50am","viernes",777,105,G,47854);
+Horario(5,"7:10am-8:00am","martes",771,109,G,12345);
+Horario(6,"8:00am-8:50am","martes",771,109,G,12345);
+Horario(7,"7:10am-8:00am","jueves",771,109,G,47854);
+Horario(8,"8:00am-8:50am","jueves",771,109,G,47854);
+Horario(9,"9:10am-10:00am","martes",779,110,G,12445);
+Horario(10,"10:00am-10:50am","martes",779,110,G,12445);
+Horario(11,"9:10am-10:00am","jueves",779,110,G,12365);
+Horario(12,"10:00am-10:50am","jueves",779,110,G,12365);
+
+Asignar (200145785, 777, 30, 25);
+Asignar (200745781, 777, 60, 10);
+Asignar (200478542, 771, 70, 20);
