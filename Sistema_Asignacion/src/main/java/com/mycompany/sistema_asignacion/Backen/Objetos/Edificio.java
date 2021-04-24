@@ -1,6 +1,8 @@
-package sistema_asignacion.Objetos;
+package com.mycompany.sistema_asignacion.Backen.Objetos;
 
-import com.mycompany.sistema_asignacion.EDD.*;
+import com.mycompany.sistema_asignacion.Backen.EDD.ListaSimple;
+
+
 /**
  * Edificio
  */

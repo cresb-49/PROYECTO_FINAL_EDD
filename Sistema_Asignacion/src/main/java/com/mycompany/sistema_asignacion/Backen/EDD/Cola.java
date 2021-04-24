@@ -1,4 +1,4 @@
-package com.mycompany.sistema_asignacion.EDD;
+package com.mycompany.sistema_asignacion.Backen.EDD;
 
 public class Cola<T> {
 

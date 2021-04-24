@@ -1,4 +1,4 @@
-package com.mycompany.sistema_asignacion.Exceptions;
+package com.mycompany.sistema_asignacion.Backen.Exceptions;
 
 public class NullTagException extends Exception{
 
