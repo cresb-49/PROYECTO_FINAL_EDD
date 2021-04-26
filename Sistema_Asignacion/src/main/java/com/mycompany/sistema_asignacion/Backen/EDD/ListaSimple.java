@@ -1,6 +1,7 @@
 package com.mycompany.sistema_asignacion.Backen.EDD;
 
 import com.mycompany.sistema_asignacion.Backen.Exceptions.CloneNodeException;
+import com.mycompany.sistema_asignacion.Backen.Exceptions.InvalidStructureException;
 
 public class ListaSimple<T> {
 
@@ -16,7 +17,7 @@ public class ListaSimple<T> {
     }
 
     public void agregar(T dato, String tag) throws CloneNodeException {
-        if (buscar(tag) != null) {
+        if (buscar(tag) == null) {
             if (this.raiz == null) {
                 this.raiz = new NodoListaSimple<>(dato, tag, null);
                 this.size++;
@@ -26,6 +27,44 @@ public class ListaSimple<T> {
                     tmp = tmp.getSiguiente();
                 }
                 tmp.setSiguiente(new NodoListaSimple<>(dato, tag, null));
+                this.size++;
+            }
+        } else {
+            throw new CloneNodeException("Ya existe un dato " + tag + " en esta lista");
+        }
+    }
+
+    public void agregarOrden(T dato, String tag) throws CloneNodeException, InvalidStructureException {
+        if (buscar(tag) == null) {
+            if (this.raiz == null) {
+                this.raiz = new NodoListaSimple<>(dato, tag, null);
+                this.size++;
+            } else {
+                NodoListaSimple<T> tmp = this.raiz;
+                NodoListaSimple<T> nodo = null;
+                boolean insertado = false;
+                while (tmp.getSiguiente() != null) {
+                    nodo = tmp.getSiguiente();
+                    if (tag.compareTo(tmp.getTag()) < 0) {
+                        insertarAtras(tmp, dato, tag);
+                        insertado = true;
+                        break;
+                    } else if (tag.compareTo(tmp.getTag()) > 0 && tag.compareTo(nodo.getTag()) < 0) {
+                        insertarEntre(tmp, nodo, dato, tag);
+                        insertado = true;
+                        break;
+                    } else if (tag.compareTo(tmp.getTag()) > 0 && tag.compareTo(nodo.getTag()) > 0) {
+                        tmp = tmp.getSiguiente();
+                    }
+                }
+                if (!insertado) {
+                    if (tag.compareTo(tmp.getTag()) < 0) {
+                        insertarAtras(tmp, dato, tag);
+                    }else{
+                        insertarAdelante(tmp, dato, tag);
+                    }
+                }
+                //tmp.setSiguiente(new NodoListaSimple<>(dato, tag, null));
                 this.size++;
             }
         } else {
@@ -47,9 +86,9 @@ public class ListaSimple<T> {
     public void eliminar(String tag) throws CloneNodeException {
         if (buscar(tag) != null) {
             NodoListaSimple<T> tmp = this.raiz;
-            
-            while (tmp.getSiguiente()!=null) {                
-                if(tmp.getSiguiente().getTag().equals(tag)){
+
+            while (tmp.getSiguiente() != null) {
+                if (tmp.getSiguiente().getTag().equals(tag)) {
                     NodoListaSimple<T> remplazo = tmp.getSiguiente().getSiguiente();
                     tmp.setSiguiente(remplazo);
                     this.size--;
@@ -60,6 +99,39 @@ public class ListaSimple<T> {
         }
     }
 
+    private void insertarEntre(NodoListaSimple<T> tmp, NodoListaSimple<T> nodo, T dato, String tag) {
+        NodoListaSimple<T> nuevo = new NodoListaSimple<>(dato, tag, nodo);
+        tmp.setSiguiente(nuevo);
+    }
+
+    private void insertarAtras(NodoListaSimple<T> tmp, T dato, String tag) throws InvalidStructureException {
+        if (tmp == this.raiz) {
+            NodoListaSimple<T> tmp2 = this.raiz;
+            NodoListaSimple<T> nuevo = new NodoListaSimple<>(dato, tag, tmp2);
+            this.raiz = nuevo;
+        } else {
+            throw new InvalidStructureException("Hay un elemento repetido en la lista");
+        }
+    }
+
+    private void insertarAdelante(NodoListaSimple<T> tmp, T dato, String tag) {
+        tmp.setSiguiente(new NodoListaSimple<>(dato,tag,null));
+    }
+    
+    public void imprimirLista(){
+        System.out.println("-----------------------------");
+        NodoListaSimple<T> tmp = this.raiz;
+        if(tmp == null){
+            System.out.println("Lista vacia");
+        }else{
+            while (tmp !=null) {
+                System.out.println(tmp.getDato().toString());
+                tmp = tmp.getSiguiente();
+            }
+        }
+        System.out.println("-----------------------------");
+    }
+    
     public class NodoListaSimple<T> {
 
         private NodoListaSimple<T> siguiente;

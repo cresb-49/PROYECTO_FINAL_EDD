@@ -1,9 +1,24 @@
-parser code {:
-        
-    private Pila errores = new Pila();    
+package com.mycompany.sistema_asignacion.Backen.Analizadores.Parser;
+import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
+import com.mycompany.sistema_asignacion.Backen.Analizadores.token;
+import com.mycompany.sistema_asignacion.Backen.Analizadores.Lexer.Lexer;
+import com.mycompany.sistema_asignacion.Backen.EDD.*;
+import com.mycompany.sistema_asignacion.Backen.Exceptions.*;
+import com.mycompany.sistema_asignacion.Backen.Objetos.*;
 
-    public parserUsuario(lexer lex){
+import java_cup.runtime.Symbol;
+
+parser code {:
+           
+    private DatosSistema datos;
+    private Cola<String> errores;
+    private TraductorErrores traductor;
+
+    public parser(Lexer lex,DatosSistema datos,Cola<String> errores){
         super(lex);
+        this.traductor = new TraductorErrores();
+        this.datos = datos;
+        this.errores = errores;
     }
 
     public void report_error(String message, Object info){
@@ -14,12 +29,11 @@ parser code {:
     }
 
     public void syntax_error(Symbol cur_token){
-        /*
         token tok = (token) cur_token.value;
-        String err = "Parametro inesperado \""+tok.getLexeme()+"\" se esperaba[";
+        String err = "Error sintactico { "+tok.getLexeme()+" } se esperaba[";
         for (int i = 0; i < expected_token_ids().size(); i++) {
-            if (!traductorError.tokenEsperado(expected_token_ids().get(i)).equals("")) {
-                err = err + traductorError.tokenEsperado(expected_token_ids().get(i));
+            if (!traductor.tokenEsperado(expected_token_ids().get(i)).equals("")) {
+                err = err + traductor.tokenEsperado(expected_token_ids().get(i));
                 if (i < (expected_token_ids().size() - 1)) {
                     err = err + " ó ";
                 }
@@ -27,44 +41,86 @@ parser code {:
         }
         err = err +"] Linea: "+tok.getLine()+",Columna: "+tok.getColumn();
         System.out.println(err);
-        errores.push(err);
-        */
+        errores.agregar(err);
     }
 
     protected int error_sync_size() {
         return 1;
     }
 
-    public Pila getErrores(){
+    public Cola<String> getErrores(){
         return errores;
-    }
-
-    public AVL getUsuarios(){
-        return usuarios;
     }
 
 :}
 
-terminal    USER,ID,D_DOT,COMA,DOT_COMA;
-non terminal s,sp,cont,cont2,contenido;
+terminal    USER,ESTU,CATE,EDIF,SALON,CURSO,HORARIO,ASIG,TIPO_USER,DIA,ALFANUMERICO,
+            CARNET,STRING,STRING_SPACE,P_A,P_C,COMA,DOT_COMA,NUMERO,CADENA_DIA,CADENA_HORARIO;
 
-s   ::= USER:e1 D_DOT contenido:e2 DOT_COMA sp
+non terminal exp,nums,cadenas;
+
+start with exp;
+
+exp ::= USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_C DOT_COMA exp
+        {:
+            int id;
+            Usuario newUser = null;
+            
+            if(datos.getUsuarios().isEmpty()){
+                id = 0;
+                newUser = new Usuario(id, ((token)nombre).getLexeme(), ((token)pass).getLexeme(), ((token)tipoUser).getLexeme());
+            }else{
+                Usuario tmp = datos.getUsuarios().getUltimo();
+                newUser = new Usuario((tmp.getId()+1), ((token)nombre).getLexeme(), ((token)pass).getLexeme(), ((token)tipoUser).getLexeme());
+            }
+            if(newUser!=null)
+            {
+                try {
+                    datos.getUsuarios().add(newUser, newUser.getNombre());
+                } catch (CloneNodeException e) {
+                    errores.agregar("Ya existe un usuario \""+newUser.getNombre()+"\" en el sistema");
+                }
+            }
+            System.out.println(newUser.toString());
+        :}
+    |   ESTU P_A CARNET COMA cadenas COMA cadenas P_C DOT_COMA exp
+        {:
+
+        :}
+    |   EDIF P_A STRING:nombre P_C DOT_COMA
+        {:
+            Edificio newEdificio = new Edificio(((token)nombre).getLexeme());
+            try {
+              datos.getEdificios().add(newEdificio, newEdificio.getNombre());
+            } catch (CloneNodeException ex) {
+                errores.agregar("Ya existe un edificio:" + newEdificio.getNombre());
+            }
+        :}
+    |   CURSO P_A nums:codigo COMA cadenas:nombre COMA nums:semestre COMA nums:creditos P_C DOT_COMA
+        {:
+            int numSemestre = Integer.valueOf(((token)semestre).getLexeme());
+            
+            if(numSemestre>0&&numSemestre<=10){
+              Curso newCurso = new Curso(Integer.valueOf(((token)codigo).getLexeme()), ((token)nombre).getLexeme(), numSemestre, Integer.valueOf(((token)creditos).getLexeme()));
+              try {
+                datos.getCursos().addOrden(newCurso, String.valueOf(newCurso.getCodigo()));
+              } catch (CloneNodeException ex) {
+                errores.agregar("Ya existe un curso con codigo: "+newCurso.getCodigo()+"Linea: "+((token)codigo).getLine()+" Columna: "+((token)codigo).getColumn());
+              }
+            }else{
+              errores.agregar("Error Semantico: el numero asociado al semestre debe ser entre el rango [1 - 10], Linea: "+((token)semestre).getLine()+",Columna: "+((token)semestre).getColumn());
+            }
+        :}
+    |
     |   error
     ;
 
-sp  ::= s
-    |
-    ;
-
-contenido ::=   cont:e1
-            |   
-            ;
-
-cont    ::= ID:e1 cont2:e2
-        |   error
+cadenas ::= STRING:e1 {:RESULT = e1;:}
+        |   STRING_SPACE:e1 {:RESULT = e1;:}
+        | error
         ;
 
-cont2   ::= COMA cont:e1
-        |
+nums    ::= NUMERO:e1 {:RESULT =e1;:}
+        |   CARNET:e1 {:RESULT =e1;:}
         |   error
         ;

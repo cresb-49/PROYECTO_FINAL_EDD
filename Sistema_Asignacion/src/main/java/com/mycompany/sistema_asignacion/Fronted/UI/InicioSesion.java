@@ -120,14 +120,13 @@ public class InicioSesion extends javax.swing.JDialog {
         String user = this.TextUser.getText();
         String pass = String.valueOf(this.TextPass.getPassword());
         
-        if(user.equals("Admin")&&pass.equals("admin")){
+        if(user.equals("Admin") && pass.equals("admin")){
             this.log = true;
             this.currentUser = new Usuario(-1, user, pass, "Super");
             this.dispose();
         }else{
             JOptionPane.showMessageDialog(this, "Usuario o password incorrecta", "Error de Inicio", JOptionPane.ERROR_MESSAGE);
         }
-        //System.out.println("Usuario:"+user+", Pass: "+pass);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

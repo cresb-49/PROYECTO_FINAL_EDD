@@ -5,19 +5,35 @@
  */
 package com.mycompany.sistema_asignacion.Fronted.UI;
 
+import com.mycompany.sistema_asignacion.Backen.Analizadores.Lexer.Lexer;
+import com.mycompany.sistema_asignacion.Backen.Analizadores.Parser.parser;
+import com.mycompany.sistema_asignacion.Backen.EDD.Cola;
+import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author benjamin
  */
 public class CargaInfo extends javax.swing.JDialog {
 
+    private DatosSistema data;
     /**
      * Creates new form CargaInfo
      */
-    public CargaInfo(java.awt.Frame parent, boolean modal) {
+    public CargaInfo(java.awt.Frame parent, boolean modal,DatosSistema data) {
         super(parent, modal);
-        //this.setLocationRelativeTo(null);
+        this.data = data;
         initComponents();
+        
     }
 
     /**
@@ -35,7 +51,7 @@ public class CargaInfo extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaErrores = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Carga de Datos");
@@ -55,10 +71,10 @@ public class CargaInfo extends javax.swing.JDialog {
 
         jTextField1.setEditable(false);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createTitledBorder("Errores del Archivo"));
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaErrores.setColumns(20);
+        jTextAreaErrores.setRows(5);
+        jTextAreaErrores.setBorder(javax.swing.BorderFactory.createTitledBorder("Errores del Archivo"));
+        jScrollPane1.setViewportView(jTextAreaErrores);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,14 +90,10 @@ public class CargaInfo extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(buscarArchivo)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1)
-                                .addGap(19, 19, 19))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 825, Short.MAX_VALUE)
-                            .addComponent(jLabel1))
-                        .addGap(19, 19, 19))))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 825, Short.MAX_VALUE)
+                    .addComponent(jLabel1))
+                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,15 +118,52 @@ public class CargaInfo extends javax.swing.JDialog {
 
     private void buscarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarArchivoActionPerformed
         // TODO add your handling code here:
+        JFileChooser selector = new JFileChooser(".");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo .data", "data");
+        selector.setFileFilter(filtro);
+        int retorno = selector.showOpenDialog(this);
+        if(retorno == JFileChooser.APPROVE_OPTION){
+            this.jTextField1.setText(selector.getSelectedFile().getAbsolutePath());
+            this.leerArchivo(selector.getSelectedFile());
+        }
+        
     }//GEN-LAST:event_buscarArchivoActionPerformed
-
+    
+    private void leerArchivo(File file){
+        try {
+            Cola<String> errores = new Cola<>();
+            Lexer lexer = new Lexer(new FileReader(file));
+            lexer.setErrores(errores);
+            parser parse = new parser(lexer, this.data, errores);
+            parse.parse();
+            
+            this.visualizarErrores(errores);
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "No se puede leer el archivo: \n"+ex.getMessage(), "Error de lectura", JOptionPane.WARNING_MESSAGE);
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al parsear el archivo: \n"+ex.getMessage(), "Error de lectura", JOptionPane.WARNING_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
+    
+    private void visualizarErrores(Cola<String> errors){
+        StringBuilder err = new StringBuilder();
+        
+        while (!errors.isEmpty()) {
+            err.append(errors.tomar()+"\n");
+        }
+        this.jTextAreaErrores.setText(err.toString());
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscarArchivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextAreaErrores;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

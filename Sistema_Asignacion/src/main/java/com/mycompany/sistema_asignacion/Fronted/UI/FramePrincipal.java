@@ -23,7 +23,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         this.dataSistema = datos;
         this.currentUser = null;
         this.setLocationRelativeTo(null);
-        this.inicioDelUsuario();
+        //this.inicioDelUsuario();
     }
 
     private void inicioDelUsuario() {
@@ -178,13 +178,17 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-
-        if (this.currentUser.getTipo().equals("Super")) {
-            CargaInfo cargarInfo = new CargaInfo(this, true);
+        CargaInfo cargarInfo = new CargaInfo(this, true,this.dataSistema);
+        cargarInfo.setVisible(true);
+        
+        /*
+        if (this.currentUser.getTipo().equals("super")) {
+            CargaInfo cargarInfo = new CargaInfo(this, true,this.dataSistema);
             cargarInfo.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(this, "No tiene los permisos para cargar informacion", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
         }
+        */
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -204,7 +208,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         
         this.inicioDelUsuario();
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ViewId;
     private javax.swing.JTextField ViewType;

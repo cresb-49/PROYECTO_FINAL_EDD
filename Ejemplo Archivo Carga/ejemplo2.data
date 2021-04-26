@@ -1,0 +1,8 @@
+Usuario(Secretaria, "murphychica1", colaborador);
+Usuario(Control, "control123", colaborador);
+Usuario(FMarroquín, "fffmmm", estudiante);
+Usuario(Ulises, "uliuli", estudiante);
+
+Estudiante(200145785, "Fernando Marroquín", "Quetzaltenango");
+Estudiante(200745781, "Alfonso Antonio", "Cantel");
+Estudiante(200478542, "Mario Morales", "La Esperanza");
