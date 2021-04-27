@@ -99,11 +99,6 @@ day = [\"]({dia})[\"]
             //System.out.println("Tipo Usuario: "+yytext());
             return new Symbol (TIPO_USER,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
         }
-    {dia}
-        {
-            //System.out.println("Dia: "+yytext());
-            return new Symbol (DIA,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
-        }
     {alfaNumerico}
         {
             //System.out.println("Cadena Alfanumerica: "+yytext());

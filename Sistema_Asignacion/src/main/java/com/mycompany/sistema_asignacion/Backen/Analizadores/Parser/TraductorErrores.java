@@ -36,8 +36,10 @@ public class TraductorErrores {
             return "P-R \"Asignar\"";
         case TIPO_USER:
             return "[estudiante, colaborador, super]";
-        case DIA:
+        case CADENA_DIA:
             return "rango [lunes-viernes]";
+        case CADENA_HORARIO:
+            return "Horario de Clase";
         case ALFANUMERICO:
             return "Cadena alfanumerica";
         case CARNET:

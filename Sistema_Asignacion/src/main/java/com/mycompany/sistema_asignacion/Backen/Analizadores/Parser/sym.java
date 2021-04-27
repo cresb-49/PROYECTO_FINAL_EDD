@@ -9,27 +9,26 @@ package com.mycompany.sistema_asignacion.Backen.Analizadores.Parser;
 public class sym {
   /* terminals */
   public static final int CATE = 4;
-  public static final int DIA = 11;
-  public static final int P_C = 17;
   public static final int SALON = 6;
+  public static final int P_C = 16;
   public static final int TIPO_USER = 10;
-  public static final int P_A = 16;
+  public static final int P_A = 15;
   public static final int HORARIO = 8;
   public static final int EDIF = 5;
   public static final int USER = 2;
-  public static final int CADENA_DIA = 21;
-  public static final int COMA = 18;
-  public static final int STRING = 14;
+  public static final int CADENA_DIA = 20;
+  public static final int COMA = 17;
+  public static final int STRING = 13;
   public static final int EOF = 0;
-  public static final int DOT_COMA = 19;
-  public static final int NUMERO = 20;
-  public static final int ALFANUMERICO = 12;
+  public static final int DOT_COMA = 18;
+  public static final int NUMERO = 19;
+  public static final int ALFANUMERICO = 11;
   public static final int error = 1;
-  public static final int CARNET = 13;
-  public static final int STRING_SPACE = 15;
+  public static final int CARNET = 12;
+  public static final int STRING_SPACE = 14;
   public static final int ASIG = 9;
   public static final int CURSO = 7;
-  public static final int CADENA_HORARIO = 22;
+  public static final int CADENA_HORARIO = 21;
   public static final int ESTU = 3;
   public static final String[] terminalNames = new String[] {
   "EOF",
@@ -43,7 +42,6 @@ public class sym {
   "HORARIO",
   "ASIG",
   "TIPO_USER",
-  "DIA",
   "ALFANUMERICO",
   "CARNET",
   "STRING",

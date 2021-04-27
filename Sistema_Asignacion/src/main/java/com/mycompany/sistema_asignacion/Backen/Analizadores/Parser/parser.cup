@@ -54,14 +54,14 @@ parser code {:
 
 :}
 
-terminal    USER,ESTU,CATE,EDIF,SALON,CURSO,HORARIO,ASIG,TIPO_USER,DIA,ALFANUMERICO,
+terminal    USER,ESTU,CATE,EDIF,SALON,CURSO,HORARIO,ASIG,TIPO_USER,ALFANUMERICO,
             CARNET,STRING,STRING_SPACE,P_A,P_C,COMA,DOT_COMA,NUMERO,CADENA_DIA,CADENA_HORARIO;
 
 non terminal exp,nums,cadenas;
 
 start with exp;
 
-exp ::= USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_C DOT_COMA exp
+exp ::= exp USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_C DOT_COMA
         {:
             int id;
             Usuario newUser = null;
@@ -81,15 +81,20 @@ exp ::= USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_
                     errores.agregar("Ya existe un usuario \""+newUser.getNombre()+"\" en el sistema");
                 }
             }
+            System.out.println("--------Usuario-------");
             System.out.println(newUser.toString());
+            System.out.println("----------------------");
         :}
-    |   ESTU P_A CARNET:carnet COMA cadenas:nombre COMA cadenas:direccion P_C DOT_COMA exp
+    |   exp ESTU P_A CARNET:carnet COMA cadenas:nombre COMA cadenas:direccion P_C DOT_COMA
         {:
             int idCarnet =  Integer.valueOf(((token)carnet).getLexeme());
             Estudiante newEstudiante = new Estudiante(idCarnet, ((token)nombre).getLexeme(), ((token)direccion).getLexeme());
+
+            System.out.println("------Estudiante------");
             System.out.println(newEstudiante.toString());
+            System.out.println("----------------------");
         :}
-    |   EDIF P_A STRING:nombre P_C DOT_COMA
+    |   exp EDIF P_A STRING:nombre P_C DOT_COMA
         {:
             Edificio newEdificio = new Edificio(((token)nombre).getLexeme());
             try {
@@ -97,8 +102,11 @@ exp ::= USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_
             } catch (CloneNodeException ex) {
                 errores.agregar("Ya existe un edificio:" + newEdificio.getNombre());
             }
+            System.out.println("-------Edificio-------");
+            System.out.println(newEdificio.toString());
+            System.out.println("----------------------");
         :}
-    |   CURSO P_A nums:codigo COMA cadenas:nombre COMA nums:semestre COMA nums:creditos P_C DOT_COMA exp
+    |   exp CURSO P_A nums:codigo COMA cadenas:nombre COMA nums:semestre COMA nums:creditos P_C DOT_COMA
         {:
             int numSemestre = Integer.valueOf(((token)semestre).getLexeme());
             
@@ -106,18 +114,26 @@ exp ::= USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_
               Curso newCurso = new Curso(Integer.valueOf(((token)codigo).getLexeme()), ((token)nombre).getLexeme(), numSemestre, Integer.valueOf(((token)creditos).getLexeme()));
               try {
                 datos.getCursos().addOrden(newCurso, String.valueOf(newCurso.getCodigo()));
+
+                System.out.println("---------Curso--------");
+                System.out.println(newCurso.toString());
+                System.out.println("----------------------");
+
               } catch (CloneNodeException ex) {
                 errores.agregar("Ya existe un curso con codigo: "+newCurso.getCodigo()+"Linea: "+((token)codigo).getLine()+" Columna: "+((token)codigo).getColumn());
               }
             }else{
               errores.agregar("Error Semantico: el numero asociado al semestre debe ser entre el rango [1 - 10], Linea: "+((token)semestre).getLine()+",Columna: "+((token)semestre).getColumn());
             }
+
         :}
-    |   CATE P_A nums:identificador COMA cadenas:nombre COMA cadenas:direccion P_C DOT_COMA exp
+    |   exp CATE P_A nums:identificador COMA cadenas:nombre COMA cadenas:direccion P_C DOT_COMA
         {:
             int id = Integer.valueOf(((token)identificador).getLexeme());
             Catedratico newCatedratico = new Catedratico(id, ((token)nombre).getLexeme(),((token)direccion).getLexeme());
+            System.out.println("-----Catedratico------");
             System.out.println(newCatedratico.toString());
+            System.out.println("----------------------");
             try {
               datos.getCatedraticos().agregar(((token)identificador).getLexeme(), newCatedratico);
             } catch (CloneNodeException ex) {
@@ -126,7 +142,7 @@ exp ::= USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_
               errores.agregar("No se esta asignando un identificador al Catedratico, Linea: "+((token)identificador).getLine()+",Columna: "+((token)identificador).getColumn());
             }
         :}
-    |   SALON P_A STRING:edificio COMA nums:numero COMA nums:capacidad P_C DOT_COMA exp
+    |   exp SALON P_A STRING:edificio COMA nums:numero COMA nums:capacidad P_C DOT_COMA
         {:
             int numeroSalon = Integer.valueOf(((token)numero).getLexeme());
             int cantidadEstudiantes = Integer.valueOf(((token)capacidad).getLexeme());
@@ -138,6 +154,11 @@ exp ::= USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_
               if(recuEdificio!=null){
                 Salon newSalon = new Salon(numeroSalon, cantidadEstudiantes, edi);
                 recuEdificio.getSalones().agregarOrden(newSalon,String.valueOf(newSalon.getNumeroSalon()));
+
+                System.out.println("---------Salon--------");
+                System.out.println(newSalon.toString());
+                System.out.println("----------------------");
+
               }else{
                 errores.agregar("No existe un edificio \""+edi+"\", Linea: "+((token)edificio).getLine()+" ,Columna: "+((token)edificio).getColumn());
               }
@@ -146,6 +167,37 @@ exp ::= USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_
             }catch(InvalidStructureException ex){
               errores.agregar("Error al guardar el salon: "+numeroSalon);
             }
+        :}
+    |   exp HORARIO P_A nums:code COMA CADENA_HORARIO:horario COMA CADENA_DIA:dia COMA nums:curso COMA nums:salon COMA cadenas:edificio COMA nums:catedratico P_C DOT_COMA
+        {:
+            int codigo = Integer.valueOf(((token)code).getLexeme());
+            String hour = ((token)horario).getLexeme();
+            String day = ((token)dia).getLexeme();
+            int codeCurso = Integer.valueOf(((token)curso).getLexeme());
+            int numSalon = Integer.valueOf(((token)salon).getLexeme());
+            String edi = ((token)edificio).getLexeme();
+            int idCatedratico = Integer.valueOf(((token)catedratico).getLexeme());
+
+            Horario newHorario = new Horario(codigo, hour, day, codeCurso, numSalon, edi, idCatedratico);
+
+            System.out.println("--------Horario-------");
+            System.out.println(newHorario.toString());
+            System.out.println("----------------------");
+
+        :}
+    |   exp ASIG P_A CARNET:_carnet COMA nums:_curso COMA nums:_zona COMA nums:_final P_C DOT_COMA
+        {:
+            int carnet = Integer.valueOf(((token)_carnet).getLexeme());
+            int curso = Integer.valueOf(((token)_curso).getLexeme());
+            int zona = Integer.valueOf(((token)_zona).getLexeme());
+            int final_ = Integer.valueOf(((token)_final).getLexeme());
+            
+            Asignacion newAsignacion = new Asignacion(carnet, curso, zona, final_);
+
+            System.out.println("------Asignacion------");
+            System.out.println(newAsignacion.toString());
+            System.out.println("----------------------");
+
         :}
     |
     |   error
