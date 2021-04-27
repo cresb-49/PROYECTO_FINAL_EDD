@@ -409,7 +409,7 @@ public class AVL<T> {
      *
      * @return
      */
-    public Object[] AVLtoArrayPostOrden(Class<T[]> arrayType) {
+    public T[] AVLtoArrayPostOrden(Class<T[]> arrayType) {
         T[] array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(),(this.cantidad + 1)));
         Cola<T> data = new Cola();
 

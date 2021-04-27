@@ -49,6 +49,11 @@ public class Estudiante {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    @Override
+    public int hashCode() {
+        return carnet;
+    }
     
     @Override
     public String toString() {
