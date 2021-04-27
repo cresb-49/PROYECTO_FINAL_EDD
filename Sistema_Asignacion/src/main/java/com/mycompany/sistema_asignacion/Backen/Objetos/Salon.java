@@ -7,22 +7,17 @@ import java.util.Set;
 public class Salon {
     private int numeroSalon;
     private int cantidadEstudiantes;
+    private String edificio;
     
     /**
      * Contructor con parametos de la clase Salon
      * @param numeroSalon
      * @param cantidadEstudiantes
      */
-    public Salon(int numeroSalon,int cantidadEstudiantes){
+    public Salon(int numeroSalon,int cantidadEstudiantes,String edificio){
         this.numeroSalon = numeroSalon;
         this.cantidadEstudiantes = cantidadEstudiantes;
-    }
-
-    /**
-     * Contructor vacio de la clase
-     */
-    public Salon(){
-
+        this.edificio = edificio;
     }
 
     public int getCantidadEstudiantes() {
@@ -39,6 +34,20 @@ public class Salon {
 
     public void setNumeroSalon(int numeroSalon) {
         this.numeroSalon = numeroSalon;
+    }
+
+    /**
+     * @return the edificio
+     */
+    public String getEdificio() {
+        return edificio;
+    }
+
+    /**
+     * @param edificio the edificio to set
+     */
+    public void setEdificio(String edificio) {
+        this.edificio = edificio;
     }
 
     @Override

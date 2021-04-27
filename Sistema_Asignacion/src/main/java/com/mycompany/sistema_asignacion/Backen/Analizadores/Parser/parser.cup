@@ -83,9 +83,11 @@ exp ::= USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_
             }
             System.out.println(newUser.toString());
         :}
-    |   ESTU P_A CARNET COMA cadenas COMA cadenas P_C DOT_COMA exp
+    |   ESTU P_A CARNET:carnet COMA cadenas:nombre COMA cadenas:direccion P_C DOT_COMA exp
         {:
-
+            int idCarnet =  Integer.valueOf(((token)carnet).getLexeme());
+            Estudiante newEstudiante = new Estudiante(idCarnet, ((token)nombre).getLexeme(), ((token)direccion).getLexeme());
+            System.out.println(newEstudiante.toString());
         :}
     |   EDIF P_A STRING:nombre P_C DOT_COMA
         {:
@@ -96,7 +98,7 @@ exp ::= USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_
                 errores.agregar("Ya existe un edificio:" + newEdificio.getNombre());
             }
         :}
-    |   CURSO P_A nums:codigo COMA cadenas:nombre COMA nums:semestre COMA nums:creditos P_C DOT_COMA
+    |   CURSO P_A nums:codigo COMA cadenas:nombre COMA nums:semestre COMA nums:creditos P_C DOT_COMA exp
         {:
             int numSemestre = Integer.valueOf(((token)semestre).getLexeme());
             
@@ -109,6 +111,40 @@ exp ::= USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_
               }
             }else{
               errores.agregar("Error Semantico: el numero asociado al semestre debe ser entre el rango [1 - 10], Linea: "+((token)semestre).getLine()+",Columna: "+((token)semestre).getColumn());
+            }
+        :}
+    |   CATE P_A nums:identificador COMA cadenas:nombre COMA cadenas:direccion P_C DOT_COMA exp
+        {:
+            int id = Integer.valueOf(((token)identificador).getLexeme());
+            Catedratico newCatedratico = new Catedratico(id, ((token)nombre).getLexeme(),((token)direccion).getLexeme());
+            System.out.println(newCatedratico.toString());
+            try {
+              datos.getCatedraticos().agregar(((token)identificador).getLexeme(), newCatedratico);
+            } catch (CloneNodeException ex) {
+              errores.agregar("Ya existe un Catedratico con identificador: "+((token)identificador).getLexeme()+", Linea: "+((token)identificador).getLine()+",Columna: "+((token)identificador).getColumn());
+            }catch(NullTagException ex){
+              errores.agregar("No se esta asignando un identificador al Catedratico, Linea: "+((token)identificador).getLine()+",Columna: "+((token)identificador).getColumn());
+            }
+        :}
+    |   SALON P_A STRING:edificio COMA nums:numero COMA nums:capacidad P_C DOT_COMA exp
+        {:
+            int numeroSalon = Integer.valueOf(((token)numero).getLexeme());
+            int cantidadEstudiantes = Integer.valueOf(((token)capacidad).getLexeme());
+            String edi = ((token)edificio).getLexeme();
+
+            try {
+              Edificio recuEdificio =  datos.getEdificios().buscar(edi);
+
+              if(recuEdificio!=null){
+                Salon newSalon = new Salon(numeroSalon, cantidadEstudiantes, edi);
+                recuEdificio.getSalones().agregarOrden(newSalon,String.valueOf(newSalon.getNumeroSalon()));
+              }else{
+                errores.agregar("No existe un edificio \""+edi+"\", Linea: "+((token)edificio).getLine()+" ,Columna: "+((token)edificio).getColumn());
+              }
+            } catch (CloneNodeException ex) {
+              errores.agregar("Ya existe un salon \""+numeroSalon+"\" en el edificio, Linea: "+((token)numero).getLine()+" ,Columna: "+((token)numero).getColumn());
+            }catch(InvalidStructureException ex){
+              errores.agregar("Error al guardar el salon: "+numeroSalon);
             }
         :}
     |
