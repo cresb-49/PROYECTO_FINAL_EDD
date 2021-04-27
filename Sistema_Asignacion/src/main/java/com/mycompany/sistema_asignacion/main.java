@@ -19,8 +19,9 @@ public class main {
         HashTable<Estudiante> table = new HashTable<>(Estudiante[].class);
         Estudiante estudiante1 = new Estudiante(201931012, "Carlos Pac", "Quetzaltenango");
         Estudiante estudiante2 = new Estudiante(202030488, "Sara Pac", "Quetzaltenango");
-        Estudiante estudiante3 = new Estudiante(202054832, "Sara Pac", "Quetzaltenango");
-        Estudiante estudiante4 = new Estudiante(201834534, "Sara Pac", "Quetzaltenango");
+        Estudiante estudiante3 = new Estudiante(202054832, "Benjamin Flores", "Quetzaltenango");
+        Estudiante estudiante4 = new Estudiante(201834534, "Juan Perez", "Quetzaltenango");
+        
         table.add(estudiante1, estudiante1.hashCode());
         table.add(estudiante2, estudiante2.hashCode());
         table.add(estudiante3, estudiante3.hashCode());
