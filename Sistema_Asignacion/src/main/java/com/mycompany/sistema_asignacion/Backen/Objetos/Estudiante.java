@@ -54,6 +54,17 @@ public class Estudiante {
     public int hashCode() {
         return carnet;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Estudiante estudiante = (Estudiante)obj;
+        //System.out.println("Coparar carnet: "+this.carnet+" , "+estudiante.getCarnet());
+        if(this.carnet == estudiante.getCarnet()){
+            return true;
+        }else{
+            return false;
+        }
+    }
     
     @Override
     public String toString() {
