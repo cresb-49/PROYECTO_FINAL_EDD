@@ -328,7 +328,11 @@ class CUP$parser$actions {
 		
             int idCarnet =  Integer.valueOf(((token)carnet).getLexeme());
             Estudiante newEstudiante = new Estudiante(idCarnet, ((token)nombre).getLexeme(), ((token)direccion).getLexeme());
-
+            try {
+              datos.getEstudiantes().add(newEstudiante,newEstudiante.hashCode());
+            } catch (CloneNodeException ex) {
+              errores.agregar("Ya existe un estudiante con carnet \""+newEstudiante.getCarnet()+"\" en el sistema, Linea: "+((token)carnet).getLine()+",Columna:"+((token)carnet).getColumn());
+            }
             System.out.println("------Estudiante------");
             System.out.println(newEstudiante.toString());
             System.out.println("----------------------");

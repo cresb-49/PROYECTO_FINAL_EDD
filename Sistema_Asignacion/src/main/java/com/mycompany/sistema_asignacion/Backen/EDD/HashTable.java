@@ -1,6 +1,7 @@
 package com.mycompany.sistema_asignacion.Backen.EDD;
 
 import com.mycompany.sistema_asignacion.Backen.Exceptions.CloneNodeException;
+import com.mycompany.sistema_asignacion.Backen.Exceptions.NotFoundNodeException;
 
 public class HashTable<T> {
     private static final double MAX_CAPACITY = 0.55;
@@ -42,7 +43,7 @@ public class HashTable<T> {
             if (!igual) {
                 System.out.println("Colicion de elemento posicion: " + index);
                 this.solucionarColicion(data, hash, 1,true);
-                tmp.setReHashWall(true);
+                tmp.setReHashBridge(true);
             } else {
                 throw new CloneNodeException("Ya existe un elemento igual en la tabla");
             }
@@ -50,7 +51,7 @@ public class HashTable<T> {
     }
 
     /**
-     * Soluciona el momento de la colicion con el array
+     * Soluciona el momento de la colision con el array
      * 
      * @param data
      * @param hash
@@ -84,14 +85,17 @@ public class HashTable<T> {
             System.out.println("Iguales: "+igual);
             if (!igual) {
                 System.out.println("Colicion de elemento posicion: " + index);
-                this.solucionarColicion(data, hash, i,true);
-                tmp.setReHashWall(true);
+                this.solucionarColicion(data, hash, i,option);
+                tmp.setReHashBridge(true);
             } else {
                 throw new CloneNodeException("Ya existe un elemento igual en la tabla");
             }
         }
     }
 
+    /**
+     * Realiza el cresimiento de la tabla hash
+     */
     private void reHash() throws CloneNodeException {
         //Copia de los elementos del hash anterior
         Object copiaArray[] = this.array;
@@ -103,7 +107,6 @@ public class HashTable<T> {
         for (Object copi : copiaArray) {
             NodeHash<T> antiguo = (NodeHash<T>) copi;
             if (!antiguo.isDelete()) {
-
                 //PARAMETROS PARA EL NUEVO HASH
                 int hash = antiguo.getData().hashCode();
                 T data = antiguo.getData();
@@ -122,10 +125,141 @@ public class HashTable<T> {
                     if (!tmp.getData().equals(data)) {
                         System.out.println("Colicion de elemento posicion: " + index);
                         this.solucionarColicion(data, hash, 1,false);
-                        tmp.setReHashWall(true);
+                        tmp.setReHashBridge(true);
                     } else {
                         throw new CloneNodeException("Ya existe un elemento igual en la tabla");
                     }
+                }
+            }
+        }
+    }
+
+    /**
+     * Busaca un elemento en la tabla hash
+     * @param busqueda
+     * @param hash
+     * @return
+     */
+    public T buscar(T busqueda,int hash){
+        int index = hash % this.size;
+
+        NodeHash<T> tmp = (NodeHash<T>) this.array[index];
+
+        if(tmp==null){
+            return null;
+        }else{
+            T result = tmp.getData();
+            if(result.equals(busqueda)){
+                if(!tmp.isDelete()){
+                    return result;
+                }else{
+                    return null;
+                }
+            }else{
+                if(tmp.isReHashBridge()){
+                    return this.busquedaReHash(busqueda, hash, 1);
+                }else{
+                    return null;
+                }
+            }
+
+        }
+    }
+
+    /**
+     * Metodo recursivo para la busqueda de un elemento en la tabla hash
+     * @param busqueda
+     * @param hash
+     * @param i
+     * @return
+     */
+    private T busquedaReHash(T busqueda, int hash, int i){
+
+        i = i + 1;
+        int index = ((hash % this.size) * i);
+        while (index >= this.size) {
+            index = index - this.size;
+        }
+
+        NodeHash<T> tmp = (NodeHash<T>) this.array[index];
+        if(tmp==null){
+            return null;
+        }else{
+            T result = tmp.getData();
+            if(result.equals(busqueda)){
+                if(!tmp.isDelete()){
+                    return result;
+                }else{
+                    return null;
+                }
+            }else{
+                if(tmp.isReHashBridge()){
+                    return this.busquedaReHash(busqueda, hash, i);
+                }else{
+                    return null;
+                }
+            }
+        }
+    }
+
+    /**
+     * Elimina un dato de la tabla hash en base a un modelo 
+     * @param dato
+     * @param hash
+     * @throws NotFoundNodeException
+     */
+    public void eliminar(T dato,int hash) throws NotFoundNodeException{
+        int index = hash % this.size;
+        NodeHash<T> tmp = (NodeHash<T>) this.array[index];
+        if(tmp==null){
+            throw new NotFoundNodeException("No existe el elemento buscado");
+        }else{
+            T result = tmp.getData();
+            if(result.equals(dato)){
+                if(tmp.isDelete()){
+                    throw new NotFoundNodeException("No existe el elemento buscado");
+                }else{
+                    tmp.setDelete(true);
+                }
+            }else{
+                if(tmp.isReHashBridge()){
+                    this.eliminarReHash(dato, hash, 1);
+                }else{
+                    throw new NotFoundNodeException("No existe el elemento buscado");
+                }
+            }
+        }
+    }
+
+    /**
+     * Metodo recursivo para eliminar un dato de la tabla hash
+     * @param dato
+     * @param hash
+     * @param i
+     * @throws NotFoundNodeException
+     */
+    public void eliminarReHash(T dato, int hash, int i) throws NotFoundNodeException{
+        i = i + 1;
+        int index = ((hash % this.size) * i);
+        while (index >= this.size) {
+            index = index - this.size;
+        }
+        NodeHash<T> tmp = (NodeHash<T>) this.array[index];
+        if(tmp==null){
+            throw new NotFoundNodeException("No existe el elemento buscado");
+        }else{
+            T result = tmp.getData();
+            if(result.equals(dato)){
+                if(tmp.isDelete()){
+                    throw new NotFoundNodeException("No existe el elemento buscado");
+                }else{
+                    tmp.setDelete(true);
+                }
+            }else{
+                if(tmp.isReHashBridge()){
+                    this.eliminarReHash(dato, hash, i);
+                }else{
+                    throw new NotFoundNodeException("No existe el elemento buscado");
                 }
             }
         }
@@ -136,9 +270,13 @@ public class HashTable<T> {
      */
     public void imprimirHash() {
 
+        NodeHash<T> tmp =null;
         for (int i = 0; i < array.length; i++) {
-            if (array[i] != null) {
-                System.out.println("key: " + i + " -> \n" + array[i]);
+            tmp = (NodeHash<T>) array[i];
+            if(tmp !=null){
+                if(!tmp.isDelete()){
+                    System.out.println("key: " + i + " -> \n" + array[i]);
+                }
             }
         }
     }
@@ -146,13 +284,13 @@ public class HashTable<T> {
     private class NodeHash<T> {
 
         private boolean delete;
-        private boolean reHashWall;
+        private boolean reHashBridge;
         private T data;
 
         public NodeHash(T data) {
             this.data = data;
             this.delete = false;
-            this.reHashWall = false;
+            this.reHashBridge = false;
         }
 
         /**
@@ -186,15 +324,15 @@ public class HashTable<T> {
         /**
          * @return the reHashWall
          */
-        public boolean isReHashWall() {
-            return reHashWall;
+        public boolean isReHashBridge() {
+            return reHashBridge;
         }
 
         /**
          * @param reHashWall the reHashWall to set
          */
-        public void setReHashWall(boolean reHashWall) {
-            this.reHashWall = reHashWall;
+        public void setReHashBridge(boolean reHashWall) {
+            this.reHashBridge = reHashWall;
         }
 
         @Override

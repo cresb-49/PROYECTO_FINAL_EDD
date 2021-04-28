@@ -7,12 +7,14 @@ public class DatosSistema {
     private ListaCircularDoble<Edificio> edificios;
     private ListaCircularDoble<Curso> cursos;
     private AVL<Catedratico> catedraticos;
+    private HashTable<Estudiante> estudiantes;
 
     public DatosSistema() {
         this.usuarios = new ListaCircularDoble<>();
         this.edificios = new ListaCircularDoble<>();
         this.cursos = new ListaCircularDoble<>();
         this.catedraticos = new AVL<>();
+        this.estudiantes = new HashTable<>();
     }
 
     /**
@@ -65,5 +67,17 @@ public class DatosSistema {
      */
     public void setCatedraticos(AVL<Catedratico> catedraticos) {
         this.catedraticos = catedraticos;
+    }
+    /**
+     * @return the estudiantes
+     */
+    public HashTable<Estudiante> getEstudiantes() {
+        return estudiantes;
+    }
+    /**
+     * @param estudiantes the estudiantes to set
+     */
+    public void setEstudiantes(HashTable<Estudiante> estudiantes) {
+        this.estudiantes = estudiantes;
     }
 }
