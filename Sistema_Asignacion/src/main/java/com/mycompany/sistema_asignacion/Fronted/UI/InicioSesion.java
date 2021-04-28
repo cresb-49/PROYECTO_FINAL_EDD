@@ -67,6 +67,10 @@ public class InicioSesion extends javax.swing.JDialog {
             }
         });
 
+        TextPass.setText("12345");
+
+        TextUser.setText("AdminSistema");
+
         jLabel2.setText("Usuario");
 
         jLabel3.setText("INGRESE SUS CREDENCIALES");
