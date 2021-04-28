@@ -23,11 +23,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         this.dataSistema = datos;
         this.currentUser = null;
         this.setLocationRelativeTo(null);
-        //this.inicioDelUsuario();
+        this.inicioDelUsuario();
     }
 
     private void inicioDelUsuario() {
-        InicioSesion login = new InicioSesion(this, true);
+        InicioSesion login = new InicioSesion(this, true,this.dataSistema);
         login.setVisible(true);
         if (login.isLog() == false) {
             this.dispose();

@@ -5,6 +5,7 @@
  */
 package com.mycompany.sistema_asignacion.Fronted.UI;
 
+import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Usuario;
 import javax.swing.JOptionPane;
 
@@ -16,11 +17,13 @@ public class InicioSesion extends javax.swing.JDialog {
 
     private boolean log = false;
     private Usuario currentUser;
+    private DatosSistema dataSistema;
     /**
      * Creates new form InicioSesion
      */
-    public InicioSesion(java.awt.Frame parent, boolean modal) {
+    public InicioSesion(java.awt.Frame parent, boolean modal,DatosSistema dataSistema) {
         super(parent, modal);
+        this.dataSistema = dataSistema;
         this.currentUser = null;
         this.setLocationRelativeTo(null);
         initComponents();
@@ -120,12 +123,18 @@ public class InicioSesion extends javax.swing.JDialog {
         String user = this.TextUser.getText();
         String pass = String.valueOf(this.TextPass.getPassword());
         
-        if(user.equals("Admin") && pass.equals("admin")){
-            this.log = true;
-            this.currentUser = new Usuario(-1, user, pass, "Super");
-            this.dispose();
+        Usuario tmp = dataSistema.getUsuarios().buscar(user);
+        
+        if(tmp==null){
+            JOptionPane.showMessageDialog(this, "No existe un usuario: "+user, "Error de Inicio", JOptionPane.ERROR_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(this, "Usuario o password incorrecta", "Error de Inicio", JOptionPane.ERROR_MESSAGE);
+            if(tmp.getPassword().equals(pass)){
+                this.log = true;
+                this.currentUser = tmp;
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(this, "La contraseña del usuario es incorrecta", "Error de Inicio", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
