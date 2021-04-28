@@ -393,7 +393,7 @@ public class AVL<T> {
      */
     public T[] AVLtoArrayInOrden(Class<T[]> arrayType) {
         T[] array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(),(this.cantidad + 1)));
-        Cola<T> data = new Cola();
+        Cola<T> data = new Cola<>();
 
         this.recuperarDataInOrden(this.raiz, data);
         int cont = 0;
@@ -411,7 +411,7 @@ public class AVL<T> {
      */
     public T[] AVLtoArrayPostOrden(Class<T[]> arrayType) {
         T[] array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(),(this.cantidad + 1)));
-        Cola<T> data = new Cola();
+        Cola<T> data = new Cola<>();
 
         this.recuperarDataPostOrden(this.raiz, data);
         int cont = 0;
@@ -429,7 +429,7 @@ public class AVL<T> {
      */
     public T[] AVLtoArrayPreOrden(Class<T[]> arrayType) {
         T[] array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(),(this.cantidad + 1)));
-        Cola<T> data = new Cola();
+        Cola<T> data = new Cola<>();
 
         this.recuperarDataPreOrden(this.raiz, data);
         int cont = 0;
@@ -440,7 +440,7 @@ public class AVL<T> {
         return array;
     }
 
-    private void recuperarDataInOrden(NodoArbol<T> nodo, Cola data) {
+    private void recuperarDataInOrden(NodoArbol<T> nodo, Cola<T> data) {
         if (nodo.getIzquierda() != null) {
             this.recuperarDataInOrden(nodo.getIzquierda(), data);
         }
@@ -451,7 +451,7 @@ public class AVL<T> {
 
     }
 
-    private void recuperarDataPostOrden(NodoArbol<T> nodo, Cola data) {
+    private void recuperarDataPostOrden(NodoArbol<T> nodo, Cola<T> data) {
         if (nodo.getIzquierda() != null) {
             this.recuperarDataPostOrden(nodo.getIzquierda(), data);
         }
@@ -461,7 +461,7 @@ public class AVL<T> {
         data.agregar(nodo.getContenido());
     }
 
-    private void recuperarDataPreOrden(NodoArbol<T> nodo, Cola data) {
+    private void recuperarDataPreOrden(NodoArbol<T> nodo, Cola<T> data) {
         data.agregar(nodo.getContenido());
         if (nodo.getIzquierda() != null) {
             this.recuperarDataPreOrden(nodo.getIzquierda(), data);
