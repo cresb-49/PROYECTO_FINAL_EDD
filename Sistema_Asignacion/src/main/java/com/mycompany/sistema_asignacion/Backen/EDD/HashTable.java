@@ -138,7 +138,7 @@ public class HashTable<T> {
      * Busaca un elemento en la tabla hash
      * @param busqueda
      * @param hash
-     * @return
+     * @return Objeto / null
      */
     public T buscar(T busqueda,int hash){
         int index = hash % this.size;

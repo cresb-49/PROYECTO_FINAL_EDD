@@ -3,9 +3,9 @@ Estudiante(200745781, "Alfonso Antonio", "Cantel");
 Estudiante(200478542, "Mario Morales", "La Esperanza");
 
 Usuario(1,Secretaria, "murphychica1", colaborador);
-Usuario(2,Control, "control123", colaborador);
+Usuario(1,Control, "control123", colaborador);
 Usuario(200145785,FMarroquín, "fffmmm", estudiante);
-Usuario(200745781,Ulises, "uliuli", super);
+Usuario(200745781,Ulises, "uliuli", estudiante);
 
 
 Catedratico(12345,"Prof1","Ciudad");

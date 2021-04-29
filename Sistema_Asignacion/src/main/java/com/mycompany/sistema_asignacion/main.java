@@ -1,6 +1,7 @@
 package com.mycompany.sistema_asignacion;
 
 import com.mycompany.sistema_asignacion.Backen.EDD.HashTable;
+import com.mycompany.sistema_asignacion.Backen.EDD.ListaCircularDoble;
 import com.mycompany.sistema_asignacion.Backen.Exceptions.CloneNodeException;
 import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Estudiante;
@@ -23,30 +24,24 @@ public class main {
     }
 
     private static void prueba(){
-        HashTable<Estudiante> table = new HashTable<>();
-
-        Estudiante estudiante1 = new Estudiante(201931012, "Carlos Pac", "Quetzaltenango");
-        Estudiante estudiante2 = new Estudiante(202030488, "Sara Pac", "Quetzaltenango");
-        Estudiante estudiante3 = new Estudiante(202054832, "Benjamin Flores", "Quetzaltenango");
-        Estudiante estudiante4 = new Estudiante(201834534, "Juan Perez", "Quetzaltenango");
-        //Estudiante estudiante5 = new Estudiante(201931012, "Carlos Pac", "Quetzaltenango");
-        
+        ListaCircularDoble<Usuario> usuarios = new ListaCircularDoble<>();
+        Usuario user1 = new Usuario(1, "nombre1", "password", "tipo");
+        Usuario user2 = new Usuario(2, "nombre2", "password", "tipo");
+        Usuario user3 = new Usuario(3, "nombre3", "password", "tipo");
+        Usuario user4 = new Usuario(4, "nombre4", "password", "tipo");
+        Usuario user5 = new Usuario(5, "nombre5", "password", "tipo");
         try {
-            table.add(estudiante1, estudiante1.hashCode());
-            table.add(estudiante2, estudiante2.hashCode());
-            table.add(estudiante3, estudiante3.hashCode());
-            table.add(estudiante4, estudiante4.hashCode());
-            //table.add(estudiante5, estudiante5.hashCode());
-            table.imprimirHash();
-            System.out.println("------------------------------");
 
-            Estudiante modelo = new Estudiante(201931013, "", "");
-            table.eliminar(modelo,modelo.hashCode());
-            table.imprimirHash();
-            
+            usuarios.add(user1, user1.getNombre());
+            usuarios.add(user2, user2.getNombre());
+            usuarios.add(user3, user3.getNombre());
+            usuarios.add(user4, user4.getNombre());
+            usuarios.add(user5, user5.getNombre());
+
+            System.out.println(usuarios.buscar(user2));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 }

@@ -54,12 +54,13 @@ public class Usuario {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         Usuario user = (Usuario)obj;
         return user.getId() == this.id;
     }
+    
     @Override
     public String toString() {
         return "-Id: "+id+"\n-Tipo: "+tipo+"\n-Nombre: "+nombre+"\n-Password: "+password;

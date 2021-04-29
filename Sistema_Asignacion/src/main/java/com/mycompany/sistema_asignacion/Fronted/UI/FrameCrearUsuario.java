@@ -7,6 +7,7 @@ package com.mycompany.sistema_asignacion.Fronted.UI;
 
 import com.mycompany.sistema_asignacion.Backen.Exceptions.CloneNodeException;
 import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
+import com.mycompany.sistema_asignacion.Backen.Objetos.Estudiante;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Usuario;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -38,13 +39,13 @@ public class FrameCrearUsuario extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         FieldUser = new javax.swing.JTextField();
         FieldPass = new javax.swing.JPasswordField();
-        FieldPass2 = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         tipoUser = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        FieldId = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -54,8 +55,9 @@ public class FrameCrearUsuario extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Password:");
 
-        jLabel3.setText("Confirmar:");
+        FieldUser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        FieldPass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         FieldPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FieldPassActionPerformed(evt);
@@ -73,6 +75,11 @@ public class FrameCrearUsuario extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setText("Id:");
+
+        FieldId.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        FieldId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,48 +87,41 @@ public class FrameCrearUsuario extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(FieldPass, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(FieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(FieldPass2)
-                                .addComponent(tipoUser, 0, 127, Short.MAX_VALUE)))))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel5))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(FieldPass, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                    .addComponent(jButton1)
+                    .addComponent(tipoUser, 0, 127, Short.MAX_VALUE)
+                    .addComponent(FieldUser, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                    .addComponent(FieldId))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(FieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(FieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(FieldPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(FieldPass2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(tipoUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -138,35 +138,45 @@ public class FrameCrearUsuario extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Debe de escribir un usuario", "Error de registro", JOptionPane.WARNING_MESSAGE);
         } else {
             String pass1 = String.valueOf(this.FieldPass.getPassword());
-            String pass2 = String.valueOf(this.FieldPass2.getPassword());
             if (this.comprobarAlfanumerico(user)) {
-                if (pass1.isEmpty() || pass2.isEmpty()) {
+                if (pass1.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Debe de escribir y confirmar la contraseña", "Error de registro", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    if (comprobarAlfanumerico(pass1)) {
-                        if (pass1.equals(pass2)) {
+
+                    int identificador = Integer.valueOf(this.FieldId.getText());
+
+                    if (this.dataSistema.getUsuarios().buscar(new Usuario(identificador, "", "", "")) == null) {
+                        if (comprobarAlfanumerico(pass1)) {
                             try {
                                 String tipo = this.tipoUser.getItemAt(this.tipoUser.getSelectedIndex());
-
-                                Usuario tmp = this.dataSistema.getUsuarios().getUltimo();
-                                Usuario newUser = new Usuario((tmp.getId() + 1), user, pass1, tipo);
-
-                                this.dataSistema.getUsuarios().add(newUser, newUser.getNombre());
-                                JOptionPane.showMessageDialog(this, "Se creo con exito el usuario \"" + user + "\" en el sistema", "Registro Completado", JOptionPane.INFORMATION_MESSAGE);
+                                Usuario newUser = new Usuario(identificador, user, pass1, tipo);
                                 
-                                this.FieldUser.setText(null);
-                                this.FieldPass.setText(null);
-                                this.FieldPass2.setText(null);
-                                this.tipoUser.setSelectedIndex(0);
-                                
+                                if(tipo.equals("estudiante")){
+                                    Estudiante tmp = new Estudiante(identificador,"","");
+                                    if(this.dataSistema.getEstudiantes().buscar(tmp, tmp.hashCode())!=null){
+                                        this.dataSistema.getUsuarios().add(newUser, newUser.getNombre());
+                                        JOptionPane.showMessageDialog(this, "Se creo con exito el usuario \"" + user + "\" en el sistema", "Registro Completado", JOptionPane.INFORMATION_MESSAGE);
+                                        this.FieldUser.setText(null);
+                                        this.FieldPass.setText(null);
+                                        this.tipoUser.setSelectedIndex(0);
+                                    }else{
+                                        JOptionPane.showMessageDialog(this, "No hay referencia del estudiante \"" + identificador + "\" en el sistema", "Error de registro", JOptionPane.WARNING_MESSAGE);
+                                    }
+                                }else{
+                                    this.dataSistema.getUsuarios().add(newUser, newUser.getNombre());
+                                    JOptionPane.showMessageDialog(this, "Se creo con exito el usuario \"" + user + "\" en el sistema", "Registro Completado", JOptionPane.INFORMATION_MESSAGE);
+                                    this.FieldUser.setText(null);
+                                    this.FieldPass.setText(null);
+                                    this.tipoUser.setSelectedIndex(0);
+                                }
                             } catch (CloneNodeException e) {
                                 JOptionPane.showMessageDialog(this, "Ya existe un usuario \"" + user + "\" en el sistema", "Error de registro", JOptionPane.WARNING_MESSAGE);
                             }
                         } else {
-                            JOptionPane.showMessageDialog(this, "Las contraseñas con coindicen", "Error de registro", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "La contraseña debe contener caracteres alfanumericos", "Error de registro", JOptionPane.WARNING_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(this, "La contraseña debe contener caracteres alfanumericos", "Error de registro", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Ya existe un usuario con identidicador \""+identificador+"\"", "Error de registro", JOptionPane.WARNING_MESSAGE);
                     }
                 }
             } else {
@@ -179,14 +189,14 @@ public class FrameCrearUsuario extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField FieldId;
     private javax.swing.JPasswordField FieldPass;
-    private javax.swing.JPasswordField FieldPass2;
     private javax.swing.JTextField FieldUser;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JComboBox<String> tipoUser;
     // End of variables declaration//GEN-END:variables
 }

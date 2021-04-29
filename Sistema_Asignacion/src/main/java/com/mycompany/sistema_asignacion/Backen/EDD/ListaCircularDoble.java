@@ -136,12 +136,16 @@ public class ListaCircularDoble<T> {
         }
         return null;
     }
-    
+    /**
+     * Busqueda por medio de objetos
+     * @param modelo
+     * @return
+     */
     public T buscar(T modelo) {
         NodoLCD<T> tmp2 = this.raiz;
         if (tmp2 != null) {
             do {
-                if (tmp2.getTag().equals(modelo)) {
+                if (tmp2.getData().equals(modelo)) {
                     return tmp2.getData();
                 }
                 tmp2 = tmp2.getSiguiente();
