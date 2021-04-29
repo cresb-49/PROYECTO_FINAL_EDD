@@ -71,6 +71,7 @@ public class CargaInfo extends javax.swing.JDialog {
 
         jTextField1.setEditable(false);
 
+        jTextAreaErrores.setEditable(false);
         jTextAreaErrores.setColumns(20);
         jTextAreaErrores.setRows(5);
         jTextAreaErrores.setBorder(javax.swing.BorderFactory.createTitledBorder("Errores del Archivo"));
@@ -154,6 +155,7 @@ public class CargaInfo extends javax.swing.JDialog {
             err.append(errors.tomar()+"\n");
         }
         this.jTextAreaErrores.setText(err.toString());
+        this.jTextAreaErrores.setEditable(false);
     }
     
     

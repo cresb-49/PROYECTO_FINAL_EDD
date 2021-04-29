@@ -37,7 +37,7 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\021\000\002\002\004\000\002\002\014\000\002\002" +
+    "\000\021\000\002\002\004\000\002\002\016\000\002\002" +
     "\014\000\002\002\010\000\002\002\016\000\002\002\014" +
     "\000\002\002\014\000\002\002\024\000\002\002\016\000" +
     "\002\002\002\000\002\002\003\000\002\004\003\000\002" +
@@ -50,13 +50,13 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\132\000\026\002\ufff8\003\004\004\ufff8\005\ufff8\006" +
+    "\000\134\000\026\002\ufff8\003\004\004\ufff8\005\ufff8\006" +
     "\ufff8\007\ufff8\010\ufff8\011\ufff8\012\ufff8\013\ufff8\001\002" +
     "\000\024\002\ufff7\004\ufff7\005\ufff7\006\ufff7\007\ufff7\010" +
     "\ufff7\011\ufff7\012\ufff7\013\ufff7\001\002\000\024\002\013" +
     "\004\010\005\007\006\012\007\011\010\014\011\015\012" +
-    "\006\013\016\001\002\000\004\021\115\001\002\000\004" +
-    "\021\105\001\002\000\004\021\075\001\002\000\004\021" +
+    "\006\013\016\001\002\000\004\021\117\001\002\000\004" +
+    "\021\107\001\002\000\004\021\075\001\002\000\004\021" +
     "\071\001\002\000\004\021\061\001\002\000\004\002\001" +
     "\001\002\000\004\021\051\001\002\000\004\021\034\001" +
     "\002\000\004\021\017\001\002\000\004\016\020\001\002" +
@@ -91,28 +91,29 @@ public class parser extends java_cup.runtime.lr_parser {
     "\012\ufffc\013\ufffc\001\002\000\004\017\072\001\002\000" +
     "\004\022\073\001\002\000\004\024\074\001\002\000\024" +
     "\002\ufffe\004\ufffe\005\ufffe\006\ufffe\007\ufffe\010\ufffe\011" +
-    "\ufffe\012\ufffe\013\ufffe\001\002\000\004\015\076\001\002" +
-    "\000\004\023\077\001\002\000\004\017\100\001\002\000" +
-    "\004\023\101\001\002\000\004\014\102\001\002\000\004" +
-    "\022\103\001\002\000\004\024\104\001\002\000\024\002" +
-    "\000\004\000\005\000\006\000\007\000\010\000\011\000" +
-    "\012\000\013\000\001\002\000\004\016\106\001\002\000" +
-    "\004\023\107\001\002\000\010\003\040\017\037\020\041" +
+    "\ufffe\012\ufffe\013\ufffe\001\002\000\010\003\023\016\024" +
+    "\025\022\001\002\000\004\023\077\001\002\000\004\015" +
+    "\100\001\002\000\004\023\101\001\002\000\004\017\102" +
+    "\001\002\000\004\023\103\001\002\000\004\014\104\001" +
+    "\002\000\004\022\105\001\002\000\004\024\106\001\002" +
+    "\000\024\002\000\004\000\005\000\006\000\007\000\010" +
+    "\000\011\000\012\000\013\000\001\002\000\004\016\110" +
     "\001\002\000\004\023\111\001\002\000\010\003\040\017" +
-    "\037\020\041\001\002\000\004\022\113\001\002\000\004" +
-    "\024\114\001\002\000\024\002\uffff\004\uffff\005\uffff\006" +
-    "\uffff\007\uffff\010\uffff\011\uffff\012\uffff\013\uffff\001\002" +
-    "\000\010\003\023\016\024\025\022\001\002\000\004\023" +
-    "\117\001\002\000\004\027\120\001\002\000\004\023\121" +
-    "\001\002\000\004\026\122\001\002\000\004\023\123\001" +
-    "\002\000\010\003\023\016\024\025\022\001\002\000\004" +
+    "\037\020\041\001\002\000\004\023\113\001\002\000\010" +
+    "\003\040\017\037\020\041\001\002\000\004\022\115\001" +
+    "\002\000\004\024\116\001\002\000\024\002\uffff\004\uffff" +
+    "\005\uffff\006\uffff\007\uffff\010\uffff\011\uffff\012\uffff\013" +
+    "\uffff\001\002\000\010\003\023\016\024\025\022\001\002" +
+    "\000\004\023\121\001\002\000\004\027\122\001\002\000" +
+    "\004\023\123\001\002\000\004\026\124\001\002\000\004" +
     "\023\125\001\002\000\010\003\023\016\024\025\022\001" +
-    "\002\000\004\023\127\001\002\000\010\003\040\017\037" +
-    "\020\041\001\002\000\004\023\131\001\002\000\010\003" +
-    "\023\016\024\025\022\001\002\000\004\022\133\001\002" +
-    "\000\004\024\134\001\002\000\024\002\ufffa\004\ufffa\005" +
-    "\ufffa\006\ufffa\007\ufffa\010\ufffa\011\ufffa\012\ufffa\013\ufffa" +
-    "\001\002" });
+    "\002\000\004\023\127\001\002\000\010\003\023\016\024" +
+    "\025\022\001\002\000\004\023\131\001\002\000\010\003" +
+    "\040\017\037\020\041\001\002\000\004\023\133\001\002" +
+    "\000\010\003\023\016\024\025\022\001\002\000\004\022" +
+    "\135\001\002\000\004\024\136\001\002\000\024\002\ufffa" +
+    "\004\ufffa\005\ufffa\006\ufffa\007\ufffa\010\ufffa\011\ufffa\012" +
+    "\ufffa\013\ufffa\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -120,7 +121,7 @@ public class parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\132\000\004\002\004\001\001\000\002\001\001\000" +
+    "\000\134\000\004\002\004\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
@@ -140,17 +141,18 @@ public class parser extends java_cup.runtime.lr_parser {
     "\001\000\002\001\001\000\004\004\065\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\004\003\075\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\004\004\107\001\001\000\002\001\001\000\004" +
-    "\004\111\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\004\003\115\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\004\003\123\001\001\000\002\001\001" +
-    "\000\004\003\125\001\001\000\002\001\001\000\004\004" +
-    "\127\001\001\000\002\001\001\000\004\003\131\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001" });
+    "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
+    "\004\111\001\001\000\002\001\001\000\004\004\113\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\004\003\117\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\004\003\125\001\001\000\002\001\001\000\004\003" +
+    "\127\001\001\000\002\001\001\000\004\004\131\001\001" +
+    "\000\002\001\001\000\004\003\133\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -273,9 +275,12 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 1: // exp ::= exp USER P_A ALFANUMERICO COMA STRING COMA TIPO_USER P_C DOT_COMA 
+          case 1: // exp ::= exp USER P_A nums COMA ALFANUMERICO COMA STRING COMA TIPO_USER P_C DOT_COMA 
             {
               Object RESULT =null;
+		int identificadorleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).left;
+		int identificadorright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).right;
+		Object identificador = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-8)).value;
 		int nombreleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).left;
 		int nombreright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
 		Object nombre = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
@@ -286,29 +291,40 @@ class CUP$parser$actions {
 		int tipoUserright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Object tipoUser = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
-            int id;
-            Usuario newUser = null;
-            
-            if(datos.getUsuarios().isEmpty()){
-                id = 0;
-                newUser = new Usuario(id, ((token)nombre).getLexeme(), ((token)pass).getLexeme(), ((token)tipoUser).getLexeme());
-            }else{
-                Usuario tmp = datos.getUsuarios().getUltimo();
-                newUser = new Usuario((tmp.getId()+1), ((token)nombre).getLexeme(), ((token)pass).getLexeme(), ((token)tipoUser).getLexeme());
-            }
-            if(newUser!=null)
+            int id = Integer.valueOf(((token)identificador).getLexeme());
+            Usuario newUser = new Usuario(id, ((token)nombre).getLexeme(), ((token)pass).getLexeme(), ((token)tipoUser).getLexeme());
+            if(datos.getUsuarios().buscar(newUser)==null)
             {
                 try {
-                    datos.getUsuarios().add(newUser, newUser.getNombre());
+                  switch (newUser.getTipo()) {
+                    case "colaborador":
+                        datos.getUsuarios().add(newUser, newUser.getNombre());
+                        break;
+                    case "estudiante":
+                        Estudiante tmpEstudiante = new Estudiante(newUser.getId(), "", "");
+                        if(datos.getEstudiantes().buscar(tmpEstudiante, tmpEstudiante.hashCode())!=null){
+                            datos.getUsuarios().add(newUser, newUser.getNombre());
+                        }else{
+                            errores.agregar("No existe refencia del estudiante, Linea: "+((token)identificador).getLine()+" Columna: "+((token)identificador).getColumn());  
+                        }
+                        break;
+                    case "super":
+                        errores.agregar("No pude cargar un usuario super en el sistema, Linea: "+((token)tipoUser).getLine()+" Columna: "+((token)tipoUser).getColumn());
+                        break;
+                    default:
+                        errores.agregar("Tipo de usuario no reconocido, Linea: "+((token)tipoUser).getLine()+" Columna: "+((token)tipoUser).getColumn());
+                  }
                 } catch (CloneNodeException e) {
-                    errores.agregar("Ya existe un usuario \""+newUser.getNombre()+"\" en el sistema");
+                    errores.agregar("Ya existe un usuario \""+newUser.getNombre()+"\" en el sistema, Linea: "+((token)nombre).getLine()+" Columna: "+((token)nombre).getColumn());
                 }
+            }else{
+                errores.agregar("Ya existe un usuario con id \""+newUser.getId()+"\" en el sistema, Linea: "+((token)identificador).getLine()+" Columna: "+((token)identificador).getColumn());
             }
             System.out.println("--------Usuario-------");
             System.out.println(newUser.toString());
             System.out.println("----------------------");
         
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("exp",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("exp",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-11)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
@@ -392,7 +408,7 @@ class CUP$parser$actions {
                 System.out.println("----------------------");
 
               } catch (CloneNodeException ex) {
-                errores.agregar("Ya existe un curso con codigo: "+newCurso.getCodigo()+"Linea: "+((token)codigo).getLine()+" Columna: "+((token)codigo).getColumn());
+                errores.agregar("Ya existe un curso con codigo \""+newCurso.getCodigo()+"\" ,Linea: "+((token)codigo).getLine()+" Columna: "+((token)codigo).getColumn());
               }
             }else{
               errores.agregar("Error Semantico: el numero asociado al semestre debe ser entre el rango [1 - 10], Linea: "+((token)semestre).getLine()+",Columna: "+((token)semestre).getColumn());
@@ -467,7 +483,7 @@ class CUP$parser$actions {
                 errores.agregar("No existe un edificio \""+edi+"\", Linea: "+((token)edificio).getLine()+" ,Columna: "+((token)edificio).getColumn());
               }
             } catch (CloneNodeException ex) {
-              errores.agregar("Ya existe un salon \""+numeroSalon+"\" en el edificio, Linea: "+((token)numero).getLine()+" ,Columna: "+((token)numero).getColumn());
+              errores.agregar("Ya existe un salon \""+numeroSalon+"\" en el edificio \""+edi+"\", Linea: "+((token)numero).getLine()+" ,Columna: "+((token)numero).getColumn());
             }catch(InvalidStructureException ex){
               errores.agregar("Error al guardar el salon: "+numeroSalon);
             }

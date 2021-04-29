@@ -1,11 +1,12 @@
-Usuario(Secretaria, "murphychica1", colaborador);
-Usuario(Control, "control123", colaborador);
-Usuario(FMarroquín, "fffmmm", estudiante);
-Usuario(Ulises, "uliuli", estudiante);
-
 Estudiante(200145785, "Fernando Marroquín", "Quetzaltenango");
 Estudiante(200745781, "Alfonso Antonio", "Cantel");
 Estudiante(200478542, "Mario Morales", "La Esperanza");
+
+Usuario(1,Secretaria, "murphychica1", colaborador);
+Usuario(2,Control, "control123", colaborador);
+Usuario(200145785,FMarroquín, "fffmmm", estudiante);
+Usuario(200745781,Ulises, "uliuli", super);
+
 
 Catedratico(12345,"Prof1","Ciudad");
 Catedratico(47854, "Prof2", "Ciudad");

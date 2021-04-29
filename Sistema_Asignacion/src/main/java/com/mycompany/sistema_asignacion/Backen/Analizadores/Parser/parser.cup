@@ -61,25 +61,36 @@ non terminal exp,nums,cadenas;
 
 start with exp;
 
-exp ::= exp USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_C DOT_COMA
+exp ::= exp USER P_A nums:identificador COMA ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_C DOT_COMA
         {:
-            int id;
-            Usuario newUser = null;
-            
-            if(datos.getUsuarios().isEmpty()){
-                id = 0;
-                newUser = new Usuario(id, ((token)nombre).getLexeme(), ((token)pass).getLexeme(), ((token)tipoUser).getLexeme());
-            }else{
-                Usuario tmp = datos.getUsuarios().getUltimo();
-                newUser = new Usuario((tmp.getId()+1), ((token)nombre).getLexeme(), ((token)pass).getLexeme(), ((token)tipoUser).getLexeme());
-            }
-            if(newUser!=null)
+            int id = Integer.valueOf(((token)identificador).getLexeme());
+            Usuario newUser = new Usuario(id, ((token)nombre).getLexeme(), ((token)pass).getLexeme(), ((token)tipoUser).getLexeme());
+            if(datos.getUsuarios().buscar(newUser)==null)
             {
                 try {
-                    datos.getUsuarios().add(newUser, newUser.getNombre());
+                  switch (newUser.getTipo()) {
+                    case "colaborador":
+                        datos.getUsuarios().add(newUser, newUser.getNombre());
+                        break;
+                    case "estudiante":
+                        Estudiante tmpEstudiante = new Estudiante(newUser.getId(), "", "");
+                        if(datos.getEstudiantes().buscar(tmpEstudiante, tmpEstudiante.hashCode())!=null){
+                            datos.getUsuarios().add(newUser, newUser.getNombre());
+                        }else{
+                            errores.agregar("No existe refencia del estudiante, Linea: "+((token)identificador).getLine()+" Columna: "+((token)identificador).getColumn());  
+                        }
+                        break;
+                    case "super":
+                        errores.agregar("No pude cargar un usuario super en el sistema, Linea: "+((token)tipoUser).getLine()+" Columna: "+((token)tipoUser).getColumn());
+                        break;
+                    default:
+                        errores.agregar("Tipo de usuario no reconocido, Linea: "+((token)tipoUser).getLine()+" Columna: "+((token)tipoUser).getColumn());
+                  }
                 } catch (CloneNodeException e) {
-                    errores.agregar("Ya existe un usuario \""+newUser.getNombre()+"\" en el sistema");
+                    errores.agregar("Ya existe un usuario \""+newUser.getNombre()+"\" en el sistema, Linea: "+((token)nombre).getLine()+" Columna: "+((token)nombre).getColumn());
                 }
+            }else{
+                errores.agregar("Ya existe un usuario con id \""+newUser.getId()+"\" en el sistema, Linea: "+((token)identificador).getLine()+" Columna: "+((token)identificador).getColumn());
             }
             System.out.println("--------Usuario-------");
             System.out.println(newUser.toString());
@@ -124,7 +135,7 @@ exp ::= exp USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUse
                 System.out.println("----------------------");
 
               } catch (CloneNodeException ex) {
-                errores.agregar("Ya existe un curso con codigo: "+newCurso.getCodigo()+"Linea: "+((token)codigo).getLine()+" Columna: "+((token)codigo).getColumn());
+                errores.agregar("Ya existe un curso con codigo \""+newCurso.getCodigo()+"\" ,Linea: "+((token)codigo).getLine()+" Columna: "+((token)codigo).getColumn());
               }
             }else{
               errores.agregar("Error Semantico: el numero asociado al semestre debe ser entre el rango [1 - 10], Linea: "+((token)semestre).getLine()+",Columna: "+((token)semestre).getColumn());
@@ -167,7 +178,7 @@ exp ::= exp USER P_A ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUse
                 errores.agregar("No existe un edificio \""+edi+"\", Linea: "+((token)edificio).getLine()+" ,Columna: "+((token)edificio).getColumn());
               }
             } catch (CloneNodeException ex) {
-              errores.agregar("Ya existe un salon \""+numeroSalon+"\" en el edificio, Linea: "+((token)numero).getLine()+" ,Columna: "+((token)numero).getColumn());
+              errores.agregar("Ya existe un salon \""+numeroSalon+"\" en el edificio \""+edi+"\", Linea: "+((token)numero).getLine()+" ,Columna: "+((token)numero).getColumn());
             }catch(InvalidStructureException ex){
               errores.agregar("Error al guardar el salon: "+numeroSalon);
             }

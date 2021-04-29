@@ -55,8 +55,10 @@ public class Usuario {
         this.tipo = tipo;
     }
     
-    public boolean equals(Usuario usuario) {
-        return usuario.getId()==this.id;
+    @Override
+    public boolean equals(Object obj) {
+        Usuario user = (Usuario)obj;
+        return user.getId() == this.id;
     }
     @Override
     public String toString() {

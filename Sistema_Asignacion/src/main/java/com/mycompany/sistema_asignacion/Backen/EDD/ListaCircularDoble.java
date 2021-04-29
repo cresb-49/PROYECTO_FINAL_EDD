@@ -3,13 +3,13 @@ package com.mycompany.sistema_asignacion.Backen.EDD;
 import com.mycompany.sistema_asignacion.Backen.Exceptions.CloneNodeException;
 import com.mycompany.sistema_asignacion.Backen.Exceptions.NotFoundNodeException;
 
-public class ListaCircularDoble<T>{
+public class ListaCircularDoble<T> {
 
     private NodoLCD<T> raiz;
-    private int legth=0;
+    private int legth = 0;
 
-    public ListaCircularDoble(){
-        this.raiz = null;    
+    public ListaCircularDoble() {
+        this.raiz = null;
     }
 
     /**
@@ -17,9 +17,9 @@ public class ListaCircularDoble<T>{
      *
      * @param nuevo
      */
-    public void addOrden(T dato,String tag) throws CloneNodeException{
+    public void addOrden(T dato, String tag) throws CloneNodeException {
 
-        NodoLCD<T> nuevo = new NodoLCD<>(tag,dato);
+        NodoLCD<T> nuevo = new NodoLCD<>(tag, dato);
 
         if (raiz == null) {
             raiz = nuevo;
@@ -57,14 +57,16 @@ public class ListaCircularDoble<T>{
 
         }
     }
+
     /**
      * Ingresa el elemneto sis ningun orden en el tag
+     *
      * @param dato
      * @param tag
-     * @throws CloneNodeException 
+     * @throws CloneNodeException
      */
-    public void add(T dato,String tag) throws CloneNodeException{
-        NodoLCD<T> nuevo = new NodoLCD<>(tag,dato);
+    public void add(T dato, String tag) throws CloneNodeException {
+        NodoLCD<T> nuevo = new NodoLCD<>(tag, dato);
         if (raiz == null) {
             raiz = nuevo;
             raiz.setSiguiente(raiz);
@@ -83,11 +85,11 @@ public class ListaCircularDoble<T>{
     public int getLegth() {
         return legth;
     }
-    
-    public boolean isEmpty(){
+
+    public boolean isEmpty() {
         return (this.raiz == null);
     }
-    
+
     private void insertarAdelante(NodoLCD<T> base, NodoLCD<T> nuevo) {
         NodoLCD<T> tmp = base.getSiguiente();
         base.setSiguiente(nuevo);
@@ -134,8 +136,21 @@ public class ListaCircularDoble<T>{
         }
         return null;
     }
+    
+    public T buscar(T modelo) {
+        NodoLCD<T> tmp2 = this.raiz;
+        if (tmp2 != null) {
+            do {
+                if (tmp2.getTag().equals(modelo)) {
+                    return tmp2.getData();
+                }
+                tmp2 = tmp2.getSiguiente();
+            } while (tmp2 != this.raiz);
+        }
+        return null;
+    }
 
-    public void eliminar(String tag) throws NotFoundNodeException{
+    public void eliminar(String tag) throws NotFoundNodeException {
         if (this.buscar(tag) != null) {
             boolean eliminado = false;
             NodoLCD<T> tmp = this.raiz;
@@ -164,28 +179,35 @@ public class ListaCircularDoble<T>{
             throw new NotFoundNodeException("No existe un elemento con el tag: " + tag);
         }
     }
-    
+
     /**
      * Retorna el ultimo elemento de la lista circular
-     * @return 
+     *
+     * @return
      */
-    public T getUltimo(){
-        if(this.raiz==null){
+    public T getUltimo() {
+        if (this.raiz == null) {
             return null;
-        }
-        else{
+        } else {
             return this.raiz.getAnterior().getData();
         }
     }
-    
-    public class NodoLCD<T>{
+
+    /**
+     * @return the raiz
+     */
+    public NodoLCD<T> getRaiz() {
+        return raiz;
+    }
+
+    public class NodoLCD<T> {
 
         private NodoLCD<T> anterior;
         private NodoLCD<T> siguiente;
         private T data;
         private String tag;
 
-        public NodoLCD(String tag,T data){
+        public NodoLCD(String tag, T data) {
             this.tag = tag;
             this.data = data;
             this.anterior = null;
@@ -198,51 +220,59 @@ public class ListaCircularDoble<T>{
         public NodoLCD<T> getAnterior() {
             return anterior;
         }
+
         /**
          * @param anterior the anterior to set
          */
         public void setAnterior(NodoLCD<T> anterior) {
             this.anterior = anterior;
         }
+
         /**
          * @return the siguiente
          */
         public NodoLCD<T> getSiguiente() {
             return siguiente;
         }
+
         /**
          * @param siguiente the siguiente to set
          */
         public void setSiguiente(NodoLCD<T> siguiente) {
             this.siguiente = siguiente;
         }
+
         /**
          * @return the tag
          */
         public String getTag() {
             return tag;
         }
+
         /**
          * @param tag the tag to set
          */
         public void setTag(String tag) {
             this.tag = tag;
         }
+
         /**
          * @return the data
          */
         public T getData() {
             return data;
         }
+
         /**
          * @param data the data to set
          */
         public void setData(T data) {
             this.data = data;
         }
+
         @Override
         public String toString() {
-            return "Tag: "+this.tag+" ,Data: "+this.data;
+            return "Tag: " + this.tag + " ,Data: " + this.data;
         }
     }
 }
