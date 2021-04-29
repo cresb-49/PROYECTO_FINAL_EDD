@@ -5,16 +5,33 @@
  */
 package com.mycompany.sistema_asignacion.Fronted.UI;
 
+import com.mycompany.sistema_asignacion.Backen.Exceptions.NotFoundNodeException;
+import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
+import com.mycompany.sistema_asignacion.Backen.Objetos.Estudiante;
+import com.mycompany.sistema_asignacion.Backen.Objetos.Usuario;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author benjamin
  */
 public class FrameModificarUsuario extends javax.swing.JInternalFrame {
 
+    private DatosSistema datosSistema;
+    private String copiaUser;
+    private String copiaPass;
+    private String copiaTipo;
+    private Usuario modUsuario;
+
     /**
      * Creates new form FrameModificarUsuario
+     *
+     * @param datos
      */
-    public FrameModificarUsuario() {
+    public FrameModificarUsuario(DatosSistema datos) {
+        this.datosSistema = datos;
+        this.modUsuario = null;
         initComponents();
     }
 
@@ -27,21 +44,217 @@ public class FrameModificarUsuario extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        nombreUser = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        ViewUser = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        ButtonModificar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        ViewID = new javax.swing.JTextField();
+        ViewTipo = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        ViewPass = new javax.swing.JPasswordField();
+
+        setClosable(true);
+        setIconifiable(true);
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Usuario:");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel2.setText("Usuario:");
+
+        ViewUser.setEditable(false);
+        ViewUser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel3.setText("Tipo:");
+
+        ButtonModificar.setText("Modificar");
+        ButtonModificar.setEnabled(false);
+        ButtonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonModificarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Id:");
+
+        ViewID.setEditable(false);
+        ViewID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        ViewTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "colaborador", "estudiante", "super" }));
+        ViewTipo.setEnabled(false);
+
+        jLabel5.setText("Pass:");
+
+        ViewPass.setEditable(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ViewUser)
+                    .addComponent(ViewID, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                    .addComponent(ViewTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ViewPass))
+                .addGap(36, 36, 36)
+                .addComponent(ButtonModificar)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(ViewID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(ViewUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(ViewPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(ButtonModificar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(ViewTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(nombreUser, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(nombreUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+
+        String user = this.nombreUser.getText();
+
+        if (!user.isEmpty()) {
+            Usuario tmp = this.datosSistema.getUsuarios().buscar(user);
+            if (tmp == null) {
+                this.ButtonModificar.setEnabled(false);
+                JOptionPane.showMessageDialog(this, "No existe un usuario \"" + user + "\" en el sistema", "Error de busqueda", JOptionPane.WARNING_MESSAGE);
+            } else {
+                this.ViewID.setText(String.valueOf(tmp.getId()));
+                this.ViewUser.setText(tmp.getNombre());
+                this.ViewUser.setEditable(true);
+                this.ViewPass.setText(tmp.getPassword());
+                this.ViewPass.setEditable(true);
+                this.ViewTipo.setSelectedIndex(this.index(tmp.getTipo()));
+                this.ViewTipo.setEnabled(true);
+                this.ButtonModificar.setEnabled(true);
+                //Copia de los datos
+                copiaUser = this.ViewUser.getText();
+                copiaPass = String.valueOf(this.ViewPass.getPassword());
+                copiaTipo = this.ViewTipo.getItemAt(this.ViewTipo.getSelectedIndex());
+                modUsuario = tmp;
+            }
+        } else {
+            this.ButtonModificar.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "Debe de introducir un nombre de usuario", "Error de busqueda", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+    private int index(String tipo) {
+        switch (tipo) {
+            case "colaborador":
+                return 0;
+            case "estudiante":
+                return 1;
+            case "super":
+                return 2;
+            default:
+                return 0;
+        }
+    }
+    
+    private boolean comprobarAlfanumerico(String cadena) {
+        return Pattern.matches("^[0-9a-zA-ZÀ-ÿ\u00f1\u00d1]+$", cadena);
+    }
+    
+    private void ButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonModificarActionPerformed
+        String newUser = this.ViewUser.getText();
+        String newPass = String.valueOf(this.ViewPass.getPassword());
+        String newTipo = this.ViewTipo.getItemAt(this.ViewTipo.getSelectedIndex());
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_ButtonModificarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonModificar;
+    private javax.swing.JTextField ViewID;
+    private javax.swing.JPasswordField ViewPass;
+    private javax.swing.JComboBox<String> ViewTipo;
+    private javax.swing.JTextField ViewUser;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField nombreUser;
     // End of variables declaration//GEN-END:variables
 }

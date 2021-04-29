@@ -146,6 +146,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu5.add(jMenuItem4);
 
         jMenuItem5.setText("Modificar Usuario");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem5);
 
         jMenu2.add(jMenu5);
@@ -283,6 +288,17 @@ public class FramePrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar usuarios", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        if(this.currentUser.getTipo().equals("super")){
+            FrameModificarUsuario frameModificarUsuario = new FrameModificarUsuario(dataSistema);
+            this.Escritorio.add(frameModificarUsuario);
+            frameModificarUsuario.show();
+        }else{
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar usuarios", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void cerrarSession() {
         this.ViewId.setText(null);
