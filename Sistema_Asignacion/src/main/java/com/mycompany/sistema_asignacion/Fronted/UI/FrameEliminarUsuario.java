@@ -163,7 +163,7 @@ public class FrameEliminarUsuario extends javax.swing.JInternalFrame {
         
         String user = this.nombreUser.getText();
         
-        if(user.isEmpty()){
+        if(!user.isEmpty()){
             Usuario tmp = this.datosSistema.getUsuarios().buscar(user);
             if(tmp==null){
                 this.ButtonEliminar.setEnabled(false);
