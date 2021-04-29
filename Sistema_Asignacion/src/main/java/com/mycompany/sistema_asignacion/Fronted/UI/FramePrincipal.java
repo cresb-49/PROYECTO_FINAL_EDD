@@ -138,6 +138,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu5.add(jMenuItem3);
 
         jMenuItem4.setText("Eliminar Usuario");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem4);
 
         jMenuItem5.setText("Modificar Usuario");
@@ -264,9 +269,20 @@ public class FramePrincipal extends javax.swing.JFrame {
             this.Escritorio.add(crearUsuario);
             crearUsuario.show();
         }else{
-            JOptionPane.showMessageDialog(this, "No tiene los permisos para cargar informacion", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar usuarios", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        if(this.currentUser.getTipo().equals("super")){
+            FrameEliminarUsuario eliminarUsuario = new FrameEliminarUsuario(dataSistema);
+            this.Escritorio.add(eliminarUsuario);
+            eliminarUsuario.show();
+        }else{
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar usuarios", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void cerrarSession() {
         this.ViewId.setText(null);
