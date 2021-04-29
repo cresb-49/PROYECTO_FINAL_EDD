@@ -48,7 +48,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        Escritorio = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
         ViewUser = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -79,16 +79,16 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jDesktopPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        Escritorio.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
+        Escritorio.setLayout(EscritorioLayout);
+        EscritorioLayout.setHorizontalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        EscritorioLayout.setVerticalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 414, Short.MAX_VALUE)
         );
 
@@ -130,6 +130,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu5.setText("Usuarios");
 
         jMenuItem3.setText("Crear Usuario");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem3);
 
         jMenuItem4.setText("Eliminar Usuario");
@@ -195,7 +200,7 @@ public class FramePrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDesktopPane1)
+                    .addComponent(Escritorio)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
@@ -225,7 +230,7 @@ public class FramePrincipal extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(ViewType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDesktopPane1)
+                .addComponent(Escritorio)
                 .addContainerGap())
         );
 
@@ -252,6 +257,17 @@ public class FramePrincipal extends javax.swing.JFrame {
         this.cerrarSession();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        if(this.currentUser.getTipo().equals("super")){
+            FrameCrearUsuario crearUsuario = new FrameCrearUsuario(this.dataSistema);
+            this.Escritorio.add(crearUsuario);
+            crearUsuario.show();
+        }else{
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para cargar informacion", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     private void cerrarSession() {
         this.ViewId.setText(null);
         this.ViewType.setText(null);
@@ -261,11 +277,11 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JTextField ViewId;
     private javax.swing.JTextField ViewType;
     private javax.swing.JTextField ViewUser;
     private javax.swing.JButton jButton1;
-    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

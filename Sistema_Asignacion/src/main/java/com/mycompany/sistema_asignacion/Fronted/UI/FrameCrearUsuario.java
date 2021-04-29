@@ -5,16 +5,25 @@
  */
 package com.mycompany.sistema_asignacion.Fronted.UI;
 
+import com.mycompany.sistema_asignacion.Backen.Exceptions.CloneNodeException;
+import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
+import com.mycompany.sistema_asignacion.Backen.Objetos.Usuario;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author benjamin
  */
 public class FrameCrearUsuario extends javax.swing.JInternalFrame {
 
+    private DatosSistema dataSistema;
+
     /**
      * Creates new form FrameCrearUsuario
      */
-    public FrameCrearUsuario() {
+    public FrameCrearUsuario(DatosSistema datosSistema) {
+        this.dataSistema = datosSistema;
         initComponents();
     }
 
@@ -27,21 +36,157 @@ public class FrameCrearUsuario extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        FieldUser = new javax.swing.JTextField();
+        FieldPass = new javax.swing.JPasswordField();
+        FieldPass2 = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
+        tipoUser = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("CREAR USUARIO");
+
+        jLabel1.setText("Usuario:");
+
+        jLabel2.setText("Password:");
+
+        jLabel3.setText("Confirmar:");
+
+        FieldPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldPassActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Tipo:");
+
+        tipoUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "colaborador", "estudiante", "super" }));
+
+        jButton1.setText("Crear");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(FieldPass, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(FieldPass2)
+                                .addComponent(tipoUser, 0, 127, Short.MAX_VALUE)))))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(FieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(FieldPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(FieldPass2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(tipoUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void FieldPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldPassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FieldPassActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String user = this.FieldUser.getText();
+        if (user.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe de escribir un usuario", "Error de registro", JOptionPane.WARNING_MESSAGE);
+        } else {
+            String pass1 = String.valueOf(this.FieldPass.getPassword());
+            String pass2 = String.valueOf(this.FieldPass2.getPassword());
+            if (this.comprobarAlfanumerico(user)) {
+                if (pass1.isEmpty() || pass2.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Debe de escribir y confirmar la contraseña", "Error de registro", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    if (comprobarAlfanumerico(pass1)) {
+                        if (pass1.equals(pass2)) {
+                            try {
+                                String tipo = this.tipoUser.getItemAt(this.tipoUser.getSelectedIndex());
+
+                                Usuario tmp = this.dataSistema.getUsuarios().getUltimo();
+                                Usuario newUser = new Usuario((tmp.getId() + 1), user, pass1, tipo);
+
+                                this.dataSistema.getUsuarios().add(newUser, newUser.getNombre());
+                                JOptionPane.showMessageDialog(this, "Se creo con exito el usuario \"" + user + "\" en el sistema", "Registro Completado", JOptionPane.INFORMATION_MESSAGE);
+                                
+                                this.FieldUser.setText(null);
+                                this.FieldPass.setText(null);
+                                this.FieldPass2.setText(null);
+                                this.tipoUser.setSelectedIndex(0);
+                                
+                            } catch (CloneNodeException e) {
+                                JOptionPane.showMessageDialog(this, "Ya existe un usuario \"" + user + "\" en el sistema", "Error de registro", JOptionPane.WARNING_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Las contraseñas con coindicen", "Error de registro", JOptionPane.WARNING_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "La contraseña debe contener caracteres alfanumericos", "Error de registro", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "El usuario debe contener caracteres alfanumericos", "Error de registro", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+    private boolean comprobarAlfanumerico(String cadena) {
+        return Pattern.matches("^[0-9a-zA-ZÀ-ÿ\u00f1\u00d1]+$", cadena);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField FieldPass;
+    private javax.swing.JPasswordField FieldPass2;
+    private javax.swing.JTextField FieldUser;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JComboBox<String> tipoUser;
     // End of variables declaration//GEN-END:variables
 }
