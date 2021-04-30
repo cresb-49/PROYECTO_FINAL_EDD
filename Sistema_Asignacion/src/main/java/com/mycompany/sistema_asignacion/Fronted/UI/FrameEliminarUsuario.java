@@ -18,12 +18,19 @@ import javax.swing.JTextField;
  * @author benjamin
  */
 public class FrameEliminarUsuario extends javax.swing.JInternalFrame {
+
     private DatosSistema datosSistema;
-    /** 
+    private FramePrincipal framePrincipal;
+    private Usuario currentUsuario;
+    private Usuario deleteUsuario;
+
+    /**
      * Creates new form FrameEliminarUsuario
      */
-    public FrameEliminarUsuario(DatosSistema datos) {
+    public FrameEliminarUsuario(DatosSistema datos, FramePrincipal frame) {
         this.datosSistema = datos;
+        this.framePrincipal = frame;
+        this.currentUsuario = frame.getCurrentUser();
         initComponents();
     }
 
@@ -160,36 +167,45 @@ public class FrameEliminarUsuario extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
         String user = this.nombreUser.getText();
-        
-        if(!user.isEmpty()){
+
+        if (!user.isEmpty()) {
             Usuario tmp = this.datosSistema.getUsuarios().buscar(user);
-            if(tmp==null){
+            if (tmp == null) {
                 this.ButtonEliminar.setEnabled(false);
-                JOptionPane.showMessageDialog(this, "No existe un usuario \""+user+"\" en el sistema", "Error de busqueda", JOptionPane.WARNING_MESSAGE);
-            }else{
+                JOptionPane.showMessageDialog(this, "No existe un usuario \"" + user + "\" en el sistema", "Error de busqueda", JOptionPane.WARNING_MESSAGE);
+            } else {
+                this.deleteUsuario = tmp;
                 this.ViewID.setText(String.valueOf(tmp.getId()));
                 this.ViewUser.setText(tmp.getNombre());
                 this.ViewTipo.setText(tmp.getTipo());
                 this.ButtonEliminar.setEnabled(true);
             }
-        }else{
+        } else {
             this.ButtonEliminar.setEnabled(false);
             JOptionPane.showMessageDialog(this, "Debe de introducir un nombre de usuario", "Error de busqueda", JOptionPane.WARNING_MESSAGE);
         }
-        
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEliminarActionPerformed
         try {
-            this.datosSistema.getUsuarios().eliminar(this.ViewUser.getText());
-            JOptionPane.showMessageDialog(this, "Usuario eliminado con exito", "Exito de eliminacion", JOptionPane.INFORMATION_MESSAGE);
-            this.ViewID.setText(null);
-            this.ViewUser.setText(null);
-            this.ViewTipo.setText(null);
-            this.ButtonEliminar.setEnabled(false);
+
+            if (deleteUsuario == currentUsuario) {
+                this.datosSistema.getUsuarios().eliminar(this.ViewUser.getText());
+                JOptionPane.showMessageDialog(this, "Usuario eliminado con exito", "Exito de eliminacion", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                this.framePrincipal.cerrarSession();
+            } else {
+                this.datosSistema.getUsuarios().eliminar(this.ViewUser.getText());
+                JOptionPane.showMessageDialog(this, "Usuario eliminado con exito", "Exito de eliminacion", JOptionPane.INFORMATION_MESSAGE);
+                this.ViewID.setText(null);
+                this.ViewUser.setText(null);
+                this.ViewTipo.setText(null);
+                this.ButtonEliminar.setEnabled(false);
+            }
         } catch (NotFoundNodeException ex) {
             JOptionPane.showMessageDialog(this, "No existe el usuario a eliminar", "Error al eliminar", JOptionPane.WARNING_MESSAGE);
         }

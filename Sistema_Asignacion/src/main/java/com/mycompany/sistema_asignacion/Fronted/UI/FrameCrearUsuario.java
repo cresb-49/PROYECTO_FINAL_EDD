@@ -26,6 +26,15 @@ public class FrameCrearUsuario extends javax.swing.JInternalFrame {
     public FrameCrearUsuario(DatosSistema datosSistema) {
         this.dataSistema = datosSistema;
         initComponents();
+        this.idAutomatico();
+    }
+    
+    private void idAutomatico(){
+        try {
+            this.FieldId.setText(String.valueOf(this.dataSistema.getUsuarios().getUltimo().getId()+1));
+        } catch (Exception e) {
+            /**Do noting error despreciable*/
+        }
     }
 
     /**
@@ -159,6 +168,7 @@ public class FrameCrearUsuario extends javax.swing.JInternalFrame {
                                         this.FieldUser.setText(null);
                                         this.FieldPass.setText(null);
                                         this.tipoUser.setSelectedIndex(0);
+                                        this.idAutomatico();
                                     }else{
                                         JOptionPane.showMessageDialog(this, "No hay referencia del estudiante \"" + identificador + "\" en el sistema", "Error de registro", JOptionPane.WARNING_MESSAGE);
                                     }
@@ -168,6 +178,7 @@ public class FrameCrearUsuario extends javax.swing.JInternalFrame {
                                     this.FieldUser.setText(null);
                                     this.FieldPass.setText(null);
                                     this.tipoUser.setSelectedIndex(0);
+                                    this.idAutomatico();
                                 }
                             } catch (CloneNodeException e) {
                                 JOptionPane.showMessageDialog(this, "Ya existe un usuario \"" + user + "\" en el sistema", "Error de registro", JOptionPane.WARNING_MESSAGE);

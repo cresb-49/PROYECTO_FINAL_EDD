@@ -9,6 +9,7 @@ import com.mycompany.sistema_asignacion.Backen.Exceptions.NotFoundNodeException;
 import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Estudiante;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Usuario;
+import java.awt.HeadlessException;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
@@ -23,14 +24,18 @@ public class FrameModificarUsuario extends javax.swing.JInternalFrame {
     private String copiaPass;
     private String copiaTipo;
     private Usuario modUsuario;
+    private Usuario currentUsuario;
+    private FramePrincipal framePrincipal;
 
     /**
      * Creates new form FrameModificarUsuario
      *
      * @param datos
      */
-    public FrameModificarUsuario(DatosSistema datos) {
+    public FrameModificarUsuario(DatosSistema datos, Usuario currentUsuario, FramePrincipal frame) {
+        this.framePrincipal = frame;
         this.datosSistema = datos;
+        this.currentUsuario = currentUsuario;
         this.modUsuario = null;
         initComponents();
     }
@@ -198,7 +203,6 @@ public class FrameModificarUsuario extends javax.swing.JInternalFrame {
                 this.ViewPass.setText(tmp.getPassword());
                 this.ViewPass.setEditable(true);
                 this.ViewTipo.setSelectedIndex(this.index(tmp.getTipo()));
-                this.ViewTipo.setEnabled(true);
                 this.ButtonModificar.setEnabled(true);
                 //Copia de los datos
                 copiaUser = this.ViewUser.getText();
@@ -224,21 +228,57 @@ public class FrameModificarUsuario extends javax.swing.JInternalFrame {
                 return 0;
         }
     }
-    
+
     private boolean comprobarAlfanumerico(String cadena) {
         return Pattern.matches("^[0-9a-zA-ZÀ-ÿ\u00f1\u00d1]+$", cadena);
     }
-    
+
     private void ButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonModificarActionPerformed
         String newUser = this.ViewUser.getText();
         String newPass = String.valueOf(this.ViewPass.getPassword());
-        String newTipo = this.ViewTipo.getItemAt(this.ViewTipo.getSelectedIndex());
-        
-        
-        
-        
-        
-        
+        try {
+            if (this.comprobarAlfanumerico(newUser)) {
+                if (this.comprobarAlfanumerico(newPass)) {
+                    if (modUsuario == currentUsuario) {
+                        if (!copiaUser.equals(newUser)) {
+                            if (datosSistema.getUsuarios().buscar(newUser) == null) {
+                                modUsuario.setNombre(newUser);
+                                modUsuario.setPassword(newPass);
+                                datosSistema.getUsuarios().modificarTag(copiaUser, newUser);
+                                framePrincipal.actualizarInfo();
+                                JOptionPane.showMessageDialog(this, "Datos del usuario actualizados", "Modificacion Completada", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(this, "La existe un nombre de usuario \"" + newUser + "\" en el sistema", "Error de modificacion", JOptionPane.WARNING_MESSAGE);
+                            }
+                        } else {
+                            modUsuario.setPassword(newPass);
+                            framePrincipal.actualizarInfo();
+                            JOptionPane.showMessageDialog(this, "Datos del usuario actualizados", "Modificacion Completada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        if (!copiaUser.equals(newUser)) {
+                            if (datosSistema.getUsuarios().buscar(newUser) == null) {
+                                modUsuario.setNombre(newUser);
+                                modUsuario.setPassword(newPass);
+                                JOptionPane.showMessageDialog(this, "Datos del usuario actualizados", "Modificacion Completada", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(this, "La existe un nombre de usuario \"" + newUser + "\" en el sistema", "Error de modificacion", JOptionPane.WARNING_MESSAGE);
+                            }
+                        } else {
+                            modUsuario.setPassword(newPass);
+                            JOptionPane.showMessageDialog(this, "Datos del usuario actualizados", "Modificacion Completada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "La contraseña debe contener caracteres alfanumericos", "Error de modificacion", JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "El usuario solo debe contener caracteres alfanumericos", "Error de modificacion", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (NotFoundNodeException ex) {
+            JOptionPane.showMessageDialog(this, "No se puede modificar el usuario", "Error de modificacion", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_ButtonModificarActionPerformed
 
 

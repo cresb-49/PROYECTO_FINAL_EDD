@@ -27,12 +27,20 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     private void inicioDelUsuario() {
-        InicioSesion login = new InicioSesion(this, true,this.dataSistema);
+        InicioSesion login = new InicioSesion(this, true, this.dataSistema);
         login.setVisible(true);
         if (login.isLog() == false) {
             this.dispose();
         } else {
             this.currentUser = login.getCurrentUser();
+            this.mostrarDatos();
+        }
+    }
+
+    private void mostrarDatos() {
+        if(currentUser==null){
+            this.dispose();
+        }else{
             this.ViewUser.setText(this.currentUser.getNombre());
             this.ViewId.setText(String.valueOf(this.currentUser.getId()));
             this.ViewType.setText(this.currentUser.getTipo());
@@ -250,9 +258,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         if (this.currentUser.getTipo().equals("super")) {
-            CargaInfo cargarInfo = new CargaInfo(this, true,this.dataSistema);
+            CargaInfo cargarInfo = new CargaInfo(this, true, this.dataSistema);
             cargarInfo.setVisible(true);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para cargar informacion", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -269,45 +277,52 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        if(this.currentUser.getTipo().equals("super")){
+        if (this.currentUser.getTipo().equals("super")) {
             FrameCrearUsuario crearUsuario = new FrameCrearUsuario(this.dataSistema);
             this.Escritorio.add(crearUsuario);
             crearUsuario.show();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar usuarios", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        if(this.currentUser.getTipo().equals("super")){
-            FrameEliminarUsuario eliminarUsuario = new FrameEliminarUsuario(dataSistema);
+        if (this.currentUser.getTipo().equals("super")) {
+            FrameEliminarUsuario eliminarUsuario = new FrameEliminarUsuario(dataSistema,this);
             this.Escritorio.add(eliminarUsuario);
             eliminarUsuario.show();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar usuarios", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        if(this.currentUser.getTipo().equals("super")){
-            FrameModificarUsuario frameModificarUsuario = new FrameModificarUsuario(dataSistema);
+        if (this.currentUser.getTipo().equals("super")) {
+            FrameModificarUsuario frameModificarUsuario = new FrameModificarUsuario(dataSistema,this.currentUser,this);
             this.Escritorio.add(frameModificarUsuario);
             frameModificarUsuario.show();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar usuarios", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void cerrarSession() {
+    public void actualizarInfo(){
+        this.mostrarDatos();
+    }
+                
+    public void cerrarSession() {
         this.ViewId.setText(null);
         this.ViewType.setText(null);
         this.ViewUser.setText(null);
-        
+
         this.inicioDelUsuario();
     }
-    
+
+    public Usuario getCurrentUser() {
+        return currentUser;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JTextField ViewId;
