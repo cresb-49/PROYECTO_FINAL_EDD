@@ -303,6 +303,15 @@ public class AVL<T> {
         return nodo;
     }
     
+    public T buscar(String tag){
+        NodoArbol<T> nodo = this.buscarNodo(tag);
+        if(nodo==null){
+            return null;
+        }else{
+            return nodo.getContenido();
+        }
+    }
+    
     /**
      * Busca el nodo en el arbol en base la tag de identificacion
      * @param nodo
