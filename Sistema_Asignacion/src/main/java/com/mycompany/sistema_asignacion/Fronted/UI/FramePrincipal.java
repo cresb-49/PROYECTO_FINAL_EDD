@@ -166,6 +166,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu6.setText("Estudiantes");
 
         jMenuItem6.setText("Nuevo Estudiante");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem6);
 
         jMenuItem7.setText("Eliminar Estudiante");
@@ -277,7 +282,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        if (this.currentUser.getTipo().equals("super")) {
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
             FrameCrearUsuario crearUsuario = new FrameCrearUsuario(this.dataSistema);
             this.Escritorio.add(crearUsuario);
             crearUsuario.show();
@@ -288,7 +293,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        if (this.currentUser.getTipo().equals("super")) {
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
             FrameEliminarUsuario eliminarUsuario = new FrameEliminarUsuario(dataSistema,this);
             this.Escritorio.add(eliminarUsuario);
             eliminarUsuario.show();
@@ -299,7 +304,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        if (this.currentUser.getTipo().equals("super")) {
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
             FrameModificarUsuario frameModificarUsuario = new FrameModificarUsuario(dataSistema,this.currentUser,this);
             this.Escritorio.add(frameModificarUsuario);
             frameModificarUsuario.show();
@@ -307,6 +312,10 @@ public class FramePrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar usuarios", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     public void actualizarInfo(){
         this.mostrarDatos();
