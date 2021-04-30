@@ -80,6 +80,10 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -207,6 +211,19 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu7.add(jMenuItem16);
 
         jMenu2.add(jMenu7);
+
+        jMenu8.setText("Salones");
+
+        jMenuItem17.setText("Agregar Salon");
+        jMenu8.add(jMenuItem17);
+
+        jMenuItem18.setText("Modificar Salon");
+        jMenu8.add(jMenuItem18);
+
+        jMenuItem19.setText("Eliminar Salon");
+        jMenu8.add(jMenuItem19);
+
+        jMenu2.add(jMenu8);
 
         jMenuBar1.add(jMenu2);
 
@@ -404,6 +421,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -413,6 +431,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
