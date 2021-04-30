@@ -76,6 +76,10 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -185,6 +189,24 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu6.add(jMenuItem8);
 
         jMenu2.add(jMenu6);
+
+        jMenu7.setText("Catedraticos");
+
+        jMenuItem14.setText("Nuevo Catedratico");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem14);
+
+        jMenuItem15.setText("Modificar Catedratico");
+        jMenu7.add(jMenuItem15);
+
+        jMenuItem16.setText("Eliminar Catedratico");
+        jMenu7.add(jMenuItem16);
+
+        jMenu2.add(jMenu7);
 
         jMenuBar1.add(jMenu2);
 
@@ -340,6 +362,17 @@ public class FramePrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            NuevoCatedratico nuevoCatedratico = new NuevoCatedratico(dataSistema);
+            this.Escritorio.add(nuevoCatedratico);
+            nuevoCatedratico.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para crear Catedraticos", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
     public void actualizarInfo(){
         this.mostrarDatos();
     }
@@ -370,12 +403,16 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
