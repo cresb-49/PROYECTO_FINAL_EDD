@@ -97,7 +97,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         );
         EscritorioLayout.setVerticalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 414, Short.MAX_VALUE)
+            .addGap(0, 416, Short.MAX_VALUE)
         );
 
         jLabel1.setText("Usuario");
@@ -177,6 +177,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu6.add(jMenuItem7);
 
         jMenuItem8.setText("Modificar Estudiante");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem8);
 
         jMenu2.add(jMenu6);
@@ -315,7 +320,25 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            NuevoEstudiante nuevoEstudiante = new NuevoEstudiante(dataSistema);
+            this.Escritorio.add(nuevoEstudiante);
+            nuevoEstudiante.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar Estudiantes", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            ModificarEstudiante modificarEstudiante = new ModificarEstudiante(dataSistema);
+            this.Escritorio.add(modificarEstudiante);
+            modificarEstudiante.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar Estudiantes", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     public void actualizarInfo(){
         this.mostrarDatos();

@@ -18,7 +18,9 @@ import javax.swing.JOptionPane;
  * @author benjamin
  */
 public class NuevoEstudiante extends javax.swing.JInternalFrame {
+
     private DatosSistema datosSistema;
+
     /**
      * Creates new form NuevoEstudiante
      */
@@ -26,9 +28,13 @@ public class NuevoEstudiante extends javax.swing.JInternalFrame {
         this.datosSistema = datosSistema;
         initComponents();
     }
-    
+
     private boolean comprobarAlfanumerico(String cadena) {
         return Pattern.matches("^[0-9a-zA-ZÀ-ÿ\u00f1\u00d1]+[ 0-9a-zA-ZÀ-ÿ\u00f1\u00d1]*$", cadena);
+    }
+
+    private boolean comprobarCarnet(String cadena) {
+        return Pattern.matches("^([1-9])([0-9]{8})$", cadena);
     }
 
     /**
@@ -117,27 +123,28 @@ public class NuevoEstudiante extends javax.swing.JInternalFrame {
         int numeroCarnet = Integer.valueOf(this.NumeroCarnet.getText());
         String nombre = this.Nombre.getText();
         String direccion = this.Direccion.getText();
-        
-        if(this.comprobarAlfanumerico(nombre)){
-            if(this.comprobarAlfanumerico(direccion)){
-                Estudiante newEstudiante = new Estudiante(numeroCarnet, nombre, direccion);
-                if(this.datosSistema.getEstudiantes().buscar(newEstudiante, newEstudiante.hashCode())==null){
+        if (this.comprobarCarnet(this.NumeroCarnet.getText())) {
+            if (this.comprobarAlfanumerico(nombre)) {
+                if (this.comprobarAlfanumerico(direccion)) {
+                    Estudiante newEstudiante = new Estudiante(numeroCarnet, nombre, direccion);
                     try {
                         this.datosSistema.getEstudiantes().add(newEstudiante, newEstudiante.hashCode());
+                        JOptionPane.showMessageDialog(this, "Se registro con exito en Estudiante", "Registro Completado", JOptionPane.INFORMATION_MESSAGE);
+                        this.Nombre.setText(null);
+                        this.NumeroCarnet.setText(null);
+                        this.Direccion.setText(null);
                     } catch (CloneNodeException ex) {
-                        
+                        JOptionPane.showMessageDialog(this, "El numero de carnet \"" + numeroCarnet + "\" ya esta registrado", "Error de Registro", JOptionPane.WARNING_MESSAGE);
                     }
-                }else{
-                    JOptionPane.showMessageDialog(this, "El numero de carnet \""+numeroCarnet+"\" ya esta registrado", "Error de Registro", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "La direccion no es valida debe contener caracteres alfanumericos", "Error de Registro", JOptionPane.WARNING_MESSAGE);
                 }
-            }else{
-                JOptionPane.showMessageDialog(this, "La direccion no es valida debe contener caracteres alfanumericos", "Error de Registro", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "El nombre no es valido debe contener caracteres alfanumericos", "Error de Registro", JOptionPane.WARNING_MESSAGE);
             }
-        }else{
-            JOptionPane.showMessageDialog(this, "El nombre no es valido debe contener caracteres alfanumericos", "Error de Registro", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "El numero de carnet no es valido debe tener 9 digitos", "Error de Registro", JOptionPane.WARNING_MESSAGE);
         }
-        
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
