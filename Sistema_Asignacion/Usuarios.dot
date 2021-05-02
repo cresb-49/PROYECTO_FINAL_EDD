@@ -1,0 +1,13 @@
+digraph USUARIOS {
+node[shape = box,height=.1];
+
+nodeLC_USERAdminSistema[label = "-Id: 0
+-Tipo: super
+-Nombre: AdminSistema
+-Password: 12345",group=1];
+{ rank = same;
+nodeLC_USERAdminSistema;
+}
+nodeLC_USERAdminSistema -> nodeLC_USERAdminSistema;
+nodeLC_USERAdminSistema -> nodeLC_USERAdminSistema;
+}

@@ -5,6 +5,8 @@
  */
 package com.mycompany.sistema_asignacion.Fronted.UI;
 
+import com.mycompany.sistema_asignacion.Backen.Exceptions.NoDataException;
+import com.mycompany.sistema_asignacion.Backen.Graficadores.Graficadores;
 import com.mycompany.sistema_asignacion.Fronted.UI.Catedraticos.NuevoCatedratico;
 import com.mycompany.sistema_asignacion.Fronted.UI.Estudiantes.ModificarEstudiante;
 import com.mycompany.sistema_asignacion.Fronted.UI.Estudiantes.NuevoEstudiante;
@@ -17,6 +19,9 @@ import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.CrearCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.ModificarCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Salones.CrearSalon;
 import com.mycompany.sistema_asignacion.Fronted.UI.Salones.ModificarSalon;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,12 +30,14 @@ import javax.swing.JOptionPane;
  */
 public class FramePrincipal extends javax.swing.JFrame {
 
+    private Graficadores graficadores;
     private DatosSistema dataSistema;
     private Usuario currentUser;
 
     public FramePrincipal(DatosSistema datos) {
         initComponents();
         this.dataSistema = datos;
+        this.graficadores = new Graficadores(datos);
         this.currentUser = null;
         this.setLocationRelativeTo(null);
         this.inicioDelUsuario();
@@ -277,6 +284,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu3.setText("Graficos");
 
         jMenuItem9.setText("Usuarios");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem9);
 
         jMenuItem10.setText("Edificios / Salon");
@@ -480,6 +492,25 @@ public class FramePrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar un curso", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+        
+        String generarDotCode = this.graficadores.getGraficarUsuarios().generarDotCode();
+        try {
+            this.graficadores.getGenerarDotFile().generarArchivo(generarDotCode, "Usuarios");
+            String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Usuarios.dot", "Usuarios.png");
+            
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n"+ex.getMessage(),"Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+        } catch (NoDataException ex) {
+            JOptionPane.showMessageDialog(this, "No hay informacion de Usuarios en el sistema","Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        
+        System.out.println(generarDotCode);
+        
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     public void actualizarInfo(){
         this.mostrarDatos();
