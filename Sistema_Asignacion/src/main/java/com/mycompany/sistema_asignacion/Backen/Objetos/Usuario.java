@@ -63,6 +63,6 @@ public class Usuario {
     
     @Override
     public String toString() {
-        return "-Id: "+id+"\n-Tipo: "+tipo+"\n-Nombre: "+nombre+"\n-Password: "+password;
+        return "-Id: "+id+"\\n-Tipo: "+tipo+"\\n-Nombre: "+nombre+"\\n-Password: "+password;
     }
 }

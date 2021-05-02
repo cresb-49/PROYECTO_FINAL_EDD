@@ -1,13 +1,22 @@
 digraph USUARIOS {
 node[shape = box,height=.1];
 
-nodeLC_USERAdminSistema[label = "-Id: 0
--Tipo: super
--Nombre: AdminSistema
--Password: 12345",group=1];
+nodeLC_USERUlises[label = "-Id: 200745781\n-Tipo: estudiante\n-Nombre: Ulises\n-Password: uliuli",group=1];
+nodeLC_USERFMarroquin[label = "-Id: 200145785\n-Tipo: estudiante\n-Nombre: FMarroquin\n-Password: fffmmm",group=1];
+nodeLC_USERSecretaria[label = "-Id: 1\n-Tipo: colaborador\n-Nombre: Secretaria\n-Password: murphychica1",group=1];
+nodeLC_USERAdminSistema[label = "-Id: 0\n-Tipo: super\n-Nombre: AdminSistema\n-Password: 12345",group=1];
 { rank = same;
+nodeLC_USERUlises;
+nodeLC_USERFMarroquin;
+nodeLC_USERSecretaria;
 nodeLC_USERAdminSistema;
 }
-nodeLC_USERAdminSistema -> nodeLC_USERAdminSistema;
-nodeLC_USERAdminSistema -> nodeLC_USERAdminSistema;
+nodeLC_USERUlises -> nodeLC_USERFMarroquin;
+nodeLC_USERUlises -> nodeLC_USERAdminSistema;
+nodeLC_USERFMarroquin -> nodeLC_USERSecretaria;
+nodeLC_USERFMarroquin -> nodeLC_USERUlises;
+nodeLC_USERSecretaria -> nodeLC_USERAdminSistema;
+nodeLC_USERSecretaria -> nodeLC_USERFMarroquin;
+nodeLC_USERAdminSistema -> nodeLC_USERUlises;
+nodeLC_USERAdminSistema -> nodeLC_USERSecretaria;
 }

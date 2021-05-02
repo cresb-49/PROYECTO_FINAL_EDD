@@ -1,0 +1,13 @@
+digraph CATEDRATICOS {
+node[shape = record,height=.1];
+nodeAVL12345[label = "<f0> |<f1> 12345\n-Identificador: 12345\n-Nombre: Prof1\n-Direcccion: Ciudad|<f2> "];
+nodeAVL12365[label = "<f0> |<f1> 12365\n-Identificador: 12365\n-Nombre: Prof5\n-Direcccion: Ciudad|<f2> "];
+nodeAVL12445[label = "<f0> |<f1> 12445\n-Identificador: 12445\n-Nombre: Prof3\n-Direcccion: Ciudad|<f2> "];
+nodeAVL47354[label = "<f0> |<f1> 47354\n-Identificador: 47354\n-Nombre: Prof4\n-Direcccion: Ciudad|<f2> "];
+nodeAVL47854[label = "<f0> |<f1> 47854\n-Identificador: 47854\n-Nombre: Prof2\n-Direcccion: Ciudad|<f2> "];
+"nodeAVL12345":f2 -> "nodeAVL12365":f1;
+"nodeAVL12445":f2 -> "nodeAVL47854":f1;
+"nodeAVL12445":f0 -> "nodeAVL12345":f1;
+"nodeAVL47854":f0 -> "nodeAVL47354":f1;
+
+}

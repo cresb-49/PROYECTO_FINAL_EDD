@@ -6,9 +6,13 @@ import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
 
 public class Graficadores {
     private DatosSistema datosSistema;
-    private GraficarUsuarios graficarUsuarios;
+    
     private EjecutarGraphviz ejecutarGraphviz;
     private GenerarDotFile generarDotFile;
+
+
+    private GraficarUsuarios graficarUsuarios;
+    private GraficarCatedraticos graficarCatedraticos;
 
     public Graficadores(DatosSistema datosSistema){
         this.datosSistema = datosSistema;
@@ -16,6 +20,7 @@ public class Graficadores {
         this.generarDotFile = new GenerarDotFile();
         
         this.graficarUsuarios = new GraficarUsuarios(this.datosSistema.getUsuarios());
+        this.graficarCatedraticos = new GraficarCatedraticos(this.datosSistema.getCatedraticos());
     }
 
     /**
@@ -35,5 +40,11 @@ public class Graficadores {
      */
     public GenerarDotFile getGenerarDotFile() {
         return generarDotFile;
+    }
+    /**
+     * @return the graficarCatedraticos
+     */
+    public GraficarCatedraticos getGraficarCatedraticos() {
+        return graficarCatedraticos;
     }
 }

@@ -3,6 +3,7 @@ package com.mycompany.sistema_asignacion.Backen.EDD;
 import com.mycompany.sistema_asignacion.Backen.Exceptions.CloneNodeException;
 import com.mycompany.sistema_asignacion.Backen.Exceptions.NotFoundNodeException;
 import com.mycompany.sistema_asignacion.Backen.Exceptions.NullTagException;
+import com.mycompany.sistema_asignacion.Backen.Graphviz.ParametrosGraphviz;
 
 
 /**
@@ -728,6 +729,44 @@ public class AVL<T> {
             throw new NotFoundNodeException("No existe un nodo con tag \"" + tag + "\"");
         }
     }
+
+    /**
+     * Retorna los parametros de grapviz para graficar el arbol AVL
+     * @return
+     */
+    public ParametrosGraphviz obtenerGrafico() {
+        ParametrosGraphviz params = new ParametrosGraphviz();
+        params.agregarModelo("node[shape = record,height=.1];");
+        if (this.raiz != null) {
+            this.GenerarDot(params, this.raiz);
+        }
+        return params;
+    }
+
+    /***
+     * Genera parametros .dot de el arbol AVL
+     * @param parametros
+     * @param nodo
+     */
+    private void GenerarDot(ParametrosGraphviz parametros, NodoArbol<T> nodo) {
+        if (nodo.getIzquierda() != null) {
+            this.GenerarDot(parametros, nodo.getIzquierda());
+        }
+
+        parametros.agregarDeclaracion("nodeAVL" + nodo.getTag() + "[label = \"<f0> |<f1> " + nodo.getTag()+"\\n"+nodo.getContenido().toString()+ "|<f2> \"];");
+
+        if (nodo.getDerecha() != null) {
+            parametros.agregarRelacion("\"nodeAVL" + nodo.getTag() + "\":f2 -> \"nodeAVL" + nodo.getDerecha().getTag() + "\":f1;");
+        }
+        if (nodo.getIzquierda() != null) {
+            parametros.agregarRelacion("\"nodeAVL" + nodo.getTag() + "\":f0 -> \"nodeAVL" + nodo.getIzquierda().getTag() + "\":f1;");
+        }
+
+        if (nodo.getDerecha() != null) {
+            this.GenerarDot(parametros, nodo.getDerecha());
+        }
+    }
+
 
     /**
      * Recupera el ultimo nodo derecho ubicado en una posicion inicial en el

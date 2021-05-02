@@ -52,6 +52,6 @@ public class Catedratico {
 
     @Override
     public String toString() {
-        return "-Identificador: "+id+"\n-Nombre: "+nombre+"\n-Direcccion: "+direccion;
+        return "-Identificador: "+id+"\\n-Nombre: "+nombre+"\\n-Direcccion: "+direccion;
     }   
 }
