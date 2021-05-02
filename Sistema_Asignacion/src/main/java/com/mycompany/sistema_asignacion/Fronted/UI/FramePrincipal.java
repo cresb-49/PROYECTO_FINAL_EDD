@@ -500,6 +500,9 @@ public class FramePrincipal extends javax.swing.JFrame {
         try {
             this.graficadores.getGenerarDotFile().generarArchivo(generarDotCode, "Usuarios");
             String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Usuarios.dot", "Usuarios.png");
+            MostrarImagenes mostrarImagenes = new MostrarImagenes("Usuarios", pathImagen);
+            Escritorio.add(mostrarImagenes);
+            mostrarImagenes.show();
             
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n"+ex.getMessage(),"Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
