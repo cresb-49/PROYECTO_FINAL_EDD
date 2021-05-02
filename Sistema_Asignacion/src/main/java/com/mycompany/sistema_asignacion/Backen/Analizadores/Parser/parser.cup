@@ -209,6 +209,8 @@ exp ::= exp USER P_A nums:identificador COMA ALFANUMERICO:nombre COMA STRING:pas
             
             Asignacion newAsignacion = new Asignacion(carnet, curso, zona, final_);
 
+            
+
             System.out.println("------Asignacion------");
             System.out.println(newAsignacion.toString());
             System.out.println("----------------------");

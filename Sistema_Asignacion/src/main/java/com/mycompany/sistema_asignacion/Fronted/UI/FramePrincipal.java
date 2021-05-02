@@ -13,7 +13,10 @@ import com.mycompany.sistema_asignacion.Fronted.UI.Usuarios.FrameEliminarUsuario
 import com.mycompany.sistema_asignacion.Fronted.UI.Usuarios.FrameModificarUsuario;
 import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Usuario;
+import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.CrearCurso;
+import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.ModificarCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Salones.CrearSalon;
+import com.mycompany.sistema_asignacion.Fronted.UI.Salones.ModificarSalon;
 import javax.swing.JOptionPane;
 
 /**
@@ -91,6 +94,10 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
+        jMenu9 = new javax.swing.JMenu();
+        jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem22 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -230,12 +237,40 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu8.add(jMenuItem17);
 
         jMenuItem18.setText("Modificar Salon");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenuItem18);
 
         jMenuItem19.setText("Eliminar Salon");
         jMenu8.add(jMenuItem19);
 
         jMenu2.add(jMenu8);
+
+        jMenu9.setText("Cursos");
+
+        jMenuItem20.setText("Crear Curso");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
+        jMenu9.add(jMenuItem20);
+
+        jMenuItem21.setText("Modificar Curso");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
+        jMenu9.add(jMenuItem21);
+
+        jMenuItem22.setText("Eliminar Curso");
+        jMenu9.add(jMenuItem22);
+
+        jMenu2.add(jMenu9);
 
         jMenuBar1.add(jMenu2);
 
@@ -409,9 +444,42 @@ public class FramePrincipal extends javax.swing.JFrame {
             this.Escritorio.add(crearSalon);
             crearSalon.show();
         } else {
-            JOptionPane.showMessageDialog(this, "No tiene los permisos para crear Catedraticos", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para crear Salones", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            ModificarSalon modificarSalon = new ModificarSalon(dataSistema);
+            this.Escritorio.add(modificarSalon);
+            modificarSalon.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar Salones", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            CrearCurso crearCurso = new CrearCurso(dataSistema);
+            this.Escritorio.add(crearCurso);
+            crearCurso.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para crear un curso", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            ModificarCurso modificarCurso = new ModificarCurso(dataSistema);
+            this.Escritorio.add(modificarCurso);
+            modificarCurso.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar un curso", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     public void actualizarInfo(){
         this.mostrarDatos();
@@ -445,6 +513,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -458,6 +527,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
