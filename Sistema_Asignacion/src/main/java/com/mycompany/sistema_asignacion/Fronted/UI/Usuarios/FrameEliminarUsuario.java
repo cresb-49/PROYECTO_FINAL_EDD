@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.sistema_asignacion.Fronted.UI;
+package com.mycompany.sistema_asignacion.Fronted.UI.Usuarios;
 
 import com.mycompany.sistema_asignacion.Backen.Exceptions.NotFoundNodeException;
 import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Usuario;
+import com.mycompany.sistema_asignacion.Fronted.UI.FramePrincipal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;

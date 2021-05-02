@@ -5,8 +5,15 @@
  */
 package com.mycompany.sistema_asignacion.Fronted.UI;
 
+import com.mycompany.sistema_asignacion.Fronted.UI.Catedraticos.NuevoCatedratico;
+import com.mycompany.sistema_asignacion.Fronted.UI.Estudiantes.ModificarEstudiante;
+import com.mycompany.sistema_asignacion.Fronted.UI.Estudiantes.NuevoEstudiante;
+import com.mycompany.sistema_asignacion.Fronted.UI.Usuarios.FrameCrearUsuario;
+import com.mycompany.sistema_asignacion.Fronted.UI.Usuarios.FrameEliminarUsuario;
+import com.mycompany.sistema_asignacion.Fronted.UI.Usuarios.FrameModificarUsuario;
 import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Usuario;
+import com.mycompany.sistema_asignacion.Fronted.UI.Salones.CrearSalon;
 import javax.swing.JOptionPane;
 
 /**
@@ -214,7 +221,12 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jMenu8.setText("Salones");
 
-        jMenuItem17.setText("Agregar Salon");
+        jMenuItem17.setText("Crear Salon");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenuItem17);
 
         jMenuItem18.setText("Modificar Salon");
@@ -389,6 +401,17 @@ public class FramePrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para crear Catedraticos", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            CrearSalon crearSalon = new CrearSalon(dataSistema);
+            this.Escritorio.add(crearSalon);
+            crearSalon.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para crear Catedraticos", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     public void actualizarInfo(){
         this.mostrarDatos();

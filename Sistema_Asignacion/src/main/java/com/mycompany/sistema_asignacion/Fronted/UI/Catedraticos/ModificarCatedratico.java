@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.sistema_asignacion.Fronted.UI;
+package com.mycompany.sistema_asignacion.Fronted.UI.Catedraticos;
 
 import com.mycompany.sistema_asignacion.Backen.EDD.AVL;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Catedratico;
