@@ -52,6 +52,6 @@ public class Salon {
 
     @Override
     public String toString() {
-        return "- Salon: "+numeroSalon+"\n-Estudiantes: "+cantidadEstudiantes;
+        return "- Salon: "+numeroSalon+"\\n-Estudiantes: "+cantidadEstudiantes;
     }
 }

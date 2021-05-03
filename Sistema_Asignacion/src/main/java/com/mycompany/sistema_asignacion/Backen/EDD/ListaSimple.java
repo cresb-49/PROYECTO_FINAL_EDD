@@ -132,6 +132,14 @@ public class ListaSimple<T> {
         System.out.println("-----------------------------");
     }
     
+    /**
+     * Retorna la raiz de la lista simple
+     * @return 
+     */
+    public NodoListaSimple<T> getRaiz() {
+        return raiz;
+    }
+    
     public class NodoListaSimple<T> {
 
         private NodoListaSimple<T> siguiente;

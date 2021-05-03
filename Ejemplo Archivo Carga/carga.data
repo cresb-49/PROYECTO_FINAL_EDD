@@ -17,6 +17,7 @@ Catedratico(12365, "Prof5", "Ciudad");
 Edificio("G");
 Edificio("E");
 Edificio("D");
+Edificio("F");
 
 Salon("G", 12, 75);
 Salon ("E", 10, 25);
