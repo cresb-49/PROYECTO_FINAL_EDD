@@ -68,6 +68,6 @@ public class Estudiante {
     
     @Override
     public String toString() {
-        return "-Carnet: "+carnet+"\n-Nombre: "+nombre+"\n-Direccion: "+direccion;
+        return "-Carnet: "+carnet+"\\n-Nombre: "+nombre+"\\n-Direccion: "+direccion;
     }
 }

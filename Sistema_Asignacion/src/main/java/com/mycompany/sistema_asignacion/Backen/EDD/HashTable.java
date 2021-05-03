@@ -265,6 +265,37 @@ public class HashTable<T> {
         }
     }
 
+    public String generarDotCode(){
+        String code ="nodesep=.05;\nrankdir=LR;\nnode [shape=record,width=.1,height=.1];\n";
+
+        code = code + "nodeHASH [label = \"";
+        for (int i = 0; i < array.length; i++) {
+            code = code + "<f"+i+">"+i;
+            if(i!=(array.length-1)){
+                code = code + "|";
+            }
+        }
+        code = code + "\",height=2.0];\n";
+        code = code + "node [width = 1.5];\n";
+
+        Object tmp;
+        for (int i = 0; i < array.length; i++) {
+            tmp = array[i];
+            if(tmp!=null){
+                code = code +"node"+i+" [label = \"{ <f0>"+tmp.toString()+"}\"];\n";
+            }
+        }
+
+        for (int i = 0; i < array.length; i++) {
+            tmp = array[i];
+            if(tmp!=null){
+                code = code +"nodeHASH:f"+i+" -> node"+i+":f0;\n";
+            }
+        }
+        return code;
+    }
+
+
     /**
      * Imprime la tabla hash
      */

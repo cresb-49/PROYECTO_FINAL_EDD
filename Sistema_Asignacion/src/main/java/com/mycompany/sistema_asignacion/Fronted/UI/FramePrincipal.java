@@ -55,9 +55,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     private void mostrarDatos() {
-        if(currentUser==null){
+        if (currentUser == null) {
             this.dispose();
-        }else{
+        } else {
             this.ViewUser.setText(this.currentUser.getNombre());
             this.ViewId.setText(String.valueOf(this.currentUser.getId()));
             this.ViewType.setText(this.currentUser.getTipo());
@@ -293,9 +293,19 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem9);
 
         jMenuItem10.setText("Edificios / Salon");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem10);
 
         jMenuItem11.setText("Estudiantes");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem11);
 
         jMenuItem23.setText("Catedraticos");
@@ -406,7 +416,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
         if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
-            FrameEliminarUsuario eliminarUsuario = new FrameEliminarUsuario(dataSistema,this);
+            FrameEliminarUsuario eliminarUsuario = new FrameEliminarUsuario(dataSistema, this);
             this.Escritorio.add(eliminarUsuario);
             eliminarUsuario.show();
         } else {
@@ -417,7 +427,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
         if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
-            FrameModificarUsuario frameModificarUsuario = new FrameModificarUsuario(dataSistema,this.currentUser,this);
+            FrameModificarUsuario frameModificarUsuario = new FrameModificarUsuario(dataSistema, this.currentUser, this);
             this.Escritorio.add(frameModificarUsuario);
             frameModificarUsuario.show();
         } else {
@@ -504,7 +514,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
-        
+
         String generarDotCode = this.graficadores.getGraficarUsuarios().generarDotCode();
         try {
             this.graficadores.getGenerarDotFile().generarArchivo(generarDotCode, "Usuarios");
@@ -512,11 +522,11 @@ public class FramePrincipal extends javax.swing.JFrame {
             MostrarImagenes mostrarImagenes = new MostrarImagenes("Usuarios", pathImagen);
             Escritorio.add(mostrarImagenes);
             mostrarImagenes.show();
-            
+
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n"+ex.getMessage(),"Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
         } catch (NoDataException ex) {
-            JOptionPane.showMessageDialog(this, "No hay informacion de Usuarios en el sistema","Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No hay informacion de Usuarios en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
@@ -529,18 +539,54 @@ public class FramePrincipal extends javax.swing.JFrame {
             MostrarImagenes mostrarImagenes = new MostrarImagenes("Catedraticos", pathImagen);
             Escritorio.add(mostrarImagenes);
             mostrarImagenes.show();
-            
+
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n"+ex.getMessage(),"Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
         } catch (NoDataException ex) {
-            JOptionPane.showMessageDialog(this, "No hay informacion de Catedraticos en el sistema","Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No hay informacion de Catedraticos en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem23ActionPerformed
 
-    public void actualizarInfo(){
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+
+        String codigoDot = this.graficadores.getGraficarEstudiantes().generarDotCode();
+        try {
+            this.graficadores.getGenerarDotFile().generarArchivo(codigoDot, "Estudiantes");
+            String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Estudiantes.dot", "Estudiantes.png");
+            MostrarImagenes mostrarImagenes = new MostrarImagenes("Estudiantes", pathImagen);
+            Escritorio.add(mostrarImagenes);
+            mostrarImagenes.show();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+        } catch (NoDataException ex) {
+            JOptionPane.showMessageDialog(this, "No hay informacion de Estudiantes en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        
+        String codigoDot = this.graficadores.getGraficarEdificiosSalones().generarDotCode();
+        
+        try {
+            this.graficadores.getGenerarDotFile().generarArchivo(codigoDot, "EdificiosSalones");
+            String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("EdificiosSalones.dot", "EdificiosSalones.png");
+            MostrarImagenes mostrarImagenes = new MostrarImagenes("Edificios Y Salones", pathImagen);
+            Escritorio.add(mostrarImagenes);
+            mostrarImagenes.show();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+        } catch (NoDataException ex) {
+            JOptionPane.showMessageDialog(this, "No hay informacion de Edificios y Salones en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    public void actualizarInfo() {
         this.mostrarDatos();
     }
-                
+
     public void cerrarSession() {
         this.ViewId.setText(null);
         this.ViewType.setText(null);
