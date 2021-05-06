@@ -35,15 +35,18 @@ public class main {
         ListArbolB<String> lista = new ListArbolB<>();
         SplitInfoArbolB<String> splitInfoArbolB = new SplitInfoArbolB<>();
         try {
-            /*
+            
             arbol.agregar("4", "4");
             arbol.agregar("1", "1");
             arbol.agregar("5", "5");
             arbol.agregar("2", "2");
             arbol.agregar("6", "6");
-            arbol.agregar("6", "6");
-            */
+            arbol.agregar("7", "7");
+            
+            arbol.getRaiz().getRaiz().getMenor().imprimirLista();
+            arbol.getRaiz().getRaiz().getMayor().imprimirLista();
 
+            /*
             lista.agregar("4", "4");
             lista.agregar("1", "1");
             lista.agregar("5", "5");
@@ -58,7 +61,7 @@ public class main {
             System.out.println("Nodo: "+dividirLista.getTag());
             dividirLista.getMayor().imprimirNodos();
 
-
+            */
 
 
         } catch (Exception e) {

@@ -44,6 +44,7 @@ public class ListArbolB<T> {
     public void agregarNodo(NodoArbolB<T> nuevo) throws CloneNodeException{
         if(this.raiz == null){
             this.raiz = nuevo;
+            this.size++;
         }else{
             NodoArbolB<T> tmp = this.raiz;
             while (tmp!=null) {

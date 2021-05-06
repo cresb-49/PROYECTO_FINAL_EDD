@@ -12,6 +12,7 @@ public class ArbolB<T> {
     public ArbolB(int orden) {
         this.orden = orden;
         this.raiz = new ListArbolB<>();
+        this.splitInfoArbolB = new SplitInfoArbolB<>();
     }
 
     public void agregar(T data, String tag) throws CloneNodeException, NullTagException {
@@ -61,6 +62,9 @@ public class ArbolB<T> {
         if(lista.getSize()>=this.orden){
             if(lista == this.raiz){
                 System.out.println("Se necesita un split de la informacion de la raiz");
+                NodoArbolB<T> nuevaRaiz =  this.splitInfoArbolB.dividirLista(this.raiz);
+                this.raiz = new ListArbolB<>();
+                this.raiz.agregarNodo(nuevaRaiz);
             }else{
                 System.out.println("Se necesita un split de la informacion en nodo");
             }
@@ -70,6 +74,12 @@ public class ArbolB<T> {
     @Override
     public String toString() {
         return this.raiz.toString();
+    }
+    /**
+     * @return the raiz
+     */
+    public ListArbolB<T> getRaiz() {
+        return raiz;
     }
 
 }
