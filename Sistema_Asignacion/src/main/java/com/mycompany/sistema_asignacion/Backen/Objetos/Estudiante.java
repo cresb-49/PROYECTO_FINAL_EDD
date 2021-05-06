@@ -1,4 +1,7 @@
 package com.mycompany.sistema_asignacion.Backen.Objetos;
+
+import com.mycompany.sistema_asignacion.Backen.EDD.AVL;
+
 /**
  * Estudiante
  */
@@ -6,11 +9,13 @@ public class Estudiante {
     private int carnet;
     private String nombre;
     private String direccion;
+    private AVL<Horario> horarios;
     
     public Estudiante(int carnet,String nombre,String direccion){
         this.carnet = carnet;
         this.nombre = nombre;
         this.direccion = direccion;
+        this.horarios = new AVL<>();
     }
 
     /**
@@ -65,7 +70,18 @@ public class Estudiante {
             return false;
         }
     }
-    
+    /**
+     * @return the horarios
+     */
+    public AVL<Horario> getHorarios() {
+        return horarios;
+    }
+    /**
+     * @param horarios the horarios to set
+     */
+    public void setHorarios(AVL<Horario> horarios) {
+        this.horarios = horarios;
+    }
     @Override
     public String toString() {
         return "-Carnet: "+carnet+"\\n-Nombre: "+nombre+"\\n-Direccion: "+direccion;

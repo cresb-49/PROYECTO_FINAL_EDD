@@ -25,6 +25,7 @@ public class ListaCircularDoble<T> {
             raiz = nuevo;
             raiz.setSiguiente(raiz);
             raiz.setAnterior(raiz);
+            legth++;
         } else {
             T busqueda = this.buscar(nuevo.getTag());
             if (busqueda == null) {

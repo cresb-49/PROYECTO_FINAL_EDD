@@ -6,13 +6,13 @@ package com.mycompany.sistema_asignacion.Backen.Objetos;
  */
 public class Asignacion {
     private int carnet;
-    private int curso;
+    private int horario;
     private int zona;
     private int final_;
 
-    public Asignacion(int carnet, int curso,int zona,int final_){
+    public Asignacion(int carnet, int horario,int zona,int final_){
         this.carnet=carnet;
-        this.curso= curso;
+        this.horario= horario;
         this.zona = zona;
         this.final_ = final_;
     }
@@ -30,16 +30,16 @@ public class Asignacion {
         this.carnet = carnet;
     }
     /**
-     * @return the curso
+     * @return the horario
      */
-    public int getCurso() {
-        return curso;
+    public int getHorario() {
+        return horario;
     }
     /**
-     * @param curso the curso to set
+     * @param horario the horario to set
      */
-    public void setCurso(int curso) {
-        this.curso = curso;
+    public void setHorario(int horario) {
+        this.horario = horario;
     }
     /**
      * @return the final_
@@ -68,6 +68,6 @@ public class Asignacion {
 
     @Override
     public String toString() {
-        return "-Estudiante: "+carnet+"\n-Curso: "+curso+"\n-Zona: "+zona+"\n-Final: "+final_;
+        return "-Estudiante: "+carnet+"\n-horario: "+horario+"\n-Zona: "+zona+"\n-Final: "+final_;
     }
 }

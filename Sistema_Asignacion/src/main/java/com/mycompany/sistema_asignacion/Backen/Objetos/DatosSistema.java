@@ -1,6 +1,7 @@
 package com.mycompany.sistema_asignacion.Backen.Objetos;
 
 import com.mycompany.sistema_asignacion.Backen.EDD.*;
+import com.mycompany.sistema_asignacion.Backen.EDD.ArbolB.ArbolB;
 
 public class DatosSistema {
     private ListaCircularDoble<Usuario> usuarios;
@@ -8,6 +9,7 @@ public class DatosSistema {
     private ListaCircularDoble<Curso> cursos;
     private AVL<Catedratico> catedraticos;
     private HashTable<Estudiante> estudiantes;
+    private ArbolB<Horario> horarios;
 
     public DatosSistema() {
         this.usuarios = new ListaCircularDoble<>();
@@ -15,6 +17,7 @@ public class DatosSistema {
         this.cursos = new ListaCircularDoble<>();
         this.catedraticos = new AVL<>();
         this.estudiantes = new HashTable<>();
+        this.horarios = new ArbolB<>(5);
     }
 
     /**
@@ -79,5 +82,17 @@ public class DatosSistema {
      */
     public void setEstudiantes(HashTable<Estudiante> estudiantes) {
         this.estudiantes = estudiantes;
+    }
+    /**
+     * @return the horarios
+     */
+    public ArbolB<Horario> getHorarios() {
+        return horarios;
+    }
+    /**
+     * @param horarios the horarios to set
+     */
+    public void setHorarios(ArbolB<Horario> horarios) {
+        this.horarios = horarios;
     }
 }

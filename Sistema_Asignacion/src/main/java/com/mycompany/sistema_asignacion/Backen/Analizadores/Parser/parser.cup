@@ -194,27 +194,87 @@ exp ::= exp USER P_A nums:identificador COMA ALFANUMERICO:nombre COMA STRING:pas
             int idCatedratico = Integer.valueOf(((token)catedratico).getLexeme());
 
             Horario newHorario = new Horario(codigo, hour, day, codeCurso, numSalon, edi, idCatedratico);
-
-            System.out.println("--------Horario-------");
-            System.out.println(newHorario.toString());
-            System.out.println("----------------------");
+            try {
+                Edificio tmpEdificio = datos.getEdificios().buscar(edi);
+                if(tmpEdificio!=null){
+                    Curso tmpCurso = datos.getCursos().buscar(String.valueOf(codeCurso));
+                    
+                    if(tmpCurso!=null){
+                        Salon tmpSalon = tmpEdificio.getSalones().buscar(String.valueOf(numSalon));
+                        if(tmpSalon!=null){
+                            Catedratico tmpCatedratico = datos.getCatedraticos().buscar(String.valueOf(idCatedratico));
+                            if(tmpCatedratico!=null){
+                                datos.getHorarios().agregar(newHorario,String.valueOf(newHorario.getCodigo()));
+                                System.out.println("--------Horario-------");
+                                System.out.println(newHorario.toString());
+                                System.out.println("----------------------");
+                            }else{
+                                errores.agregar("No existe el catedratico \""+idCatedratico+"\" en el sistema, Linea: "+(((token)catedratico).getLine())+",Columna: "+(((token)catedratico).getColumn()));
+                            }
+                        }else{
+                            errores.agregar("No existe un salon \""+numSalon+"\" en el edificio \""+edi+"\", Linea: "+(((token)salon).getLine())+",Columna: "+(((token)salon).getColumn()));
+                        }
+                    }else{
+                        errores.agregar("No existe un curso con codigo \""+codeCurso+"\" en el sistema, Linea: "+(((token)curso).getLine())+",Columna: "+(((token)curso).getColumn()));
+                    }
+                }else{
+                    errores.agregar("No existe un edificio \""+edi+"\" en el sistema, Linea: "+(((token)edificio).getLine())+",Columna: "+(((token)edificio).getColumn()));
+                }
+            } catch (CloneNodeException ex) {
+                errores.agregar("Ya existe un horario con el tag \""+codigo+"\" en el sistema, Linea: "+(((token)code).getLine())+",Columna: "+(((token)code).getColumn()));
+            } catch(NullTagException ex){
+                errores.agregar("Debe de agregar un codigo de identificacion para el horario");
+            }
 
         :}
-    |   exp ASIG P_A CARNET:_carnet COMA nums:_curso COMA nums:_zona COMA nums:_final P_C DOT_COMA
+    |   exp ASIG P_A CARNET:_carnet COMA nums:_horario COMA nums:_zona COMA nums:_final P_C DOT_COMA
         {:
             int carnet = Integer.valueOf(((token)_carnet).getLexeme());
-            int curso = Integer.valueOf(((token)_curso).getLexeme());
+            int horario = Integer.valueOf(((token)_horario).getLexeme());
             int zona = Integer.valueOf(((token)_zona).getLexeme());
             int final_ = Integer.valueOf(((token)_final).getLexeme());
             
-            Asignacion newAsignacion = new Asignacion(carnet, curso, zona, final_);
+            Asignacion newAsignacion = new Asignacion(carnet, horario, zona, final_);
 
+            Estudiante tmpEstudiante = new Estudiante(carnet, "", "");
+            tmpEstudiante = datos.getEstudiantes().buscar(tmpEstudiante,tmpEstudiante.hashCode());
             
-
-            System.out.println("------Asignacion------");
-            System.out.println(newAsignacion.toString());
-            System.out.println("----------------------");
-
+            if(tmpEstudiante!=null){
+                
+                Horario tmpHorario = datos.getHorarios().buscar(String.valueOf(horario));
+                if(tmpHorario!=null){
+                    int calculo = zona +final_;
+                    if(calculo <=100){
+                        Edificio tmpEdificio = datos.getEdificios().buscar(tmpHorario.getEdificio());
+                        Salon tmpSalon = tmpEdificio.getSalones().buscar(String.valueOf(tmpHorario.getSalon()));
+                        int capacidad = tmpSalon.getCantidadEstudiantes();
+                        int asignados = tmpHorario.getAsignaciones().getLegth();
+                        if(asignados < capacidad){
+                            try {
+                                tmpHorario.getAsignaciones().addOrden(newAsignacion, String.valueOf(newAsignacion.getCarnet()));
+                                tmpEstudiante.getHorarios().agregar(String.valueOf(tmpHorario.getCodigo()),tmpHorario);
+                                System.out.println("------Asignacion------");
+                                System.out.println(newAsignacion.toString());
+                                System.out.println("----------------------");   
+                            } catch (CloneNodeException ex ){
+                                errores.agregar("El estudiante \""+carnet+"\" ya esta asignado al curso, Linea: "+(((token)_carnet).getLine())+",Columna: "+(((token)_carnet).getColumn()));
+                            }
+                            catch(NullTagException e) {
+                                errores.agregar("Error al guardar la asignacion");
+                            }
+                        }else{
+                            errores.agregar("Ya no se admiten asignaciones en el horario \""+tmpHorario.getCodigo()+"\" capacidad superada, Linea: "+(((token)_horario).getLine())+",Columna: "+(((token)_horario).getColumn()));
+                        }
+                    }else{
+                        errores.agregar("La zona y final debe ser menor o igual a 1000, Linea: "+(((token)_zona).getLine())+",Columna: "+(((token)_zona).getColumn()));
+                        errores.agregar("La zona y final debe ser menor o igual a 1000, Linea: "+(((token)_final).getLine())+",Columna: "+(((token)_final).getColumn()));
+                    }
+                }else{
+                    errores.agregar("No existe un estudiante con carnet \""+carnet+"\" en el sistema, Linea: "+(((token)_carnet).getLine())+",Columna: "+(((token)_carnet).getColumn()));
+                }
+            }else{
+                errores.agregar("No existe un estudiante con carnet \""+carnet+"\" en el sistema, Linea: "+(((token)_carnet).getLine())+",Columna: "+(((token)_carnet).getColumn()));
+            }
         :}
     |
     |   error

@@ -32,8 +32,6 @@ public class main {
 
     private static void prueba(){
         ArbolB<String> arbol = new ArbolB<>(5);
-        ListArbolB<String> lista = new ListArbolB<>();
-        SplitInfoArbolB<String> splitInfoArbolB = new SplitInfoArbolB<>();
         try {
             
             arbol.agregar("4", "4");
@@ -53,27 +51,7 @@ public class main {
             arbol.agregar("16", "16");
             arbol.agregar("17", "17");
             
-            arbol.getRaiz().getRaiz().getMenor().imprimirLista();
-            arbol.getRaiz().imprimirLista();
-            arbol.getRaiz().getRaiz().getMayor().imprimirLista();
-
-            /*
-            lista.agregar("4", "4");
-            lista.agregar("1", "1");
-            lista.agregar("5", "5");
-            lista.agregar("2", "2");
-            lista.agregar("6", "6");
-            
-            lista.imprimirLista();
-
-            NodoArbolB<String> dividirLista = splitInfoArbolB.dividirLista(lista);
-
-            dividirLista.getMenor().imprimirNodos();
-            System.out.println("Nodo: "+dividirLista.getTag());
-            dividirLista.getMayor().imprimirNodos();
-
-            */
-
+            System.out.println("Busqueda: "+arbol.buscar("10"));
 
         } catch (Exception e) {
             e.printStackTrace();

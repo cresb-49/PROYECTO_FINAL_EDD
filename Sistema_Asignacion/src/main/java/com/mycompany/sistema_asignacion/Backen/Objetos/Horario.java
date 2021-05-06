@@ -107,6 +107,18 @@ public class Horario {
     public void setEdificio(String edificio) {
         this.edificio = edificio;
     }
+    /**
+     * @return the asignaciones
+     */
+    public ListaCircularDoble<Asignacion> getAsignaciones() {
+        return asignaciones;
+    }
+    /**
+     * @param asignaciones the asignaciones to set
+     */
+    public void setAsignaciones(ListaCircularDoble<Asignacion> asignaciones) {
+        this.asignaciones = asignaciones;
+    }
 
     @Override
     public String toString() {
