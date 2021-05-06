@@ -22,12 +22,12 @@ public class ArbolB<T> {
             if(this.raiz.getSize()==0){
                 this.raiz.agregar(data, tag);
             }else{
-                this.agregarALista(this.raiz, data, tag);
+                this.agregarALista(null,this.raiz, data, tag);
             }
         }
     }
 
-    private void agregarALista(ListArbolB<T> lista, T data, String tag) throws CloneNodeException {
+    private void agregarALista(ListArbolB<T> listaAnterior,ListArbolB<T> lista, T data, String tag) throws CloneNodeException {
         NodoArbolB<T> tmp = lista.getRaiz();
         while (tmp != null) {
             int val = tag.compareTo(tmp.getTag());
@@ -35,7 +35,7 @@ public class ArbolB<T> {
                 throw new CloneNodeException("Ya existe un elemento " + tag);
             } else if (val < 0) {
                 if(tmp.getMenor()!=null){
-                    this.agregarALista(tmp.getMenor(), data, tag);
+                    this.agregarALista(lista,tmp.getMenor(), data, tag);
                     break;
                 }else{
                     if(tmp.getSiguiente()==null){
@@ -47,7 +47,7 @@ public class ArbolB<T> {
                 }
             } else if (val > 0) {
                 if(tmp.getMayor()!=null){
-                    this.agregarALista(tmp.getMayor(), data, tag);
+                    this.agregarALista(lista,tmp.getMayor(), data, tag);
                     break;
                 }else{
                     if(tmp.getSiguiente()==null){
@@ -67,6 +67,8 @@ public class ArbolB<T> {
                 this.raiz.agregarNodo(nuevaRaiz);
             }else{
                 System.out.println("Se necesita un split de la informacion en nodo");
+                NodoArbolB<T> nodoSeparado =  this.splitInfoArbolB.dividirLista(lista);
+                listaAnterior.agregarNodo(nodoSeparado);
             }
             
         }

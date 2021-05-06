@@ -43,6 +43,9 @@ public class NodoArbolB<T> {
      */
     public void setMayor(ListArbolB<T> mayor) {
         this.mayor = mayor;
+        if(this.mayor!=null){
+            this.mayor.setPadre(this);
+        }
     }
     /**
      * @return the menor
@@ -55,6 +58,9 @@ public class NodoArbolB<T> {
      */
     public void setMenor(ListArbolB<T> menor) {
         this.menor = menor;
+        if(this.menor!=null){
+            this.menor.setPadre(this);
+        }
     }
     /**
      * @return the tag

@@ -42,8 +42,19 @@ public class main {
             arbol.agregar("2", "2");
             arbol.agregar("6", "6");
             arbol.agregar("7", "7");
+            arbol.agregar("8", "8");
+            arbol.agregar("9", "9");
+            arbol.agregar("10", "10");
+            arbol.agregar("11", "11");
+            arbol.agregar("12", "12");
+            arbol.agregar("13", "13");
+            arbol.agregar("14", "14");
+            arbol.agregar("15", "15");
+            arbol.agregar("16", "16");
+            arbol.agregar("17", "17");
             
             arbol.getRaiz().getRaiz().getMenor().imprimirLista();
+            arbol.getRaiz().imprimirLista();
             arbol.getRaiz().getRaiz().getMayor().imprimirLista();
 
             /*

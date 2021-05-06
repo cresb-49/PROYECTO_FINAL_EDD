@@ -3,11 +3,13 @@ package com.mycompany.sistema_asignacion.Backen.EDD.ArbolB;
 import com.mycompany.sistema_asignacion.Backen.Exceptions.CloneNodeException;
 
 public class ListArbolB<T> {
+    private NodoArbolB<T> padre;
     private NodoArbolB<T> raiz;
     private int size = 0;
 
     public ListArbolB(){
         this.raiz = null;
+        this.padre = null;
     }
 
     public void agregar(T data,String tag) throws CloneNodeException{
@@ -130,5 +132,17 @@ public class ListArbolB<T> {
             tmp = tmp.getSiguiente();
         }
         System.out.println("--------------------");
+    }
+    /**
+     * @return the padre
+     */
+    public NodoArbolB<T> getPadre() {
+        return padre;
+    }
+    /**
+     * @param padre the padre to set
+     */
+    public void setPadre(NodoArbolB<T> padre) {
+        this.padre = padre;
     }
 }
