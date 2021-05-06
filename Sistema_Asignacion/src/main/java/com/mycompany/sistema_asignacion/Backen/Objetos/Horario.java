@@ -1,5 +1,6 @@
 package com.mycompany.sistema_asignacion.Backen.Objetos;
 
+import com.mycompany.sistema_asignacion.Backen.EDD.ListaCircularDoble;
 
 public class Horario {
     private int codigo;
@@ -9,6 +10,7 @@ public class Horario {
     private int salon;
     private String edificio;
     private int codeCatedratico;
+    private ListaCircularDoble<Asignacion> asignaciones;
 
     public Horario(int codigo,String hora,String dia,int codigoCurso,int salon,String edificio,int codeCatedratico){
         this.codigo = codigo;
@@ -18,6 +20,7 @@ public class Horario {
         this.salon = salon;
         this.codeCatedratico = codeCatedratico;
         this.edificio = edificio;
+        this.asignaciones = new ListaCircularDoble<>();
     }
 
     /**
