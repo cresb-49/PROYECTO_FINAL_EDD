@@ -2,6 +2,11 @@ package com.mycompany.sistema_asignacion;
 
 import com.mycompany.sistema_asignacion.Backen.EDD.HashTable;
 import com.mycompany.sistema_asignacion.Backen.EDD.ListaCircularDoble;
+import com.mycompany.sistema_asignacion.Backen.EDD.ListaDobleEnlazada;
+import com.mycompany.sistema_asignacion.Backen.EDD.ArbolB.ArbolB;
+import com.mycompany.sistema_asignacion.Backen.EDD.ArbolB.ListArbolB;
+import com.mycompany.sistema_asignacion.Backen.EDD.ArbolB.NodoArbolB;
+import com.mycompany.sistema_asignacion.Backen.EDD.ArbolB.SplitInfoArbolB;
 import com.mycompany.sistema_asignacion.Backen.Exceptions.CloneNodeException;
 import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Estudiante;
@@ -10,8 +15,10 @@ import com.mycompany.sistema_asignacion.Fronted.UI.FramePrincipal;
 
 public class main {
 
+    private static NodoArbolB<String> dividirLista;
+
     public static void main(String[] args){
-        
+        /*
         DatosSistema datos = new DatosSistema(); 
         try {
             datos.getUsuarios().add(new Usuario(0, "AdminSistema","12345","super"), "AdminSistema");
@@ -19,29 +26,43 @@ public class main {
             e.printStackTrace();
         }
         FramePrincipal frame = new FramePrincipal(datos); frame.setVisible(true);
-        
-        //prueba();
+        */
+        prueba();
     }
 
     private static void prueba(){
-        ListaCircularDoble<Usuario> usuarios = new ListaCircularDoble<>();
-        Usuario user1 = new Usuario(1, "nombre1", "password", "tipo");
-        Usuario user2 = new Usuario(2, "nombre2", "password", "tipo");
-        Usuario user3 = new Usuario(3, "nombre3", "password", "tipo");
-        Usuario user4 = new Usuario(4, "nombre4", "password", "tipo");
-        Usuario user5 = new Usuario(5, "nombre5", "password", "tipo");
+        ArbolB<String> arbol = new ArbolB<>(5);
+        ListArbolB<String> lista = new ListArbolB<>();
+        SplitInfoArbolB<String> splitInfoArbolB = new SplitInfoArbolB<>();
         try {
+            /*
+            arbol.agregar("4", "4");
+            arbol.agregar("1", "1");
+            arbol.agregar("5", "5");
+            arbol.agregar("2", "2");
+            arbol.agregar("6", "6");
+            arbol.agregar("6", "6");
+            */
 
-            usuarios.add(user1, user1.getNombre());
-            usuarios.add(user2, user2.getNombre());
-            usuarios.add(user3, user3.getNombre());
-            usuarios.add(user4, user4.getNombre());
-            usuarios.add(user5, user5.getNombre());
+            lista.agregar("4", "4");
+            lista.agregar("1", "1");
+            lista.agregar("5", "5");
+            lista.agregar("2", "2");
+            lista.agregar("6", "6");
+            
+            lista.imprimirLista();
 
-            System.out.println(usuarios.buscar(user2));
+            NodoArbolB<String> dividirLista = splitInfoArbolB.dividirLista(lista);
+
+            dividirLista.getMenor().imprimirNodos();
+            System.out.println("Nodo: "+dividirLista.getTag());
+            dividirLista.getMayor().imprimirNodos();
+
+
+
 
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 }
