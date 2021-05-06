@@ -537,7 +537,7 @@ class CUP$parser$actions {
                         if(tmpSalon!=null){
                             Catedratico tmpCatedratico = datos.getCatedraticos().buscar(String.valueOf(idCatedratico));
                             if(tmpCatedratico!=null){
-                                datos.getHorarios().agregar(newHorario,String.valueOf(newHorario.getCodigo()));
+                                datos.getHorarios().agregar(String.valueOf(newHorario.getCodigo()), newHorario);
                                 System.out.println("--------Horario-------");
                                 System.out.println(newHorario.toString());
                                 System.out.println("----------------------");
@@ -622,7 +622,7 @@ class CUP$parser$actions {
                         errores.agregar("La zona y final debe ser menor o igual a 1000, Linea: "+(((token)_final).getLine())+",Columna: "+(((token)_final).getColumn()));
                     }
                 }else{
-                    errores.agregar("No existe un estudiante con carnet \""+carnet+"\" en el sistema, Linea: "+(((token)_carnet).getLine())+",Columna: "+(((token)_carnet).getColumn()));
+                    errores.agregar("No existe un horario con id \""+horario+"\" en el sistema, Linea: "+(((token)_horario).getLine())+",Columna: "+(((token)_horario).getColumn()));
                 }
             }else{
                 errores.agregar("No existe un estudiante con carnet \""+carnet+"\" en el sistema, Linea: "+(((token)_carnet).getLine())+",Columna: "+(((token)_carnet).getColumn()));

@@ -3,7 +3,7 @@ Estudiante(200745781, "Alfonso Antonio", "Cantel");
 Estudiante(200478542, "Mario Morales", "La Esperanza");
 
 Usuario(1,Secretaria, "murphychica1", colaborador);
-Usuario(1,Control, "control123", colaborador);
+Usuario(2,Control, "control123", colaborador);
 Usuario(200145785,FMarroquin, "fffmmm", estudiante);
 Usuario(200745781,Ulises, "uliuli", estudiante);
 
@@ -20,6 +20,9 @@ Edificio("D");
 Edificio("F");
 
 Salon("G", 12, 75);
+Salon("G", 105, 75);
+Salon("G", 109, 75);
+Salon("G", 110, 75);
 Salon ("E", 10, 25);
 Salon ("D", 5, 125);
 
@@ -42,6 +45,6 @@ Horario(10,"10:00am-10:50am","martes",779,110,"G",12445);
 Horario(11,"9:10am-10:00am","jueves",779,110,"G",12365);
 Horario(12,"10:00am-10:50am","jueves",779,110,"G",12365);
 
-Asignar (200145785, 777, 30, 25);
-Asignar (200745781, 777, 60, 10);
-Asignar (200478542, 771, 70, 20);
+Asignar (200145785,1, 30, 25);
+Asignar (200745781,2, 60, 10);
+Asignar (200478542,3, 70, 20);

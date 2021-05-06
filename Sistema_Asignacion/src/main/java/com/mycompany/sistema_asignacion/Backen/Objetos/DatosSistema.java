@@ -9,7 +9,7 @@ public class DatosSistema {
     private ListaCircularDoble<Curso> cursos;
     private AVL<Catedratico> catedraticos;
     private HashTable<Estudiante> estudiantes;
-    private ArbolB<Horario> horarios;
+    private AVL<Horario> horarios;
 
     public DatosSistema() {
         this.usuarios = new ListaCircularDoble<>();
@@ -17,7 +17,7 @@ public class DatosSistema {
         this.cursos = new ListaCircularDoble<>();
         this.catedraticos = new AVL<>();
         this.estudiantes = new HashTable<>();
-        this.horarios = new ArbolB<>(5);
+        this.horarios = new AVL<>();
     }
 
     /**
@@ -86,13 +86,13 @@ public class DatosSistema {
     /**
      * @return the horarios
      */
-    public ArbolB<Horario> getHorarios() {
+    public AVL<Horario> getHorarios() {
         return horarios;
     }
     /**
      * @param horarios the horarios to set
      */
-    public void setHorarios(ArbolB<Horario> horarios) {
+    public void setHorarios(AVL<Horario> horarios) {
         this.horarios = horarios;
     }
 }

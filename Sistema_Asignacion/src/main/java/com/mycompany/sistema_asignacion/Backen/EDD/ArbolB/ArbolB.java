@@ -65,6 +65,7 @@ public class ArbolB<T> {
                     }
                 }
             }
+            System.out.println("raiz nula");
             return null;
         }
     }
@@ -94,8 +95,8 @@ public class ArbolB<T> {
                 if(tmp.getSiguiente()!=null){
                     val2 = tag.compareTo(tmp.getSiguiente().getTag());
                 }
-
-                if (tmp.getMayor() != null && val2 <= 0) {
+                //&& val2 <= 0
+                if (tmp.getMayor() != null ) {
                     this.agregarALista(lista, tmp.getMayor(), data, tag);
                     break;
                 } else {
