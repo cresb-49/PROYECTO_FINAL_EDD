@@ -7,6 +7,8 @@ package com.mycompany.sistema_asignacion.Fronted.UI;
 
 import com.mycompany.sistema_asignacion.Backen.Exceptions.NoDataException;
 import com.mycompany.sistema_asignacion.Backen.Graficadores.Graficadores;
+import com.mycompany.sistema_asignacion.Backen.Graficadores.GraficarAsignacion;
+import com.mycompany.sistema_asignacion.Backen.Objetos.Asignacion;
 import com.mycompany.sistema_asignacion.Fronted.UI.Catedraticos.NuevoCatedratico;
 import com.mycompany.sistema_asignacion.Fronted.UI.Estudiantes.ModificarEstudiante;
 import com.mycompany.sistema_asignacion.Fronted.UI.Estudiantes.NuevoEstudiante;
@@ -15,6 +17,7 @@ import com.mycompany.sistema_asignacion.Fronted.UI.Usuarios.FrameEliminarUsuario
 import com.mycompany.sistema_asignacion.Fronted.UI.Usuarios.FrameModificarUsuario;
 import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Usuario;
+import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.GraficarAsignaciones;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.CrearCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.ModificarCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.ConsultarNotas;
@@ -335,7 +338,12 @@ public class FramePrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem12);
 
-        jMenuItem13.setText("Asignacion");
+        jMenuItem13.setText("Asignaciones");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem13);
 
         jMenuBar1.add(jMenu3);
@@ -707,6 +715,13 @@ public class FramePrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay informacion de Horarios en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        // TODO add your handling code here:
+        GraficarAsignaciones graficarAsignaciones = new GraficarAsignaciones(dataSistema, graficadores);
+        Escritorio.add(graficarAsignaciones);
+        graficarAsignaciones.show();
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     public void actualizarInfo() {
         this.mostrarDatos();

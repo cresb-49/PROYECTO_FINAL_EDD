@@ -17,6 +17,7 @@ public class Graficadores {
     private GraficarEdificiosSalones graficarEdificiosSalones;
     private GraficadorHorario graficadorHorario;
     
+    
 
     public Graficadores(DatosSistema datosSistema){
         this.datosSistema = datosSistema;
