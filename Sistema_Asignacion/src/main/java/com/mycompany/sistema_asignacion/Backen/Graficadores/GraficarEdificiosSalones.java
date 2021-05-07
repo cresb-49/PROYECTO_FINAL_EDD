@@ -74,6 +74,7 @@ public class GraficarEdificiosSalones {
                     NodoListaSimple nodo = null;
                     Salon salon = null;
                     Salon salonTmp = null;
+                    Salon tmpSalon = null;
 
                     String subgraph = "subgraph{\n";
                     String declaracionesSub = "";
@@ -89,10 +90,11 @@ public class GraficarEdificiosSalones {
                                     salon = (Salon) nodo.getDato();
                                     relacionesSub = relacionesSub + "nodeLC_EDIFICIO" + salon.getEdificio() + " -> nodeSalon" + salon.getEdificio() + salon.getNumeroSalon() + ";\n";
                                     while (nodo != null) {
-                                        declaracionesSub = declaracionesSub + "nodeSalon" + salon.getEdificio() + salon.getNumeroSalon() + "[label=\"" + salon.toString() + "\"];\n";
+                                        tmpSalon = (Salon) nodo.getDato();
+                                        declaracionesSub = declaracionesSub + "nodeSalon" + tmpSalon.getEdificio() + tmpSalon.getNumeroSalon() + "[label=\"" + tmpSalon.toString() + "\"];\n";
                                         if (nodo.getSiguiente() != null) {
                                             salonTmp = (Salon) nodo.getSiguiente().getDato();
-                                            relacionesSub = relacionesSub + "nodeSalon" + salon.getEdificio() + salon.getNumeroSalon() + " -> " + "nodeSalon" + salonTmp.getEdificio() + salonTmp.getNumeroSalon()+"\n";
+                                            relacionesSub = relacionesSub + "nodeSalon" + tmpSalon.getEdificio() + tmpSalon.getNumeroSalon() + " -> " + "nodeSalon" + salonTmp.getEdificio() + salonTmp.getNumeroSalon()+"\n";
                                         }
                                         nodo = nodo.getSiguiente();
                                     }

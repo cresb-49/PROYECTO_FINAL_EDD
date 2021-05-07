@@ -19,6 +19,8 @@ import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.CrearCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.ModificarCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.ConsultarNotas;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.CursosAsignados;
+import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.CursosEnSalon;
+import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.EstudiantesAprovadosSemestre;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.EstudiantesAsignadoCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Salones.CrearSalon;
 import com.mycompany.sistema_asignacion.Fronted.UI.Salones.ModificarSalon;
@@ -326,6 +328,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem23);
 
         jMenuItem12.setText("Horarios");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem12);
 
         jMenuItem13.setText("Asignacion");
@@ -360,6 +367,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu10.add(jMenuItem25);
 
         jMenuItem26.setText("Cursos en Salon");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
         jMenu10.add(jMenuItem26);
 
         jMenuItem27.setText("Estudiantes Aprabados en Semestre");
@@ -633,6 +645,13 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
         // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            EstudiantesAprovadosSemestre aprovadosSemestre = new EstudiantesAprovadosSemestre(dataSistema);
+            Escritorio.add(aprovadosSemestre);
+            aprovadosSemestre.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para consultar esta informacion", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
@@ -660,6 +679,34 @@ public class FramePrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para consultar esta informacion", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem25ActionPerformed
+
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            CursosEnSalon cursosEnSalon = new CursosEnSalon(dataSistema);
+            Escritorio.add(cursosEnSalon);
+            cursosEnSalon.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para consultar esta informacion", "Tipo de usuario no valido", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem26ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        // TODO add your handling code here:
+        String codigoDot = this.graficadores.getGraficadorHorario().generarDotCode();
+        try {
+            this.graficadores.getGenerarDotFile().generarArchivo(codigoDot, "Horarios");
+            String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Horarios.dot", "Horarios.png");
+            MostrarImagenes mostrarImagenes = new MostrarImagenes("Horarios", pathImagen);
+            Escritorio.add(mostrarImagenes);
+            mostrarImagenes.show();
+
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+        } catch (NoDataException ex) {
+            JOptionPane.showMessageDialog(this, "No hay informacion de Horarios en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     public void actualizarInfo() {
         this.mostrarDatos();

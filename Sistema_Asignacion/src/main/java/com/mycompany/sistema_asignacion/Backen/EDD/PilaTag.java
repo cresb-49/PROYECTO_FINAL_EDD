@@ -92,6 +92,25 @@ public class PilaTag<T> {
             return false;
         }
     }
+    /**
+     * 
+     * @param tag
+     * @return 
+     */
+    public T retornar(String tag) {
+        if (this.isEmpty()) {
+            return null;
+        } else {
+            NodoPilaTag<T> tmp = this.raiz;
+            while (tmp != null) {
+                if (tmp.getTag().equals(tag)) {
+                    return tmp.getData();
+                }
+                tmp = tmp.getNext();
+            }
+            return null;
+        }
+    }
 
     /**
      * Retorna un valor logico si la pila esta vacia, true si lo esta, false si

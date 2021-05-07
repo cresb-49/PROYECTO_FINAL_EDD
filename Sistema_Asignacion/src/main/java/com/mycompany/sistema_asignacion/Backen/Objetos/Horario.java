@@ -122,6 +122,6 @@ public class Horario {
 
     @Override
     public String toString() {
-        return "-Codigo: "+codigo+"\n-Horario: "+hora+"\n-Dia: "+dia+"\n-Curso: "+codigoCurso+"\n-Salon: "+salon+"\n-Edificio: "+edificio+"\n-Catedratico: "+codeCatedratico;
+        return "-Codigo: "+codigo+"\\n-Horario: "+hora+"\\n-Dia: "+dia+"\\n-Curso: "+codigoCurso+"\\n-Salon: "+salon+"\\n-Edificio: "+edificio+"\\n-Catedratico: "+codeCatedratico;
     }
 }

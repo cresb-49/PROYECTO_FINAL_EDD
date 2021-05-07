@@ -1093,13 +1093,17 @@ public class Lexer implements java_cup.runtime.Scanner {
           case 24: break;
           case 12:
             { //System.out.println("Cadena: "+yytext());
-            return new Symbol (CADENA_DIA,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
+            String newText = yytext();
+            newText = newText.substring(1, newText.length()-1);
+            return new Symbol (CADENA_DIA,after_symbl.sym,0, new token(newText,yycolumn+1,yyline+1));
             }
             // fall through
           case 25: break;
           case 13:
             { //System.out.println("Cadena: "+yytext());
-            return new Symbol (CADENA_HORARIO,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
+            String newText = yytext();
+            newText = newText.substring(1, newText.length()-1);
+            return new Symbol (CADENA_HORARIO,after_symbl.sym,0, new token(newText,yycolumn+1,yyline+1));
             }
             // fall through
           case 26: break;

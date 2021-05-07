@@ -20,14 +20,14 @@ nodeLC_EDIFICIOE -> nodeLC_EDIFICIOD;
 nodeLC_EDIFICIOG -> nodeLC_EDIFICIOF;
 nodeLC_EDIFICIOG -> nodeLC_EDIFICIOE;
 subgraph{
-nodeSalonG105[label="- Salon: 105\n-Estudiantes: 75"];
-nodeSalonG105[label="- Salon: 105\n-Estudiantes: 75"];
-nodeSalonG105[label="- Salon: 105\n-Estudiantes: 75"];
-nodeSalonG105[label="- Salon: 105\n-Estudiantes: 75"];
+nodeSalonG105[label="- Salon: 105\n-Estudiantes: 80"];
+nodeSalonG109[label="- Salon: 109\n-Estudiantes: 32"];
+nodeSalonG110[label="- Salon: 110\n-Estudiantes: 45"];
+nodeSalonG12[label="- Salon: 12\n-Estudiantes: 75"];
 nodeLC_EDIFICIOG -> nodeSalonG105;
 nodeSalonG105 -> nodeSalonG109
-nodeSalonG105 -> nodeSalonG110
-nodeSalonG105 -> nodeSalonG12
+nodeSalonG109 -> nodeSalonG110
+nodeSalonG110 -> nodeSalonG12
 }
 subgraph{
 nodeSalonE10[label="- Salon: 10\n-Estudiantes: 25"];
