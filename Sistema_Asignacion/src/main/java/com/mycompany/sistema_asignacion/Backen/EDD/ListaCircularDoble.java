@@ -137,8 +137,10 @@ public class ListaCircularDoble<T> {
         }
         return null;
     }
+
     /**
      * Busqueda por medio de objetos
+     *
      * @param modelo
      * @return
      */
@@ -155,7 +157,7 @@ public class ListaCircularDoble<T> {
         return null;
     }
 
-    private NodoLCD<T> buscarNodo(String tag){
+    private NodoLCD<T> buscarNodo(String tag) {
         NodoLCD<T> tmp2 = this.raiz;
         if (tmp2 != null) {
             do {
@@ -177,11 +179,11 @@ public class ListaCircularDoble<T> {
                     if (tmp == this.raiz) {
                         NodoLCD<T> ant = this.raiz.getAnterior();
                         NodoLCD<T> sig = this.raiz.getSiguiente();
-                        if(this.raiz == this.raiz.getSiguiente() && this.raiz == this.raiz.getAnterior()){
-                            this.raiz =null;
+                        if (this.raiz == this.raiz.getSiguiente() && this.raiz == this.raiz.getAnterior()) {
+                            this.raiz = null;
                             eliminado = true;
-                            legth --;
-                        }else{
+                            legth--;
+                        } else {
                             ant.setSiguiente(sig);
                             sig.setAnterior(ant);
                             this.raiz = sig;
@@ -206,15 +208,16 @@ public class ListaCircularDoble<T> {
 
     /**
      * Modifica el tag de busqueda de un nodo
+     *
      * @param oldTag
      * @param newTag
      * @throws NotFoundNodeException
      */
-    public void modificarTag(String oldTag,String newTag) throws NotFoundNodeException{
+    public void modificarTag(String oldTag, String newTag) throws NotFoundNodeException {
         NodoLCD<T> tmp = this.buscarNodo(oldTag);
-        if(tmp==null){
+        if (tmp == null) {
             throw new NotFoundNodeException("No existe un nodo con la tag ingresada");
-        }else{
+        } else {
             tmp.setTag(newTag);
         }
     }
@@ -230,6 +233,20 @@ public class ListaCircularDoble<T> {
         } else {
             return this.raiz.getAnterior().getData();
         }
+    }
+
+    public T[] listToArray(Class<T[]> arrayType) {
+        T[] array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(), (this.legth)));
+        NodoLCD<T> tmp = this.raiz;
+        if (tmp != null) {
+            int cont = 0;
+            do {
+                array[cont] = tmp.getData();
+                tmp = tmp.getSiguiente();
+                cont++;
+            } while (tmp != this.raiz);
+        }
+        return (T[]) array;
     }
 
     /**

@@ -19,10 +19,11 @@ Edificio("E");
 Edificio("D");
 Edificio("F");
 
+
+Salon("G", 105, 80);
+Salon("G", 109, 32);
+Salon("G", 110, 45);
 Salon("G", 12, 75);
-Salon("G", 105, 75);
-Salon("G", 109, 75);
-Salon("G", 110, 75);
 Salon ("E", 10, 25);
 Salon ("D", 5, 125);
 

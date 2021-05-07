@@ -27,19 +27,16 @@ public class PilaTag<T> {
      * Introduce un elemento en la pila
      *
      * @param data
+     * @param tag
      */
-    public void push(T data, String tag) throws NullTagException {
-        if (tag == null) {
-            throw new NullTagException("Se agrego un etiqueta nula al elemento de la pila");
+    public void push(T data, String tag){
+        if (this.raiz == null) {
+            this.raiz = new NodoPilaTag<T>(data, tag, null);
+            this.size++;
         } else {
-            if (this.raiz == null) {
-                this.raiz = new NodoPilaTag<T>(data, tag, null);
-                this.size++;
-            } else {
-                NodoPilaTag<T> tmp = this.raiz;
-                this.raiz = new NodoPilaTag<T>(data, tag, tmp);
-                this.size++;
-            }
+            NodoPilaTag<T> tmp = this.raiz;
+            this.raiz = new NodoPilaTag<T>(data, tag, tmp);
+            this.size++;
         }
     }
 
@@ -49,9 +46,9 @@ public class PilaTag<T> {
      *
      * @return
      */
-    public T pop() throws NoDataException {
+    public T pop(){
         if (this.isEmpty()) {
-            throw new NoDataException("No hay elementos en la pila");
+            return null;
         } else {
             NodoPilaTag<T> tmp = this.raiz;
             this.raiz = tmp.getNext();
@@ -90,6 +87,7 @@ public class PilaTag<T> {
                 if (tmp.getTag().equals(tag)) {
                     return true;
                 }
+                tmp = tmp.getNext();
             }
             return false;
         }
