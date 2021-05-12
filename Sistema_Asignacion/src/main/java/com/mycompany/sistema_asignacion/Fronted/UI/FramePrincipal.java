@@ -18,6 +18,7 @@ import com.mycompany.sistema_asignacion.Fronted.UI.Usuarios.FrameModificarUsuari
 import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Usuario;
 import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.GraficarAsignaciones;
+import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.NuevaAsignacion;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.CrearCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.ModificarCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.ConsultarNotas;
@@ -113,6 +114,8 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem20 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem22 = new javax.swing.JMenuItem();
+        jMenu11 = new javax.swing.JMenu();
+        jMenuItem29 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -295,6 +298,18 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu2.add(jMenu9);
 
         jMenuBar1.add(jMenu2);
+
+        jMenu11.setText("Asignacion");
+
+        jMenuItem29.setText("Asignar Curso");
+        jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem29ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem29);
+
+        jMenuBar1.add(jMenu11);
 
         jMenu3.setText("Graficos");
 
@@ -723,6 +738,17 @@ public class FramePrincipal extends javax.swing.JFrame {
         graficarAsignaciones.show();
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            NuevaAsignacion nuevaAsignacion = new NuevaAsignacion(this.dataSistema);
+            Escritorio.add(nuevaAsignacion);
+            nuevaAsignacion.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para realizar una asignacion", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem29ActionPerformed
+
     public void actualizarInfo() {
         this.mostrarDatos();
     }
@@ -749,6 +775,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
+    private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -779,6 +806,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem27;
     private javax.swing.JMenuItem jMenuItem28;
+    private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
