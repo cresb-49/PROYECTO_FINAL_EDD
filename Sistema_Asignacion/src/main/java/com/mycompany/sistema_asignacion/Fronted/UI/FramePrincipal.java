@@ -21,8 +21,11 @@ import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.EliminarAsignaci
 import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.GraficarAsignaciones;
 import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.ModificarAsignacion;
 import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.NuevaAsignacion;
+import com.mycompany.sistema_asignacion.Fronted.UI.Catedraticos.EliminarCatedratico;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.CrearCurso;
+import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.EliminarCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.ModificarCurso;
+import com.mycompany.sistema_asignacion.Fronted.UI.Estudiantes.EliminarEstudiante;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.ConsultarNotas;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.CursosAsignados;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.CursosEnSalon;
@@ -111,11 +114,14 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu8 = new javax.swing.JMenu();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jMenuItem20 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem22 = new javax.swing.JMenuItem();
+        jMenu12 = new javax.swing.JMenu();
+        jMenuItem32 = new javax.swing.JMenuItem();
+        jMenuItem33 = new javax.swing.JMenuItem();
+        jMenuItem34 = new javax.swing.JMenuItem();
         jMenu11 = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
         jMenuItem30 = new javax.swing.JMenuItem();
@@ -127,6 +133,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem23 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         jMenuItem24 = new javax.swing.JMenuItem();
         jMenuItem28 = new javax.swing.JMenuItem();
@@ -283,9 +290,6 @@ public class FramePrincipal extends javax.swing.JFrame {
         });
         jMenu8.add(jMenuItem18);
 
-        jMenuItem19.setText("Eliminar Salon");
-        jMenu8.add(jMenuItem19);
-
         jMenu2.add(jMenu8);
 
         jMenu9.setText("Cursos");
@@ -315,6 +319,24 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu9.add(jMenuItem22);
 
         jMenu2.add(jMenu9);
+
+        jMenu12.setText("Horarios");
+
+        jMenuItem32.setText("Nuevo Horario");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
+        jMenu12.add(jMenuItem32);
+
+        jMenuItem33.setText("Modificar Horario");
+        jMenu12.add(jMenuItem33);
+
+        jMenuItem34.setText("Eliminar Horario");
+        jMenu12.add(jMenuItem34);
+
+        jMenu2.add(jMenu12);
 
         jMenuBar1.add(jMenu2);
 
@@ -395,6 +417,14 @@ public class FramePrincipal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem13);
+
+        jMenuItem19.setText("Cursos");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem19);
 
         jMenuBar1.add(jMenu3);
 
@@ -786,14 +816,35 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            EliminarEstudiante eliminarEstudiante = new EliminarEstudiante(dataSistema);
+            Escritorio.add(eliminarEstudiante);
+            eliminarEstudiante.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para eliminar un estudiante del sistema", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
         // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            EliminarCatedratico eliminarCatedratico = new EliminarCatedratico(dataSistema);
+            Escritorio.add(eliminarCatedratico);
+            eliminarCatedratico.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para eliminar un catedratico", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
         // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            EliminarCurso eliminarCurso = new EliminarCurso(dataSistema);
+            Escritorio.add(eliminarCurso);
+            eliminarCurso.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para eliminar un Curso", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jMenuItem22ActionPerformed
 
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
@@ -817,6 +868,27 @@ public class FramePrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para eliminar una asignacion", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem31ActionPerformed
+
+    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem32ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        // TODO add your handling code here:
+        String generarDotCode = this.graficadores.getGraficarCursos().generarDotCode();
+        try {
+            this.graficadores.getGenerarDotFile().generarArchivo(generarDotCode, "Cursos");
+            String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Cursos.dot", "Cursos.png");
+            MostrarImagenes mostrarImagenes = new MostrarImagenes("Cursos", pathImagen);
+            Escritorio.add(mostrarImagenes);
+            mostrarImagenes.show();
+
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+        } catch (NoDataException ex) {
+            JOptionPane.showMessageDialog(this, "No hay informacion de Cursos en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     public void actualizarInfo() {
         this.mostrarDatos();
@@ -845,6 +917,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
+    private javax.swing.JMenu jMenu12;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -879,6 +952,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem31;
+    private javax.swing.JMenuItem jMenuItem32;
+    private javax.swing.JMenuItem jMenuItem33;
+    private javax.swing.JMenuItem jMenuItem34;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

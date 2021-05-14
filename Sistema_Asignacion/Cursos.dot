@@ -1,0 +1,41 @@
+digraph CURSOS {
+node[shape = box,height=.1];
+
+nodeLC_CURSO795[label = "-Codigo: 795
+-Nombre: Leguajes formales
+-Semestre: 4
+-Creditos: 4",group=1];
+nodeLC_CURSO779[label = "-Codigo: 779
+-Nombre: Arquitectura de computadoras y ensambladores2
+-Semestre: 7
+-Creditos: 4",group=1];
+nodeLC_CURSO777[label = "-Codigo: 777
+-Nombre: compiladores1
+-Semestre: 5
+-Creditos: 4",group=1];
+nodeLC_CURSO771[label = "-Codigo: 771
+-Nombre: programacion2
+-Semestre: 4
+-Creditos: 4",group=1];
+nodeLC_CURSO732[label = "-Codigo: 732
+-Nombre: Estadistica 1
+-Semestre: 4
+-Creditos: 4",group=1];
+{ rank = same;
+nodeLC_CURSO795;
+nodeLC_CURSO779;
+nodeLC_CURSO777;
+nodeLC_CURSO771;
+nodeLC_CURSO732;
+}
+nodeLC_CURSO795 -> nodeLC_CURSO779;
+nodeLC_CURSO795 -> nodeLC_CURSO732;
+nodeLC_CURSO779 -> nodeLC_CURSO777;
+nodeLC_CURSO779 -> nodeLC_CURSO795;
+nodeLC_CURSO777 -> nodeLC_CURSO771;
+nodeLC_CURSO777 -> nodeLC_CURSO779;
+nodeLC_CURSO771 -> nodeLC_CURSO732;
+nodeLC_CURSO771 -> nodeLC_CURSO777;
+nodeLC_CURSO732 -> nodeLC_CURSO795;
+nodeLC_CURSO732 -> nodeLC_CURSO771;
+}

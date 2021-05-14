@@ -16,6 +16,7 @@ public class Graficadores {
     private GraficarEstudiantes graficarEstudiantes;
     private GraficarEdificiosSalones graficarEdificiosSalones;
     private GraficadorHorario graficadorHorario;
+    private GraficarCursos graficarCursos;
     
     
 
@@ -29,6 +30,7 @@ public class Graficadores {
         this.graficarEstudiantes = new GraficarEstudiantes(this.datosSistema.getEstudiantes());
         this.graficarEdificiosSalones = new GraficarEdificiosSalones(this.datosSistema.getEdificios());
         this.graficadorHorario = new GraficadorHorario(this.datosSistema.getHorarios());
+        this.graficarCursos = new GraficarCursos(this.datosSistema.getCursos());
     }
 
     /**
@@ -76,4 +78,12 @@ public class Graficadores {
     public GraficadorHorario getGraficadorHorario() {
         return graficadorHorario;
     }
+    /**
+     * 
+     * @return 
+     */
+    public GraficarCursos getGraficarCursos() {
+        return graficarCursos;
+    }
+    
 }

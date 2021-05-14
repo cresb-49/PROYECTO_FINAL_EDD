@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.sistema_asignacion.Fronted.UI.Cursos;
+package com.mycompany.sistema_asignacion.Fronted.UI.Estudiantes;
 
 import com.mycompany.sistema_asignacion.Backen.Exceptions.NotFoundNodeException;
-import com.mycompany.sistema_asignacion.Backen.Objetos.Asignacion;
-import com.mycompany.sistema_asignacion.Backen.Objetos.Curso;
 import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Estudiante;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Horario;
@@ -19,14 +17,15 @@ import javax.swing.JOptionPane;
  *
  * @author benjamin
  */
-public class EliminarCurso extends javax.swing.JInternalFrame {
+public class EliminarEstudiante extends javax.swing.JInternalFrame {
 
     private DatosSistema datosSistema;
+    private Estudiante estudianteEliminar;
 
     /**
-     * Creates new form EliminarCurso
+     * Creates new form EliminarEstudiante
      */
-    public EliminarCurso(DatosSistema datosSistema) {
+    public EliminarEstudiante(DatosSistema datosSistema) {
         this.datosSistema = datosSistema;
         initComponents();
     }
@@ -41,22 +40,24 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        FieldCodigo = new javax.swing.JFormattedTextField();
+        FieldCarnet = new javax.swing.JFormattedTextField();
         ButtonBuscar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        FieldCodigoCurso = new javax.swing.JTextField();
-        FieldNombreCurso = new javax.swing.JTextField();
+        FieldNumeroCarnet = new javax.swing.JTextField();
+        FieldNombre = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        FieldDireccion = new javax.swing.JTextField();
         ButtonEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Eliminar Curso");
+        setTitle("Eliminar Estudiante");
 
-        jLabel1.setText("Codigo de Curso:");
+        jLabel1.setText("Carnet de Estudiante:");
 
-        FieldCodigo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        FieldCarnet.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#########"))));
 
         ButtonBuscar.setText("Buscar");
         ButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -67,15 +68,20 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel2.setText("Codigo Curso:");
+        jLabel2.setText("Nombre");
 
-        jLabel3.setText("Nombre");
+        jLabel3.setText("Carnet");
 
-        FieldCodigoCurso.setEditable(false);
-        FieldCodigoCurso.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FieldNumeroCarnet.setEditable(false);
+        FieldNumeroCarnet.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        FieldNombreCurso.setEditable(false);
-        FieldNombreCurso.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FieldNombre.setEditable(false);
+        FieldNombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel4.setText("Direccion");
+
+        FieldDireccion.setEditable(false);
+        FieldDireccion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         ButtonEliminar.setText("Eliminar");
         ButtonEliminar.setEnabled(false);
@@ -95,27 +101,33 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
                     .addComponent(ButtonEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel4))
+                        .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(FieldCodigoCurso)
-                            .addComponent(FieldNombreCurso))))
+                            .addComponent(FieldNombre)
+                            .addComponent(FieldDireccion)
+                            .addComponent(FieldNumeroCarnet))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(FieldCodigoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(8, 8, 8)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(FieldNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(FieldNumeroCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(ButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(FieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(FieldDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -130,7 +142,7 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(FieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(FieldCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(ButtonBuscar)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -142,9 +154,9 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(FieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FieldCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ButtonBuscar))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -154,23 +166,24 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
 
     private void ButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonBuscarActionPerformed
         // TODO add your handling code here:
-        String codigoCurso = FieldCodigo.getText();
-        if (!codigoCurso.isEmpty()) {
-            this.buscarCurso(codigoCurso);
+        String carnetEstudiante = FieldCarnet.getText();
+        if (!carnetEstudiante.isEmpty()) {
+            this.cargarEstudiante(carnetEstudiante);
         }
+
     }//GEN-LAST:event_ButtonBuscarActionPerformed
 
     private void ButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEliminarActionPerformed
-        if (JOptionPane.showConfirmDialog(null, "Desea eliminar el curso", "Eliminar Curso", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+        // TODO add your handling code here:
+        if (estudianteEliminar != null) {
             try {
-                // TODO add your handling code here:
-                String codigoCurso = FieldCodigoCurso.getText();
-                this.eliminarHorariosCurso(codigoCurso);
-                this.datosSistema.getCursos().eliminar(codigoCurso);
-                JOptionPane.showMessageDialog(this, "Curso eliminado con exito", "Completado", JOptionPane.INFORMATION_MESSAGE);
+                this.eliminarAsiganciones(estudianteEliminar);
+                this.eliminarUsuario(estudianteEliminar);
+                this.datosSistema.getEstudiantes().eliminar(estudianteEliminar, estudianteEliminar.hashCode());
+                JOptionPane.showMessageDialog(this, "Estudiante eliminado con exito", "Completado", JOptionPane.INFORMATION_MESSAGE);
                 this.llenarCampos(null);
             } catch (NotFoundNodeException ex) {
-                JOptionPane.showMessageDialog(this, "No existe el curso seleccionado a eliminar", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No existen datos del estudiante ingresado", "Error", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_ButtonEliminarActionPerformed
@@ -179,60 +192,64 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonBuscar;
     private javax.swing.JButton ButtonEliminar;
-    private javax.swing.JFormattedTextField FieldCodigo;
-    private javax.swing.JTextField FieldCodigoCurso;
-    private javax.swing.JTextField FieldNombreCurso;
+    private javax.swing.JFormattedTextField FieldCarnet;
+    private javax.swing.JTextField FieldDireccion;
+    private javax.swing.JTextField FieldNombre;
+    private javax.swing.JTextField FieldNumeroCarnet;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
-    private void buscarCurso(String codigoCurso) {
-        Curso curso = this.datosSistema.getCursos().buscar(codigoCurso);
-        this.llenarCampos(curso);
+    private void cargarEstudiante(String carnetEstudiante) {
+        int carnet = Integer.valueOf(carnetEstudiante);
+        Estudiante estudiante = this.datosSistema.getEstudiantes().buscar(new Estudiante(carnet, "", ""), carnet);
+        if (estudiante != null) {
+            this.llenarCampos(estudiante);
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay registro del estudiante que esta buscando", "Error de Busqueda", JOptionPane.WARNING_MESSAGE);
+        }
+
     }
 
-    private void llenarCampos(Curso curso) {
-        if (curso != null) {
-            FieldCodigoCurso.setText(String.valueOf(curso.getCodigo()));
-            FieldNombreCurso.setText(curso.getNombre());
+    private void llenarCampos(Estudiante estudiante) {
+        if (estudiante != null) {
+            FieldNumeroCarnet.setText(String.valueOf(estudiante.getCarnet()));
+            FieldNombre.setText(estudiante.getNombre());
+            FieldDireccion.setText(estudiante.getDireccion());
+            this.estudianteEliminar = estudiante;
             ButtonEliminar.setEnabled(true);
         } else {
-            FieldCodigoCurso.setText(null);
-            FieldNombreCurso.setText(null);
+            FieldNumeroCarnet.setText(null);
+            FieldNombre.setText(null);
+            FieldDireccion.setText(null);
             ButtonEliminar.setEnabled(false);
         }
     }
 
-    private void eliminarHorariosCurso(String codigoCurso) {
-        Curso curso = this.datosSistema.getCursos().buscar(codigoCurso);
-        if (curso != null) {
-            Horario horarios[] = this.datosSistema.getHorarios().AVLtoArrayInOrden(Horario[].class);
-            for (Horario horario : horarios) {
-                if (horario.getCodigoCurso() == curso.getCodigo()) {
-                    this.eliminarHorario(horario);
+    private void eliminarAsiganciones(Estudiante estudianteEliminar) {
+        Horario[] AVLtoArrayInOrden = estudianteEliminar.getHorarios().AVLtoArrayInOrden(Horario[].class);
+        Horario buscar;
+        for (Horario horario : AVLtoArrayInOrden) {
+            buscar = this.datosSistema.getHorarios().buscar(String.valueOf(horario.getCodigo()));
+            if (buscar != null) {
+                try {
+                    buscar.getAsignaciones().eliminar(String.valueOf(estudianteEliminar.getCarnet()));
+                } catch (NotFoundNodeException ex) {
+                    /**
+                     * error permitido
+                     */
                 }
             }
         }
     }
 
-    private void eliminarHorario(Horario horario) {
-        if (horario != null) {
-            Asignacion asignaciones[] = horario.getAsignaciones().listToArray(Asignacion[].class);
-            Estudiante estudiante;
-            for (Asignacion asignacione : asignaciones) {
-                estudiante = this.datosSistema.getEstudiantes().buscar(new Estudiante(asignacione.getCarnet(), "", ""), asignacione.getCarnet());
-                if (estudiante != null) {
-                    try {
-                        estudiante.getHorarios().eliminar(String.valueOf(horario.getCodigo()));
-                    } catch (NotFoundNodeException ex) {
-                        /*Error permitido*/
-                    }
-                }
-            }
+    private void eliminarUsuario(Estudiante estudianteEliminar) {
+        if(estudianteEliminar!=null){
             try {
-                this.datosSistema.getHorarios().eliminar(String.valueOf(horario.getCodigo()));
+                this.datosSistema.getUsuarios().eliminar(String.valueOf(estudianteEliminar.getCarnet()));
             } catch (NotFoundNodeException ex) {
                 /*Error permitido*/
             }
