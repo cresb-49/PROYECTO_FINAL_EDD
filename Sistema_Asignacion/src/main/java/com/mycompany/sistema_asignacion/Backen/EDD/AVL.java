@@ -5,7 +5,6 @@ import com.mycompany.sistema_asignacion.Backen.Exceptions.NotFoundNodeException;
 import com.mycompany.sistema_asignacion.Backen.Exceptions.NullTagException;
 import com.mycompany.sistema_asignacion.Backen.Graphviz.ParametrosGraphviz;
 
-
 /**
  * CLASE ARBOL BINARIO DE BUSQUEDA, ESTABLECE LAS ACCIONES DE LOS OBJETOS
  * NodoArbol
@@ -37,12 +36,13 @@ public class AVL<T> {
             }
         }
     }
-    
+
     /**
      * Metodo para agregar elementos al arbol
+     *
      * @param padre
      * @param nuevo
-     * @throws CloneNodeException 
+     * @throws CloneNodeException
      */
     private void agregarNodo(NodoArbol<T> padre, NodoArbol<T> nuevo) throws CloneNodeException {
         if (nuevo.getTag().compareTo(padre.getTag()) > 0) {
@@ -139,10 +139,12 @@ public class AVL<T> {
             throw new CloneNodeException("Ya existe un nodo con tag: " + nuevo.getTag());
         }
     }
-    
+
     /**
-     * Realiza la moviemiento doble a la derecha del arbol en el nodo desequilibrado
-     * @param nodo 
+     * Realiza la moviemiento doble a la derecha del arbol en el nodo
+     * desequilibrado
+     *
+     * @param nodo
      */
     private void vueltaDobleDerecha(NodoArbol<T> nodo) {
         if (nodo == this.raiz) {
@@ -181,10 +183,12 @@ public class AVL<T> {
 
         }
     }
-    
+
     /**
-     * Realiza el movimiento doble a la izquierda en el nodo del arbol que esta desequilibrado
-     * @param nodo 
+     * Realiza el movimiento doble a la izquierda en el nodo del arbol que esta
+     * desequilibrado
+     *
+     * @param nodo
      */
     private void vueltaDobleIzquierda(NodoArbol<T> nodo) {
         if (nodo == this.raiz) {
@@ -224,10 +228,12 @@ public class AVL<T> {
             nodo.setDerecha(IC);
         }
     }
-    
+
     /**
-     * Realiza el movimento simple a la derecha en el nodo del arbol que esta desequilibrado
-     * @param nodo 
+     * Realiza el movimento simple a la derecha en el nodo del arbol que esta
+     * desequilibrado
+     *
+     * @param nodo
      */
     private void vueltaSimpleDerecha(NodoArbol<T> nodo) {
 
@@ -253,10 +259,12 @@ public class AVL<T> {
             nodo.setIzquierda(e);
         }
     }
-    
+
     /**
-     * Realiza el movimiento simple a la izquierda en el node del arbol que esta desequilibrado
-     * @param nodo 
+     * Realiza el movimiento simple a la izquierda en el node del arbol que esta
+     * desequilibrado
+     *
+     * @param nodo
      */
     private void vueltaSimpleIzquierda(NodoArbol<T> nodo) {
 
@@ -303,21 +311,22 @@ public class AVL<T> {
         nodo = this.buscarNodo(this.raiz, tag);
         return nodo;
     }
-    
-    public T buscar(String tag){
+
+    public T buscar(String tag) {
         NodoArbol<T> nodo = this.buscarNodo(tag);
-        if(nodo==null){
+        if (nodo == null) {
             return null;
-        }else{
+        } else {
             return nodo.getContenido();
         }
     }
-    
+
     /**
      * Busca el nodo en el arbol en base la tag de identificacion
+     *
      * @param nodo
      * @param tag
-     * @return 
+     * @return
      */
     private NodoArbol<T> buscarNodo(NodoArbol<T> nodo, String tag) {
         NodoArbol<T> tmp = null;
@@ -340,10 +349,11 @@ public class AVL<T> {
         this.inOrden(raiz);
         System.out.println("");
     }
-    
+
     /**
      * Logica de los movimeintos en inOrden
-     * @param nodo 
+     *
+     * @param nodo
      */
     private void inOrden(NodoArbol<T> nodo) {
         if (nodo.getIzquierda() != null) {
@@ -354,6 +364,7 @@ public class AVL<T> {
             this.inOrden(nodo.getDerecha());
         }
     }
+
     /**
      * Realiza el recorrido en postOrden
      */
@@ -361,10 +372,11 @@ public class AVL<T> {
         this.postOrden(this.raiz);
         System.out.println("");
     }
-    
+
     /**
      * Logica de los movimientos en postOrden en el arbol
-     * @param nodo 
+     *
+     * @param nodo
      */
     private void postOrden(NodoArbol<T> nodo) {
         if (nodo.getIzquierda() != null) {
@@ -375,6 +387,7 @@ public class AVL<T> {
         }
         System.out.print(nodo.imprimirNodo());
     }
+
     /**
      * Realiza el recorrido en preOrden del arbol
      */
@@ -382,9 +395,11 @@ public class AVL<T> {
         this.preOrden(this.raiz);
         System.out.println("");
     }
+
     /**
      * Logica de los movimientos en preorden
-     * @param nodo 
+     *
+     * @param nodo
      */
     private void preOrden(NodoArbol<T> nodo) {
         System.out.print(nodo.imprimirNodo());
@@ -402,16 +417,21 @@ public class AVL<T> {
      * @return
      */
     public T[] AVLtoArrayInOrden(Class<T[]> arrayType) {
-        T[] array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(),(this.cantidad + 1)));
+        T[] array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(), (this.cantidad + 1)));
         Cola<T> data = new Cola<>();
 
-        this.recuperarDataInOrden(this.raiz, data);
-        int cont = 0;
-        while (!data.isEmpty()) {
-            array[cont] = data.tomar();
-            cont++;
+        if (this.isEmpty()) {
+            return array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(), (0)));
+        } else {
+            this.recuperarDataInOrden(this.raiz, data);
+            int cont = 0;
+            while (!data.isEmpty()) {
+                array[cont] = data.tomar();
+                cont++;
+            }
+            return array;
         }
-        return array;
+
     }
 
     /**
@@ -420,7 +440,7 @@ public class AVL<T> {
      * @return
      */
     public T[] AVLtoArrayPostOrden(Class<T[]> arrayType) {
-        T[] array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(),(this.cantidad + 1)));
+        T[] array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(), (this.cantidad + 1)));
         Cola<T> data = new Cola<>();
 
         this.recuperarDataPostOrden(this.raiz, data);
@@ -438,7 +458,7 @@ public class AVL<T> {
      * @return
      */
     public T[] AVLtoArrayPreOrden(Class<T[]> arrayType) {
-        T[] array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(),(this.cantidad + 1)));
+        T[] array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(), (this.cantidad + 1)));
         Cola<T> data = new Cola<>();
 
         this.recuperarDataPreOrden(this.raiz, data);
@@ -489,12 +509,13 @@ public class AVL<T> {
     public void eliminar(String tag) throws NotFoundNodeException {
         this.eliminar(this.raiz, tag);
     }
-    
+
     /**
      * Logica para eliminar datos del arbol
+     *
      * @param nodo
      * @param tag
-     * @throws NotFoundNodeException 
+     * @throws NotFoundNodeException
      */
     private void eliminar(NodoArbol<T> nodo, String tag) throws NotFoundNodeException {
         NodoArbol<T> candidato = null;
@@ -732,6 +753,7 @@ public class AVL<T> {
 
     /**
      * Retorna los parametros de grapviz para graficar el arbol AVL
+     *
      * @return
      */
     public ParametrosGraphviz obtenerGrafico() {
@@ -743,8 +765,10 @@ public class AVL<T> {
         return params;
     }
 
-    /***
+    /**
+     * *
      * Genera parametros .dot de el arbol AVL
+     *
      * @param parametros
      * @param nodo
      */
@@ -753,7 +777,7 @@ public class AVL<T> {
             this.GenerarDot(parametros, nodo.getIzquierda());
         }
 
-        parametros.agregarDeclaracion("nodeAVL" + nodo.getTag() + "[label = \"<f0> |<f1> " + nodo.getTag()+"\\n"+nodo.getContenido().toString()+ "|<f2> \"];");
+        parametros.agregarDeclaracion("nodeAVL" + nodo.getTag() + "[label = \"<f0> |<f1> " + nodo.getTag() + "\\n" + nodo.getContenido().toString() + "|<f2> \"];");
 
         if (nodo.getDerecha() != null) {
             parametros.agregarRelacion("\"nodeAVL" + nodo.getTag() + "\":f2 -> \"nodeAVL" + nodo.getDerecha().getTag() + "\":f1;");
@@ -766,7 +790,6 @@ public class AVL<T> {
             this.GenerarDot(parametros, nodo.getDerecha());
         }
     }
-
 
     /**
      * Recupera el ultimo nodo derecho ubicado en una posicion inicial en el

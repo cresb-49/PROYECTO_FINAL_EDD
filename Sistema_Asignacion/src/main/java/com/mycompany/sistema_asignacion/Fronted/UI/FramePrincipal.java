@@ -17,7 +17,9 @@ import com.mycompany.sistema_asignacion.Fronted.UI.Usuarios.FrameEliminarUsuario
 import com.mycompany.sistema_asignacion.Fronted.UI.Usuarios.FrameModificarUsuario;
 import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
 import com.mycompany.sistema_asignacion.Backen.Objetos.Usuario;
+import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.EliminarAsignacion;
 import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.GraficarAsignaciones;
+import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.ModificarAsignacion;
 import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.NuevaAsignacion;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.CrearCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.ModificarCurso;
@@ -116,6 +118,8 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenu11 = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
+        jMenuItem30 = new javax.swing.JMenuItem();
+        jMenuItem31 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -221,6 +225,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu6.add(jMenuItem6);
 
         jMenuItem7.setText("Eliminar Estudiante");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem7);
 
         jMenuItem8.setText("Modificar Estudiante");
@@ -247,6 +256,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu7.add(jMenuItem15);
 
         jMenuItem16.setText("Eliminar Catedratico");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem16);
 
         jMenu2.add(jMenu7);
@@ -293,6 +307,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu9.add(jMenuItem21);
 
         jMenuItem22.setText("Eliminar Curso");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
         jMenu9.add(jMenuItem22);
 
         jMenu2.add(jMenu9);
@@ -308,6 +327,22 @@ public class FramePrincipal extends javax.swing.JFrame {
             }
         });
         jMenu11.add(jMenuItem29);
+
+        jMenuItem30.setText("Modificar Asignacion");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem30ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem30);
+
+        jMenuItem31.setText("Eliminar Asignacion");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem31ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem31);
 
         jMenuBar1.add(jMenu11);
 
@@ -650,9 +685,9 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
-        
+
         String codigoDot = this.graficadores.getGraficarEdificiosSalones().generarDotCode();
-        
+
         try {
             this.graficadores.getGenerarDotFile().generarArchivo(codigoDot, "EdificiosSalones");
             String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("EdificiosSalones.dot", "EdificiosSalones.png");
@@ -682,7 +717,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         CursosAsignados cursosAsignados = new CursosAsignados(this.currentUser, this.dataSistema);
         Escritorio.add(cursosAsignados);
         cursosAsignados.show();
-        
+
     }//GEN-LAST:event_jMenuItem24ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
@@ -749,6 +784,40 @@ public class FramePrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem29ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
+
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            ModificarAsignacion modificarAsignacion = new ModificarAsignacion(dataSistema);
+            Escritorio.add(modificarAsignacion);
+            modificarAsignacion.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar una asignacion", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            EliminarAsignacion eliminarAsignacion = new EliminarAsignacion(dataSistema);
+            Escritorio.add(eliminarAsignacion);
+            eliminarAsignacion.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para eliminar una asignacion", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem31ActionPerformed
+
     public void actualizarInfo() {
         this.mostrarDatos();
     }
@@ -808,6 +877,8 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem30;
+    private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
