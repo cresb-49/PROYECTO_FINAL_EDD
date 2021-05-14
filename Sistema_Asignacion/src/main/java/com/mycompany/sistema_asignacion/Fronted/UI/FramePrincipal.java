@@ -871,6 +871,11 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
         // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+        
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para eliminar una asignacion", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jMenuItem32ActionPerformed
 
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
