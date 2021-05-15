@@ -30,12 +30,8 @@ LineTerminator = [\r|\n|\r\n]+
 WhiteSpace = [ \t\n]+
 palabrasRecervadas = (Usuario|Estudiante|Catedratico|Edificio|Salon|Curso|Horario|Asignar)
 tipoUser = ((super)|(colaborador)|(estudiante))
-
-//caracteresAlfaNum = [0-9a-zA-ZÀ-ÿ\u00f1\u00d1]
-caracteresAlfaNum = [0-9a-zA-ZÀ-ÿñÑ]
-alfaNumerico = ({caracteresAlfaNum})+
-
-horario = [\"]([0]?[1-9]|[1][0-2])([:])([0-5][0-9])(am|pm)([\-])([1-9]|[1][0-2])([:])([0-5][0-9])(am|pm)[\"]
+alfaNumerico = ([0-9]|[:letter:])+
+horario = [\"]([1-9]|[1][0-2])([:])([0-5][0-9])(am|pm)([\-])([1-9]|[1][0-2])([:])([0-5][0-9])(am|pm)[\"]
 innerText = {alfaNumerico}([ ]|{alfaNumerico})+
 cadena = [\"]{innerText}[\"]
 cadena2 = [\"]{alfaNumerico}[\"]
