@@ -132,6 +132,21 @@ public class ListaSimple<T> {
         System.out.println("-----------------------------");
     }
     
+    public T[] ListToArray(Class<T[]> arrayType){
+        T[] array = arrayType.cast(java.lang.reflect.Array.newInstance(arrayType.getComponentType(), (this.size)));
+        NodoListaSimple<T> tmp = this.raiz;
+        if (tmp != null) {
+            int cont = 0;
+            do {
+                array[cont] = tmp.dato;
+                tmp = tmp.getSiguiente();
+                cont++;
+            } while (tmp != null);
+        }
+        return (T[]) array;
+    }
+    
+    
     /**
      * Retorna la raiz de la lista simple
      * @return 

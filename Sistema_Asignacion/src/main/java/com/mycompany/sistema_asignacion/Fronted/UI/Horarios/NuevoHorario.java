@@ -5,17 +5,36 @@
  */
 package com.mycompany.sistema_asignacion.Fronted.UI.Horarios;
 
+import com.mycompany.sistema_asignacion.Backen.EDD.ListaSimple;
+import com.mycompany.sistema_asignacion.Backen.Exceptions.CloneNodeException;
+import com.mycompany.sistema_asignacion.Backen.Exceptions.NullTagException;
+import com.mycompany.sistema_asignacion.Backen.Objetos.Catedratico;
+import com.mycompany.sistema_asignacion.Backen.Objetos.Curso;
+import com.mycompany.sistema_asignacion.Backen.Objetos.DatosSistema;
+import com.mycompany.sistema_asignacion.Backen.Objetos.Edificio;
+import com.mycompany.sistema_asignacion.Backen.Objetos.Horario;
+import com.mycompany.sistema_asignacion.Backen.Objetos.Salon;
+import java.awt.HeadlessException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author benjamin
  */
 public class NuevoHorario extends javax.swing.JInternalFrame {
 
+    private DatosSistema datosSistema;
+
     /**
      * Creates new form NuevoHorario
      */
-    public NuevoHorario() {
+    public NuevoHorario(DatosSistema datosSistema) {
+        this.datosSistema = datosSistema;
         initComponents();
+        this.llenarInformacion();
     }
 
     /**
@@ -30,19 +49,27 @@ public class NuevoHorario extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         FieldCodigoHorario = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        ComboDia = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        ButtonCrear = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField2 = new javax.swing.JTextField();
+        FieldCatedratico = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        ComboHora1 = new javax.swing.JComboBox<>();
+        ComboHora2 = new javax.swing.JComboBox<>();
+        FieldHora1 = new javax.swing.JFormattedTextField();
+        FieldHora2 = new javax.swing.JFormattedTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        FieldCurso = new javax.swing.JTextField();
+        FieldEdificio = new javax.swing.JTextField();
+        FieldNumeroSalon = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setMaximizable(true);
@@ -55,11 +82,9 @@ public class NuevoHorario extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Hora:");
 
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
         jLabel3.setText("Dia");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "lunes", "martes", "miercoles", "jueves", "viernes" }));
+        ComboDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "lunes", "martes", "miercoles", "jueves", "viernes" }));
 
         jLabel4.setText("Edificio");
 
@@ -67,7 +92,12 @@ public class NuevoHorario extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Catedratico");
 
-        jButton1.setText("Crear Horario");
+        ButtonCrear.setText("Crear Horario");
+        ButtonCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonCrearActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,13 +106,79 @@ public class NuevoHorario extends javax.swing.JInternalFrame {
             new String [] {
                 "Codigo", "Nombre"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
 
-        jTextField2.setEditable(false);
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        }
+
+        FieldCatedratico.setEditable(false);
+        FieldCatedratico.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel8.setText("Catedraticos (Seleccione Uno)");
+
+        ComboHora1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "am", "pm" }));
+
+        ComboHora2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "am", "pm" }));
+
+        FieldHora1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("hh:mm"))));
+
+        FieldHora2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("hh:mm"))));
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo", "Nombre"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2.getTableHeader().setReorderingAllowed(false);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(0).setResizable(false);
+            jTable2.getColumnModel().getColumn(1).setResizable(false);
+        }
+
+        jLabel9.setText("Curso(Seleccione Uno)");
+
+        jLabel7.setText("Curso");
+
+        FieldCurso.setEditable(false);
+        FieldCurso.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        FieldEdificio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        FieldNumeroSalon.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        FieldNumeroSalon.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,31 +186,43 @@ public class NuevoHorario extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(FieldCodigoHorario)
-                                    .addComponent(jTextField1)
-                                    .addComponent(jComboBox1, 0, 302, Short.MAX_VALUE)
-                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel8)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel2))
+                            .addGap(49, 49, 49)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(FieldHora1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(ComboHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(FieldHora2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(ComboHora2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(FieldCodigoHorario)
+                                .addComponent(ComboDia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(FieldEdificio)
+                                .addComponent(FieldNumeroSalon)))
+                        .addComponent(jLabel8)
+                        .addComponent(jLabel9)
+                        .addComponent(jLabel7)
+                        .addComponent(ButtonCrear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(FieldCatedratico, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(FieldCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,52 +234,217 @@ public class NuevoHorario extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(FieldHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FieldHora2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboHora2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ComboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(FieldEdificio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(FieldNumeroSalon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(FieldCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(FieldCatedratico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addComponent(ButtonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row = this.jTable1.rowAtPoint(evt.getPoint());
+        FieldCatedratico.setText(String.valueOf(this.jTable1.getValueAt(row, 0)));
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void ButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCrearActionPerformed
+        // TODO add your handling code here:
+        try {
+            int codigo = Integer.valueOf(FieldCodigoHorario.getText());
+            String hora = this.recuperarHora();
+            if (!hora.isEmpty()) {
+                String dia = ComboDia.getItemAt(ComboDia.getSelectedIndex());
+                Curso curso = this.datosSistema.getCursos().buscar(FieldCurso.getText());
+                if (curso != null) {
+                    Edificio edificio = this.datosSistema.getEdificios().buscar(FieldEdificio.getText());
+                    if (edificio != null) {
+                        Salon salon = edificio.getSalones().buscar(FieldNumeroSalon.getText());
+                        if (salon != null) {
+                            Catedratico catedratico = this.datosSistema.getCatedraticos().buscar(FieldCatedratico.getText());
+                            if (catedratico != null) {
+                                try {
+                                    Horario newHorario = new Horario(codigo, hora, dia, curso.getCodigo(), salon.getNumeroSalon(), edificio.getNombre(), catedratico.getId());
+                                    this.datosSistema.getHorarios().agregar(String.valueOf(codigo), newHorario);
+                                    JOptionPane.showMessageDialog(this, "Se ha creado con exito el horario", "Completado", JOptionPane.INFORMATION_MESSAGE);
+                                } catch (CloneNodeException | NullTagException e) {
+                                    JOptionPane.showMessageDialog(this, "Ya existe un horario con el codigo introducido cambielo por otro", "Error", JOptionPane.WARNING_MESSAGE);
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(this, "No ha seleccionado un Catedratico para el curso", "Error", JOptionPane.WARNING_MESSAGE);
+                            }
+
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No ha seleccionado un salon correcto", "Error", JOptionPane.WARNING_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No ha seleccionado un edificio", "Error", JOptionPane.WARNING_MESSAGE);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "No ha seleccionado un curso", "Error", JOptionPane.WARNING_MESSAGE);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "La hora no tiene formato valido", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (HeadlessException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El codigo asigano al horario no es valido deben ser caracteres numericos", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_ButtonCrearActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+        int row = this.jTable2.rowAtPoint(evt.getPoint());
+        FieldCurso.setText(String.valueOf(this.jTable2.getValueAt(row, 0)));
+    }//GEN-LAST:event_jTable2MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonCrear;
+    private javax.swing.JComboBox<String> ComboDia;
+    private javax.swing.JComboBox<String> ComboHora1;
+    private javax.swing.JComboBox<String> ComboHora2;
+    private javax.swing.JTextField FieldCatedratico;
     private javax.swing.JFormattedTextField FieldCodigoHorario;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JTextField FieldCurso;
+    private javax.swing.JTextField FieldEdificio;
+    private javax.swing.JFormattedTextField FieldHora1;
+    private javax.swing.JFormattedTextField FieldHora2;
+    private javax.swing.JFormattedTextField FieldNumeroSalon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
+
+    private void llenarInformacion() {
+        Horario[] AVLtoArrayInOrden = this.datosSistema.getHorarios().AVLtoArrayInOrden(Horario[].class);
+        int legth = AVLtoArrayInOrden.length;
+        if (legth > 0) {
+            Horario horario = AVLtoArrayInOrden[(legth - 1)];
+            FieldCodigoHorario.setText(String.valueOf(horario.getCodigo() + 1));
+            Catedratico[] catedraticos = this.datosSistema.getCatedraticos().AVLtoArrayInOrden(Catedratico[].class);
+            if (catedraticos.length > 0) {
+                ButtonCrear.setEnabled(true);
+                this.llenarTabla(catedraticos);
+
+                Curso[] cursos = datosSistema.getCursos().listToArray(Curso[].class);
+                if (cursos.length > 0) {
+                    ButtonCrear.setEnabled(true);
+                    this.llenarTabla2(cursos);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "No hay cursos registrados en el sistema", "Error", JOptionPane.WARNING_MESSAGE);
+                    ButtonCrear.setEnabled(false);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay catedraticos en el sistema", "Error", JOptionPane.WARNING_MESSAGE);
+                ButtonCrear.setEnabled(false);
+            }
+        } else {
+            FieldCodigoHorario.setText(String.valueOf(1));
+        }
+    }
+
+    private void llenarTabla(Catedratico[] catedraticos) {
+        this.limpiarTabla();
+        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
+        for (Catedratico catedratico : catedraticos) {
+            model.addRow(new Object[]{catedratico.getId(), catedratico.getNombre()});
+        }
+    }
+
+    private void llenarTabla2(Curso[] cursos) {
+        this.limpiarTabla2();
+        DefaultTableModel model = (DefaultTableModel) this.jTable2.getModel();
+
+        for (Curso curso : cursos) {
+            model.addRow(new Object[]{curso.getCodigo(), curso.getNombre()});
+        }
+    }
+
+    private void limpiarTabla() {
+        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
+        if (model.getRowCount() > 0) {
+            do {
+                model.removeRow(0);
+            } while (model.getRowCount() != 0);
+        }
+    }
+
+    private void limpiarTabla2() {
+        DefaultTableModel model = (DefaultTableModel) this.jTable2.getModel();
+        if (model.getRowCount() > 0) {
+            do {
+                model.removeRow(0);
+            } while (model.getRowCount() != 0);
+        }
+    }
+
+    private String recuperarHora() {
+        String hora1 = FieldHora1.getText();
+        String hora2 = FieldHora2.getText();
+
+        if (this.pruebaHora(hora1)) {
+            if (this.pruebaHora(hora2)) {
+                String tiempo1 = ComboHora1.getItemAt(ComboHora1.getSelectedIndex());
+                String tiempo2 = ComboHora2.getItemAt(ComboHora2.getSelectedIndex());
+                return hora1 + tiempo1 + "-" + hora2 + tiempo2;
+            } else {
+                return "";
+            }
+
+        } else {
+            return "";
+        }
+    }
+
+    private boolean pruebaHora(String text) {
+        Pattern pattern = Pattern.compile("^([0]?[1-9]|[1][0-2])([:])([0-5][0-9])$");
+        Matcher matcher = pattern.matcher(text);
+        return matcher.find();
+    }
 }

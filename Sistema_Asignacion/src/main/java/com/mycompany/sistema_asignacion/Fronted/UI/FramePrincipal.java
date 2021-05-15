@@ -26,6 +26,8 @@ import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.CrearCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.EliminarCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.ModificarCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Estudiantes.EliminarEstudiante;
+import com.mycompany.sistema_asignacion.Fronted.UI.Horarios.EliminarHorario;
+import com.mycompany.sistema_asignacion.Fronted.UI.Horarios.NuevoHorario;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.ConsultarNotas;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.CursosAsignados;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.CursosEnSalon;
@@ -334,6 +336,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu12.add(jMenuItem33);
 
         jMenuItem34.setText("Eliminar Horario");
+        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem34ActionPerformed(evt);
+            }
+        });
         jMenu12.add(jMenuItem34);
 
         jMenu2.add(jMenu12);
@@ -872,7 +879,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
         // TODO add your handling code here:
         if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
-        
+            NuevoHorario nuevoHorario = new NuevoHorario(dataSistema);
+            Escritorio.add(nuevoHorario);
+            nuevoHorario.show();
         } else {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para eliminar una asignacion", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
         }
@@ -894,6 +903,17 @@ public class FramePrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay informacion de Cursos en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            EliminarHorario eliminarHorario = new EliminarHorario(dataSistema);
+            Escritorio.add(eliminarHorario);
+            eliminarHorario.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para eliminar un horario", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem34ActionPerformed
 
     public void actualizarInfo() {
         this.mostrarDatos();
