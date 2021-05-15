@@ -27,6 +27,7 @@ import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.EliminarCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.ModificarCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Estudiantes.EliminarEstudiante;
 import com.mycompany.sistema_asignacion.Fronted.UI.Horarios.EliminarHorario;
+import com.mycompany.sistema_asignacion.Fronted.UI.Horarios.ModificarHorario;
 import com.mycompany.sistema_asignacion.Fronted.UI.Horarios.NuevoHorario;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.ConsultarNotas;
 import com.mycompany.sistema_asignacion.Fronted.UI.Reportes.CursosAsignados;
@@ -333,6 +334,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu12.add(jMenuItem32);
 
         jMenuItem33.setText("Modificar Horario");
+        jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem33ActionPerformed(evt);
+            }
+        });
         jMenu12.add(jMenuItem33);
 
         jMenuItem34.setText("Eliminar Horario");
@@ -914,6 +920,17 @@ public class FramePrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para eliminar un horario", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem34ActionPerformed
+
+    private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            ModificarHorario modificarHorario = new ModificarHorario(dataSistema);
+            Escritorio.add(modificarHorario);
+            modificarHorario.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar un horario", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem33ActionPerformed
 
     public void actualizarInfo() {
         this.mostrarDatos();
