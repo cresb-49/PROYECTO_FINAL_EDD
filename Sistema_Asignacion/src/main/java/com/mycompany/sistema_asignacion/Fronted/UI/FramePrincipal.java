@@ -22,6 +22,7 @@ import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.GraficarAsignaci
 import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.ModificarAsignacion;
 import com.mycompany.sistema_asignacion.Fronted.UI.Asignaciones.NuevaAsignacion;
 import com.mycompany.sistema_asignacion.Fronted.UI.Catedraticos.EliminarCatedratico;
+import com.mycompany.sistema_asignacion.Fronted.UI.Catedraticos.ModificarCatedratico;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.CrearCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.EliminarCurso;
 import com.mycompany.sistema_asignacion.Fronted.UI.Cursos.ModificarCurso;
@@ -263,6 +264,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu7.add(jMenuItem14);
 
         jMenuItem15.setText("Modificar Catedratico");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem15);
 
         jMenuItem16.setText("Eliminar Catedratico");
@@ -931,6 +937,17 @@ public class FramePrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar un horario", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem33ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            ModificarCatedratico modificarCatedratico = new ModificarCatedratico(dataSistema);
+            Escritorio.add(modificarCatedratico);
+            modificarCatedratico.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para modificar un catedratico", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     public void actualizarInfo() {
         this.mostrarDatos();

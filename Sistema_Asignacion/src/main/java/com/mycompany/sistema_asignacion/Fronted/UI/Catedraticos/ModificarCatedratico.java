@@ -47,6 +47,10 @@ public class ModificarCatedratico extends javax.swing.JInternalFrame {
         BuscarIdField = new javax.swing.JFormattedTextField();
         jButton1 = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("Modificar Catedratico");
+
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel2.setText("Id");
@@ -118,6 +122,13 @@ public class ModificarCatedratico extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Identificador:");
 
+        BuscarIdField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        BuscarIdField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarIdFieldActionPerformed(evt);
+            }
+        });
+
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,7 +177,7 @@ public class ModificarCatedratico extends javax.swing.JInternalFrame {
         String identificador = this.BuscarIdField.getText();
         Catedratico buscar = datosSistema.getCatedraticos().buscar(identificador);
         
-        if(buscar==null){
+        if(buscar!=null){
             this.FieldId.setText(String.valueOf(buscar.getId()));
             this.FieldNombre.setText(buscar.getNombre());
             this.FieldDireccion.setText(buscar.getDireccion());
@@ -193,16 +204,28 @@ public class ModificarCatedratico extends javax.swing.JInternalFrame {
         
         if(comprobarAlfanumerico(nombre)){
             if(comprobarAlfanumerico(direccion)){
-                
+                Catedratico catedratico = this.datosSistema.getCatedraticos().buscar(identificador);
+                if(catedratico!=null){
+                    catedratico.setNombre(nombre);
+                    catedratico.setDireccion(direccion);
+                    JOptionPane.showMessageDialog(this, "Se modifico con exito el catedratico \""+identificador+"\"", "Completado", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(this, "No existe un catedratico con identificador \""+identificador+"\" en el sistema", "Error de Modificacion", JOptionPane.WARNING_MESSAGE);
+                    ButtonModificar.setEnabled(false);
+                }
             }else{
-                
+                JOptionPane.showMessageDialog(this, "\""+direccion+"\" no es valido debe contener caracteres alfanumericos", "Error", JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            
+            JOptionPane.showMessageDialog(this, "\""+nombre+"\" no es valido debe contener caracteres alfanumericos", "Error", JOptionPane.WARNING_MESSAGE);
         }
         
         
     }//GEN-LAST:event_ButtonModificarActionPerformed
+
+    private void BuscarIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarIdFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BuscarIdFieldActionPerformed
     private boolean comprobarAlfanumerico(String cadena) {
         return Pattern.matches("^[0-9a-zA-ZÀ-ÿ\u00f1\u00d1]+[ 0-9a-zA-ZÀ-ÿ\u00f1\u00d1]*$", cadena);
     }
