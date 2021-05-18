@@ -106,9 +106,9 @@ exp ::= exp USER:obj P_A nums:identificador COMA STRING:nombre COMA STRING:pass 
                 int idCarnet =  Integer.valueOf(((token)carnet).getLexeme());
                 Estudiante newEstudiante = new Estudiante(idCarnet, ((token)nombre).getLexeme(), ((token)direccion).getLexeme());
                 try {
-                datos.getEstudiantes().add(newEstudiante,newEstudiante.hashCode());
+                    datos.getEstudiantes().add(newEstudiante,newEstudiante.hashCode());
                 } catch (CloneNodeException ex) {
-                errores.agregar("Ya existe un estudiante con carnet \""+newEstudiante.getCarnet()+"\" en el sistema, Linea: "+((token)carnet).getLine()+",Columna:"+((token)carnet).getColumn());
+                    errores.agregar("Ya existe un estudiante con carnet \""+newEstudiante.getCarnet()+"\" en el sistema, Linea: "+((token)carnet).getLine()+",Columna:"+((token)carnet).getColumn());
                 }
                 System.out.println("------Estudiante------");
                 System.out.println(newEstudiante.toString());
@@ -121,13 +121,13 @@ exp ::= exp USER:obj P_A nums:identificador COMA STRING:nombre COMA STRING:pass 
         {:
             Edificio newEdificio = new Edificio(((token)nombre).getLexeme());
             try {
-              datos.getEdificios().add(newEdificio, newEdificio.getNombre());
+                datos.getEdificios().add(newEdificio, newEdificio.getNombre());
+                System.out.println("-------Edificio-------");
+                System.out.println(newEdificio.toString());
+                System.out.println("----------------------");
             } catch (CloneNodeException ex) {
                 errores.agregar("Ya existe un edificio:" + newEdificio.getNombre());
             }
-            System.out.println("-------Edificio-------");
-            System.out.println(newEdificio.toString());
-            System.out.println("----------------------");
         :}
     |   exp CURSO:obj P_A nums:codigo COMA cadenas:nombre COMA nums:semestre COMA nums:creditos P_C DOT_COMA
         {:
@@ -279,52 +279,61 @@ exp ::= exp USER:obj P_A nums:identificador COMA STRING:nombre COMA STRING:pass 
             }
 
         :}
-    |   exp ASIG P_A CARNET:_carnet COMA nums:_horario COMA nums:_zona COMA nums:_final P_C DOT_COMA
+    |   exp ASIG:obj P_A CARNET:_carnet COMA nums:_horario COMA nums:_zona COMA nums:_final P_C DOT_COMA
         {:
             int carnet = Integer.valueOf(((token)_carnet).getLexeme());
-            int horario = Integer.valueOf(((token)_horario).getLexeme());
-            int zona = Integer.valueOf(((token)_zona).getLexeme());
-            int final_ = Integer.valueOf(((token)_final).getLexeme());
-            
-            Asignacion newAsignacion = new Asignacion(carnet, horario, zona, final_);
-
-            Estudiante tmpEstudiante = new Estudiante(carnet, "", "");
-            tmpEstudiante = datos.getEstudiantes().buscar(tmpEstudiante,tmpEstudiante.hashCode());
-            
-            if(tmpEstudiante!=null){
-                Horario tmpHorario = datos.getHorarios().buscar(String.valueOf(horario));
-                if(tmpHorario!=null){
-                    int calculo = zona +final_;
-                    if(calculo <=100){
-                        Edificio tmpEdificio = datos.getEdificios().buscar(tmpHorario.getEdificio());
-                        Salon tmpSalon = tmpEdificio.getSalones().buscar(String.valueOf(tmpHorario.getSalon()));
-                        int capacidad = tmpSalon.getCantidadEstudiantes();
-                        int asignados = tmpHorario.getAsignaciones().getLegth();
-                        if(asignados < capacidad){
-                            try {
-                                tmpHorario.getAsignaciones().addOrden(newAsignacion, String.valueOf(newAsignacion.getCarnet()));
-                                tmpEstudiante.getHorarios().agregar(String.valueOf(tmpHorario.getCodigo()),tmpHorario);
-                                System.out.println("------Asignacion------");
-                                System.out.println(newAsignacion.toString());
-                                System.out.println("----------------------");   
-                            } catch (CloneNodeException ex ){
-                                errores.agregar("El estudiante \""+carnet+"\" ya esta asignado al curso, Linea: "+(((token)_carnet).getLine())+",Columna: "+(((token)_carnet).getColumn()));
-                            }
-                            catch(NullTagException e) {
-                                errores.agregar("Error al guardar la asignacion");
+            if(_horario!=null){
+                int horario = Integer.valueOf(((token)_horario).getLexeme());
+                if(_zona!=null){
+                    int zona = Integer.valueOf(((token)_zona).getLexeme()); 
+                    if(_final!=null){
+                        int final_ = Integer.valueOf(((token)_final).getLexeme());
+                        Asignacion newAsignacion = new Asignacion(carnet, horario, zona, final_);
+                        Estudiante tmpEstudiante = new Estudiante(carnet, "", "");
+                        tmpEstudiante = datos.getEstudiantes().buscar(tmpEstudiante,tmpEstudiante.hashCode());
+                        if(tmpEstudiante!=null){
+                            Horario tmpHorario = datos.getHorarios().buscar(String.valueOf(horario));
+                            if(tmpHorario!=null){
+                                int calculo = zona +final_;
+                                if(calculo <=100){
+                                    Edificio tmpEdificio = datos.getEdificios().buscar(tmpHorario.getEdificio());
+                                    Salon tmpSalon = tmpEdificio.getSalones().buscar(String.valueOf(tmpHorario.getSalon()));
+                                    int capacidad = tmpSalon.getCantidadEstudiantes();
+                                    int asignados = tmpHorario.getAsignaciones().getLegth();
+                                    if(asignados < capacidad){
+                                        try {
+                                            tmpHorario.getAsignaciones().addOrden(newAsignacion, String.valueOf(newAsignacion.getCarnet()));
+                                            tmpEstudiante.getHorarios().agregar(String.valueOf(tmpHorario.getCodigo()),tmpHorario);
+                                            System.out.println("------Asignacion------");
+                                            System.out.println(newAsignacion.toString());
+                                            System.out.println("----------------------");   
+                                        } catch (CloneNodeException ex ){
+                                            errores.agregar("El estudiante \""+carnet+"\" ya esta asignado al curso, Linea: "+(((token)_carnet).getLine())+",Columna: "+(((token)_carnet).getColumn()));
+                                        }
+                                        catch(NullTagException e) {
+                                            errores.agregar("Error al guardar la asignacion");
+                                        }
+                                    }else{
+                                        errores.agregar("Ya no se admiten asignaciones en el horario \""+tmpHorario.getCodigo()+"\" capacidad superada, Linea: "+(((token)_horario).getLine())+",Columna: "+(((token)_horario).getColumn()));
+                                    }
+                                }else{
+                                    errores.agregar("La zona y final debe ser menor o igual a 1000, Linea: "+(((token)_zona).getLine())+",Columna: "+(((token)_zona).getColumn()));
+                                    errores.agregar("La zona y final debe ser menor o igual a 1000, Linea: "+(((token)_final).getLine())+",Columna: "+(((token)_final).getColumn()));
+                                }
+                            }else{
+                                errores.agregar("No existe un horario con id \""+horario+"\" en el sistema, Linea: "+(((token)_horario).getLine())+",Columna: "+(((token)_horario).getColumn()));
                             }
                         }else{
-                            errores.agregar("Ya no se admiten asignaciones en el horario \""+tmpHorario.getCodigo()+"\" capacidad superada, Linea: "+(((token)_horario).getLine())+",Columna: "+(((token)_horario).getColumn()));
+                            errores.agregar("No existe un estudiante con carnet \""+carnet+"\" en el sistema, Linea: "+(((token)_carnet).getLine())+",Columna: "+(((token)_carnet).getColumn()));
                         }
                     }else{
-                        errores.agregar("La zona y final debe ser menor o igual a 1000, Linea: "+(((token)_zona).getLine())+",Columna: "+(((token)_zona).getColumn()));
-                        errores.agregar("La zona y final debe ser menor o igual a 1000, Linea: "+(((token)_final).getLine())+",Columna: "+(((token)_final).getColumn()));
+                        errores.agregar("No se puede recuperar la nota de final, Linea: "+((token)obj).getLine());
                     }
                 }else{
-                    errores.agregar("No existe un horario con id \""+horario+"\" en el sistema, Linea: "+(((token)_horario).getLine())+",Columna: "+(((token)_horario).getColumn()));
+                    errores.agregar("No se puede recuperar la nota de zona, Linea: "+((token)obj).getLine());
                 }
             }else{
-                errores.agregar("No existe un estudiante con carnet \""+carnet+"\" en el sistema, Linea: "+(((token)_carnet).getLine())+",Columna: "+(((token)_carnet).getColumn()));
+                errores.agregar("No se puede recuperar el codigo del horario, Linea: "+((token)obj).getLine());
             }
         :}
     |
