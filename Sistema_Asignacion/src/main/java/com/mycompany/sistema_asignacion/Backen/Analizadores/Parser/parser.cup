@@ -61,53 +61,61 @@ non terminal exp,nums,cadenas;
 
 start with exp;
 
-exp ::= exp USER P_A nums:identificador COMA ALFANUMERICO:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_C DOT_COMA
+exp ::= exp USER:obj P_A nums:identificador COMA STRING:nombre COMA STRING:pass COMA TIPO_USER:tipoUser P_C DOT_COMA
         {:
-            int id = Integer.valueOf(((token)identificador).getLexeme());
-            Usuario newUser = new Usuario(id, ((token)nombre).getLexeme(), ((token)pass).getLexeme(), ((token)tipoUser).getLexeme());
-            if(datos.getUsuarios().buscar(newUser)==null)
-            {
-                try {
-                  switch (newUser.getTipo()) {
-                    case "colaborador":
-                        datos.getUsuarios().add(newUser, newUser.getNombre());
-                        break;
-                    case "estudiante":
-                        Estudiante tmpEstudiante = new Estudiante(newUser.getId(), "", "");
-                        if(datos.getEstudiantes().buscar(tmpEstudiante, tmpEstudiante.hashCode())!=null){
+            try{
+                int id = Integer.valueOf(((token)identificador).getLexeme());
+                Usuario newUser = new Usuario(id, ((token)nombre).getLexeme(), ((token)pass).getLexeme(), ((token)tipoUser).getLexeme());
+                if(datos.getUsuarios().buscar(newUser)==null)
+                {
+                    try {
+                    switch (newUser.getTipo()) {
+                        case "colaborador":
                             datos.getUsuarios().add(newUser, newUser.getNombre());
-                        }else{
-                            errores.agregar("No existe refencia del estudiante, Linea: "+((token)identificador).getLine()+" Columna: "+((token)identificador).getColumn());  
-                        }
-                        break;
-                    case "super":
-                        errores.agregar("No pude cargar un usuario super en el sistema, Linea: "+((token)tipoUser).getLine()+" Columna: "+((token)tipoUser).getColumn());
-                        break;
-                    default:
-                        errores.agregar("Tipo de usuario no reconocido, Linea: "+((token)tipoUser).getLine()+" Columna: "+((token)tipoUser).getColumn());
-                  }
-                } catch (CloneNodeException e) {
-                    errores.agregar("Ya existe un usuario \""+newUser.getNombre()+"\" en el sistema, Linea: "+((token)nombre).getLine()+" Columna: "+((token)nombre).getColumn());
+                            break;
+                        case "estudiante":
+                            Estudiante tmpEstudiante = new Estudiante(newUser.getId(), "", "");
+                            if(datos.getEstudiantes().buscar(tmpEstudiante, tmpEstudiante.hashCode())!=null){
+                                datos.getUsuarios().add(newUser, newUser.getNombre());
+                            }else{
+                                errores.agregar("No existe refencia del estudiante, Linea: "+((token)identificador).getLine()+" Columna: "+((token)identificador).getColumn());  
+                            }
+                            break;
+                        case "super":
+                            errores.agregar("No pude cargar un usuario super en el sistema, Linea: "+((token)tipoUser).getLine()+" Columna: "+((token)tipoUser).getColumn());
+                            break;
+                        default:
+                            errores.agregar("Tipo de usuario no reconocido, Linea: "+((token)tipoUser).getLine()+" Columna: "+((token)tipoUser).getColumn());
+                    }
+                    } catch (CloneNodeException e) {
+                        errores.agregar("Ya existe un usuario \""+newUser.getNombre()+"\" en el sistema, Linea: "+((token)nombre).getLine()+" Columna: "+((token)nombre).getColumn());
+                    }
+                }else{
+                    errores.agregar("Ya existe un usuario con id \""+newUser.getId()+"\" en el sistema, Linea: "+((token)identificador).getLine()+" Columna: "+((token)identificador).getColumn());
                 }
-            }else{
-                errores.agregar("Ya existe un usuario con id \""+newUser.getId()+"\" en el sistema, Linea: "+((token)identificador).getLine()+" Columna: "+((token)identificador).getColumn());
+                System.out.println("--------Usuario-------");
+                System.out.println(newUser.toString());
+                System.out.println("----------------------");
+            }catch(Exception ex){
+                errores.agregar("No se puede recuperar el id, Linea: "+((token)obj).getLine());
             }
-            System.out.println("--------Usuario-------");
-            System.out.println(newUser.toString());
-            System.out.println("----------------------");
         :}
-    |   exp ESTU P_A CARNET:carnet COMA cadenas:nombre COMA cadenas:direccion P_C DOT_COMA
+    |   exp ESTU:obj P_A CARNET:carnet COMA cadenas:nombre COMA cadenas:direccion P_C DOT_COMA
         {:
-            int idCarnet =  Integer.valueOf(((token)carnet).getLexeme());
-            Estudiante newEstudiante = new Estudiante(idCarnet, ((token)nombre).getLexeme(), ((token)direccion).getLexeme());
-            try {
-              datos.getEstudiantes().add(newEstudiante,newEstudiante.hashCode());
-            } catch (CloneNodeException ex) {
-              errores.agregar("Ya existe un estudiante con carnet \""+newEstudiante.getCarnet()+"\" en el sistema, Linea: "+((token)carnet).getLine()+",Columna:"+((token)carnet).getColumn());
+            try{
+                int idCarnet =  Integer.valueOf(((token)carnet).getLexeme());
+                Estudiante newEstudiante = new Estudiante(idCarnet, ((token)nombre).getLexeme(), ((token)direccion).getLexeme());
+                try {
+                datos.getEstudiantes().add(newEstudiante,newEstudiante.hashCode());
+                } catch (CloneNodeException ex) {
+                errores.agregar("Ya existe un estudiante con carnet \""+newEstudiante.getCarnet()+"\" en el sistema, Linea: "+((token)carnet).getLine()+",Columna:"+((token)carnet).getColumn());
+                }
+                System.out.println("------Estudiante------");
+                System.out.println(newEstudiante.toString());
+                System.out.println("----------------------");
+            }catch(Exception ex){
+                errores.agregar("No se puede recuperar el carnet, Linea: "+((token)obj).getLine());
             }
-            System.out.println("------Estudiante------");
-            System.out.println(newEstudiante.toString());
-            System.out.println("----------------------");
         :}
     |   exp EDIF P_A STRING:nombre P_C DOT_COMA
         {:
@@ -121,109 +129,153 @@ exp ::= exp USER P_A nums:identificador COMA ALFANUMERICO:nombre COMA STRING:pas
             System.out.println(newEdificio.toString());
             System.out.println("----------------------");
         :}
-    |   exp CURSO P_A nums:codigo COMA cadenas:nombre COMA nums:semestre COMA nums:creditos P_C DOT_COMA
+    |   exp CURSO:obj P_A nums:codigo COMA cadenas:nombre COMA nums:semestre COMA nums:creditos P_C DOT_COMA
         {:
-            int numSemestre = Integer.valueOf(((token)semestre).getLexeme());
-            
-            if(numSemestre>0&&numSemestre<=10){
-              Curso newCurso = new Curso(Integer.valueOf(((token)codigo).getLexeme()), ((token)nombre).getLexeme(), numSemestre, Integer.valueOf(((token)creditos).getLexeme()));
-              try {
-                datos.getCursos().addOrden(newCurso, String.valueOf(newCurso.getCodigo()));
+            if(semestre != null){
+                int numSemestre = Integer.valueOf(((token)semestre).getLexeme());
+                if(numSemestre>0&&numSemestre<=10){
+                    if(nombre!=null){
+                        if(creditos!=null){
+                            Curso newCurso = new Curso(Integer.valueOf(((token)codigo).getLexeme()), ((token)nombre).getLexeme(), numSemestre, Integer.valueOf(((token)creditos).getLexeme()));
+                            try {
+                                datos.getCursos().addOrden(newCurso, String.valueOf(newCurso.getCodigo()));
 
-                System.out.println("---------Curso--------");
-                System.out.println(newCurso.toString());
-                System.out.println("----------------------");
-
-              } catch (CloneNodeException ex) {
-                errores.agregar("Ya existe un curso con codigo \""+newCurso.getCodigo()+"\" ,Linea: "+((token)codigo).getLine()+" Columna: "+((token)codigo).getColumn());
-              }
-            }else{
-              errores.agregar("Error Semantico: el numero asociado al semestre debe ser entre el rango [1 - 10], Linea: "+((token)semestre).getLine()+",Columna: "+((token)semestre).getColumn());
-            }
-
-        :}
-    |   exp CATE P_A nums:identificador COMA cadenas:nombre COMA cadenas:direccion P_C DOT_COMA
-        {:
-            int id = Integer.valueOf(((token)identificador).getLexeme());
-            Catedratico newCatedratico = new Catedratico(id, ((token)nombre).getLexeme(),((token)direccion).getLexeme());
-            System.out.println("-----Catedratico------");
-            System.out.println(newCatedratico.toString());
-            System.out.println("----------------------");
-            try {
-              datos.getCatedraticos().agregar(((token)identificador).getLexeme(), newCatedratico);
-            } catch (CloneNodeException ex) {
-              errores.agregar("Ya existe un Catedratico con identificador: "+((token)identificador).getLexeme()+", Linea: "+((token)identificador).getLine()+",Columna: "+((token)identificador).getColumn());
-            }catch(NullTagException ex){
-              errores.agregar("No se esta asignando un identificador al Catedratico, Linea: "+((token)identificador).getLine()+",Columna: "+((token)identificador).getColumn());
-            }
-        :}
-    |   exp SALON P_A STRING:edificio COMA nums:numero COMA nums:capacidad P_C DOT_COMA
-        {:
-            int numeroSalon = Integer.valueOf(((token)numero).getLexeme());
-            int cantidadEstudiantes = Integer.valueOf(((token)capacidad).getLexeme());
-            String edi = ((token)edificio).getLexeme();
-
-            try {
-              Edificio recuEdificio =  datos.getEdificios().buscar(edi);
-
-              if(recuEdificio!=null){
-                Salon newSalon = new Salon(numeroSalon, cantidadEstudiantes, edi);
-                recuEdificio.getSalones().agregarOrden(newSalon,String.valueOf(newSalon.getNumeroSalon()));
-
-                System.out.println("---------Salon--------");
-                System.out.println(newSalon.toString());
-                System.out.println("----------------------");
-
-              }else{
-                errores.agregar("No existe un edificio \""+edi+"\", Linea: "+((token)edificio).getLine()+" ,Columna: "+((token)edificio).getColumn());
-              }
-            } catch (CloneNodeException ex) {
-              errores.agregar("Ya existe un salon \""+numeroSalon+"\" en el edificio \""+edi+"\", Linea: "+((token)numero).getLine()+" ,Columna: "+((token)numero).getColumn());
-            }catch(InvalidStructureException ex){
-              errores.agregar("Error al guardar el salon: "+numeroSalon);
-            }
-        :}
-    |   exp HORARIO P_A nums:code COMA CADENA_HORARIO:horario COMA CADENA_DIA:dia COMA nums:curso COMA nums:salon COMA cadenas:edificio COMA nums:catedratico P_C DOT_COMA
-        {:
-            int codigo = Integer.valueOf(((token)code).getLexeme());
-            String hour = ((token)horario).getLexeme();
-            String day = ((token)dia).getLexeme();
-            int codeCurso = Integer.valueOf(((token)curso).getLexeme());
-            int numSalon = Integer.valueOf(((token)salon).getLexeme());
-            String edi = ((token)edificio).getLexeme();
-            int idCatedratico = Integer.valueOf(((token)catedratico).getLexeme());
-
-            Horario newHorario = new Horario(codigo, hour, day, codeCurso, numSalon, edi, idCatedratico);
-            try {
-                Edificio tmpEdificio = datos.getEdificios().buscar(edi);
-                if(tmpEdificio!=null){
-                    Curso tmpCurso = datos.getCursos().buscar(String.valueOf(codeCurso));
-                    
-                    if(tmpCurso!=null){
-                        Salon tmpSalon = tmpEdificio.getSalones().buscar(String.valueOf(numSalon));
-                        if(tmpSalon!=null){
-                            Catedratico tmpCatedratico = datos.getCatedraticos().buscar(String.valueOf(idCatedratico));
-                            if(tmpCatedratico!=null){
-                                datos.getHorarios().agregar(String.valueOf(newHorario.getCodigo()), newHorario);
-                                System.out.println("--------Horario-------");
-                                System.out.println(newHorario.toString());
+                                System.out.println("---------Curso--------");
+                                System.out.println(newCurso.toString());
                                 System.out.println("----------------------");
-                            }else{
-                                errores.agregar("No existe el catedratico \""+idCatedratico+"\" en el sistema, Linea: "+(((token)catedratico).getLine())+",Columna: "+(((token)catedratico).getColumn()));
+
+                            } catch (CloneNodeException ex) {
+                                errores.agregar("Ya existe un curso con codigo \""+newCurso.getCodigo()+"\" ,Linea: "+((token)codigo).getLine()+" Columna: "+((token)codigo).getColumn());
                             }
                         }else{
-                            errores.agregar("No existe un salon \""+numSalon+"\" en el edificio \""+edi+"\", Linea: "+(((token)salon).getLine())+",Columna: "+(((token)salon).getColumn()));
+                            errores.agregar("No se puede recuperar la cantidad de creditos del curso, Linea: "+((token)obj).getLine());    
                         }
                     }else{
-                        errores.agregar("No existe un curso con codigo \""+codeCurso+"\" en el sistema, Linea: "+(((token)curso).getLine())+",Columna: "+(((token)curso).getColumn()));
+                        errores.agregar("No se puede recuperar el nombre del curso, Linea: "+((token)obj).getLine());        
                     }
                 }else{
-                    errores.agregar("No existe un edificio \""+edi+"\" en el sistema, Linea: "+(((token)edificio).getLine())+",Columna: "+(((token)edificio).getColumn()));
+                errores.agregar("Error Semantico: el numero asociado al semestre debe ser entre el rango [1 - 10], Linea: "+((token)semestre).getLine()+",Columna: "+((token)semestre).getColumn());
                 }
-            } catch (CloneNodeException ex) {
-                errores.agregar("Ya existe un horario con el tag \""+codigo+"\" en el sistema, Linea: "+(((token)code).getLine())+",Columna: "+(((token)code).getColumn()));
-            } catch(NullTagException ex){
-                errores.agregar("Debe de agregar un codigo de identificacion para el horario");
+            }else{
+                errores.agregar("No se puede recuperar el semestre del curso, Linea: "+((token)obj).getLine());
+            }
+        :}
+    |   exp CATE:obj P_A nums:identificador COMA cadenas:nombre COMA cadenas:direccion P_C DOT_COMA
+        {:
+            if(identificador!=null){
+                int id = Integer.valueOf(((token)identificador).getLexeme());
+                if(nombre!=null){
+                    if(direccion!=null){
+                        Catedratico newCatedratico = new Catedratico(id, ((token)nombre).getLexeme(),((token)direccion).getLexeme());
+                        try {
+                            datos.getCatedraticos().agregar(((token)identificador).getLexeme(), newCatedratico);
+                            System.out.println("-----Catedratico------");
+                            System.out.println(newCatedratico.toString());
+                            System.out.println("----------------------");
+                        } catch (CloneNodeException ex) {
+                            errores.agregar("Ya existe un Catedratico con identificador: "+((token)identificador).getLexeme()+", Linea: "+((token)identificador).getLine()+",Columna: "+((token)identificador).getColumn());
+                        }catch(NullTagException ex){
+                            errores.agregar("No se esta asignando un identificador al Catedratico, Linea: "+((token)identificador).getLine()+",Columna: "+((token)identificador).getColumn());
+                        }
+                    }else{
+                        errores.agregar("No se puede recuperar la direccion del catedratico, Linea: "+((token)obj).getLine());
+                    }
+                }else{
+                    errores.agregar("No se puede recuperar el nombre del catedratico, Linea: "+((token)obj).getLine());
+                }
+            }else{
+                errores.agregar("No se puede recuperar el identificador del catedratico, Linea: "+((token)obj).getLine());
+            }
+        :}
+    |   exp SALON:obj P_A STRING:edificio COMA nums:numero COMA nums:capacidad P_C DOT_COMA
+        {:
+            if(numero!=null){
+                int numeroSalon = Integer.valueOf(((token)numero).getLexeme()); 
+                if(capacidad!=null){
+                    int cantidadEstudiantes = Integer.valueOf(((token)capacidad).getLexeme());
+                    String edi = ((token)edificio).getLexeme();
+                    try {
+                        Edificio recuEdificio =  datos.getEdificios().buscar(edi);
+                        if(recuEdificio!=null){
+                            Salon newSalon = new Salon(numeroSalon, cantidadEstudiantes, edi);
+                            recuEdificio.getSalones().agregarOrden(newSalon,String.valueOf(newSalon.getNumeroSalon()));
+
+                            System.out.println("---------Salon--------");
+                            System.out.println(newSalon.toString());
+                            System.out.println("----------------------");
+
+                        }else{
+                            errores.agregar("No existe un edificio \""+edi+"\", Linea: "+((token)edificio).getLine()+" ,Columna: "+((token)edificio).getColumn());
+                        }
+                    } catch (CloneNodeException ex) {
+                        errores.agregar("Ya existe un salon \""+numeroSalon+"\" en el edificio \""+edi+"\", Linea: "+((token)numero).getLine()+" ,Columna: "+((token)numero).getColumn());
+                    }catch(InvalidStructureException ex){
+                        errores.agregar("Error al guardar el salon: "+numeroSalon);
+                    }
+                }else{
+                    errores.agregar("No se puede recuperar la capacidad del salon , Linea: "+((token)obj).getLine());
+                }
+            }else{
+                errores.agregar("No se puede recuperar el numero de salon , Linea: "+((token)obj).getLine());
+            }
+
+        :}
+    |   exp HORARIO:obj P_A nums:code COMA CADENA_HORARIO:horario COMA CADENA_DIA:dia COMA nums:curso COMA nums:salon COMA ALFANUMERICO:edificio COMA nums:catedratico P_C DOT_COMA
+        {:
+            if(code!=null){
+                int codigo = Integer.valueOf(((token)code).getLexeme());
+                String hour = ((token)horario).getLexeme();
+                String day = ((token)dia).getLexeme();
+                if(curso!=null){
+                    int codeCurso = Integer.valueOf(((token)curso).getLexeme());
+                    if(salon!=null){
+                        int numSalon = Integer.valueOf(((token)salon).getLexeme());
+                        String edi = ((token)edificio).getLexeme();
+                        if(catedratico!=null){
+                            int idCatedratico = Integer.valueOf(((token)catedratico).getLexeme());
+                            Horario newHorario = new Horario(codigo, hour, day, codeCurso, numSalon, edi, idCatedratico);
+                            try {
+                                Edificio tmpEdificio = datos.getEdificios().buscar(edi);
+                                if(tmpEdificio!=null){
+                                    Curso tmpCurso = datos.getCursos().buscar(String.valueOf(codeCurso));
+                                    
+                                    if(tmpCurso!=null){
+                                        Salon tmpSalon = tmpEdificio.getSalones().buscar(String.valueOf(numSalon));
+                                        if(tmpSalon!=null){
+                                            Catedratico tmpCatedratico = datos.getCatedraticos().buscar(String.valueOf(idCatedratico));
+                                            if(tmpCatedratico!=null){
+                                                datos.getHorarios().agregar(String.valueOf(newHorario.getCodigo()), newHorario);
+                                                System.out.println("--------Horario-------");
+                                                System.out.println(newHorario.toString());
+                                                System.out.println("----------------------");
+                                            }else{
+                                                errores.agregar("No existe el catedratico \""+idCatedratico+"\" en el sistema, Linea: "+(((token)catedratico).getLine())+",Columna: "+(((token)catedratico).getColumn()));
+                                            }
+                                        }else{
+                                            errores.agregar("No existe un salon \""+numSalon+"\" en el edificio \""+edi+"\", Linea: "+(((token)salon).getLine())+",Columna: "+(((token)salon).getColumn()));
+                                        }
+                                    }else{
+                                        errores.agregar("No existe un curso con codigo \""+codeCurso+"\" en el sistema, Linea: "+(((token)curso).getLine())+",Columna: "+(((token)curso).getColumn()));
+                                    }
+                                }else{
+                                    errores.agregar("No existe un edificio \""+edi+"\" en el sistema, Linea: "+(((token)edificio).getLine())+",Columna: "+(((token)edificio).getColumn()));
+                                }
+                            } catch (CloneNodeException ex) {
+                                errores.agregar("Ya existe un horario con el tag \""+codigo+"\" en el sistema, Linea: "+(((token)code).getLine())+",Columna: "+(((token)code).getColumn()));
+                            } catch(NullTagException ex){
+                                errores.agregar("Debe de agregar un codigo de identificacion para el horario");
+                            }
+                        }else{
+                            errores.agregar("No se puede recuperar el identificador del catedratico en el horario, Linea: "+((token)obj).getLine());
+                        }
+                    }else{
+                        errores.agregar("No se puede recuperar el numero de salon del horario , Linea: "+((token)obj).getLine());
+                    }
+                }else{
+                    errores.agregar("No se puede recuperar el codigo del curso del horario , Linea: "+((token)obj).getLine());
+                }
+            }else{
+                errores.agregar("No se puede recuperar el codigo de identificacion del horario , Linea: "+((token)obj).getLine());
             }
 
         :}

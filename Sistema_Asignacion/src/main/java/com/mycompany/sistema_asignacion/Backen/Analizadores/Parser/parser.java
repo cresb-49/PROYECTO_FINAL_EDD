@@ -92,7 +92,7 @@ public class parser extends java_cup.runtime.lr_parser {
     "\004\022\073\001\002\000\004\024\074\001\002\000\024" +
     "\002\ufffe\004\ufffe\005\ufffe\006\ufffe\007\ufffe\010\ufffe\011" +
     "\ufffe\012\ufffe\013\ufffe\001\002\000\010\003\023\016\024" +
-    "\025\022\001\002\000\004\023\077\001\002\000\004\015" +
+    "\025\022\001\002\000\004\023\077\001\002\000\004\017" +
     "\100\001\002\000\004\023\101\001\002\000\004\017\102" +
     "\001\002\000\004\023\103\001\002\000\004\014\104\001" +
     "\002\000\004\022\105\001\002\000\004\024\106\001\002" +
@@ -108,12 +108,12 @@ public class parser extends java_cup.runtime.lr_parser {
     "\004\023\123\001\002\000\004\026\124\001\002\000\004" +
     "\023\125\001\002\000\010\003\023\016\024\025\022\001" +
     "\002\000\004\023\127\001\002\000\010\003\023\016\024" +
-    "\025\022\001\002\000\004\023\131\001\002\000\010\003" +
-    "\040\017\037\020\041\001\002\000\004\023\133\001\002" +
-    "\000\010\003\023\016\024\025\022\001\002\000\004\022" +
-    "\135\001\002\000\004\024\136\001\002\000\024\002\ufffa" +
-    "\004\ufffa\005\ufffa\006\ufffa\007\ufffa\010\ufffa\011\ufffa\012" +
-    "\ufffa\013\ufffa\001\002" });
+    "\025\022\001\002\000\004\023\131\001\002\000\004\015" +
+    "\132\001\002\000\004\023\133\001\002\000\010\003\023" +
+    "\016\024\025\022\001\002\000\004\022\135\001\002\000" +
+    "\004\024\136\001\002\000\024\002\ufffa\004\ufffa\005\ufffa" +
+    "\006\ufffa\007\ufffa\010\ufffa\011\ufffa\012\ufffa\013\ufffa\001" +
+    "\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -150,9 +150,9 @@ public class parser extends java_cup.runtime.lr_parser {
     "\000\004\003\117\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\004\003\125\001\001\000\002\001\001\000\004\003" +
-    "\127\001\001\000\002\001\001\000\004\004\131\001\001" +
-    "\000\002\001\001\000\004\003\133\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001" });
+    "\127\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\004\003\133\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -275,9 +275,12 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 1: // exp ::= exp USER P_A nums COMA ALFANUMERICO COMA STRING COMA TIPO_USER P_C DOT_COMA 
+          case 1: // exp ::= exp USER P_A nums COMA STRING COMA STRING COMA TIPO_USER P_C DOT_COMA 
             {
               Object RESULT =null;
+		int objleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)).left;
+		int objright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)).right;
+		Object obj = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-10)).value;
 		int identificadorleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).left;
 		int identificadorright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).right;
 		Object identificador = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-8)).value;
@@ -291,38 +294,42 @@ class CUP$parser$actions {
 		int tipoUserright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Object tipoUser = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
-            int id = Integer.valueOf(((token)identificador).getLexeme());
-            Usuario newUser = new Usuario(id, ((token)nombre).getLexeme(), ((token)pass).getLexeme(), ((token)tipoUser).getLexeme());
-            if(datos.getUsuarios().buscar(newUser)==null)
-            {
-                try {
-                  switch (newUser.getTipo()) {
-                    case "colaborador":
-                        datos.getUsuarios().add(newUser, newUser.getNombre());
-                        break;
-                    case "estudiante":
-                        Estudiante tmpEstudiante = new Estudiante(newUser.getId(), "", "");
-                        if(datos.getEstudiantes().buscar(tmpEstudiante, tmpEstudiante.hashCode())!=null){
+            try{
+                int id = Integer.valueOf(((token)identificador).getLexeme());
+                Usuario newUser = new Usuario(id, ((token)nombre).getLexeme(), ((token)pass).getLexeme(), ((token)tipoUser).getLexeme());
+                if(datos.getUsuarios().buscar(newUser)==null)
+                {
+                    try {
+                    switch (newUser.getTipo()) {
+                        case "colaborador":
                             datos.getUsuarios().add(newUser, newUser.getNombre());
-                        }else{
-                            errores.agregar("No existe refencia del estudiante, Linea: "+((token)identificador).getLine()+" Columna: "+((token)identificador).getColumn());  
-                        }
-                        break;
-                    case "super":
-                        errores.agregar("No pude cargar un usuario super en el sistema, Linea: "+((token)tipoUser).getLine()+" Columna: "+((token)tipoUser).getColumn());
-                        break;
-                    default:
-                        errores.agregar("Tipo de usuario no reconocido, Linea: "+((token)tipoUser).getLine()+" Columna: "+((token)tipoUser).getColumn());
-                  }
-                } catch (CloneNodeException e) {
-                    errores.agregar("Ya existe un usuario \""+newUser.getNombre()+"\" en el sistema, Linea: "+((token)nombre).getLine()+" Columna: "+((token)nombre).getColumn());
+                            break;
+                        case "estudiante":
+                            Estudiante tmpEstudiante = new Estudiante(newUser.getId(), "", "");
+                            if(datos.getEstudiantes().buscar(tmpEstudiante, tmpEstudiante.hashCode())!=null){
+                                datos.getUsuarios().add(newUser, newUser.getNombre());
+                            }else{
+                                errores.agregar("No existe refencia del estudiante, Linea: "+((token)identificador).getLine()+" Columna: "+((token)identificador).getColumn());  
+                            }
+                            break;
+                        case "super":
+                            errores.agregar("No pude cargar un usuario super en el sistema, Linea: "+((token)tipoUser).getLine()+" Columna: "+((token)tipoUser).getColumn());
+                            break;
+                        default:
+                            errores.agregar("Tipo de usuario no reconocido, Linea: "+((token)tipoUser).getLine()+" Columna: "+((token)tipoUser).getColumn());
+                    }
+                    } catch (CloneNodeException e) {
+                        errores.agregar("Ya existe un usuario \""+newUser.getNombre()+"\" en el sistema, Linea: "+((token)nombre).getLine()+" Columna: "+((token)nombre).getColumn());
+                    }
+                }else{
+                    errores.agregar("Ya existe un usuario con id \""+newUser.getId()+"\" en el sistema, Linea: "+((token)identificador).getLine()+" Columna: "+((token)identificador).getColumn());
                 }
-            }else{
-                errores.agregar("Ya existe un usuario con id \""+newUser.getId()+"\" en el sistema, Linea: "+((token)identificador).getLine()+" Columna: "+((token)identificador).getColumn());
+                System.out.println("--------Usuario-------");
+                System.out.println(newUser.toString());
+                System.out.println("----------------------");
+            }catch(Exception ex){
+                errores.agregar("No se puede recuperar el id, Linea: "+((token)obj).getLine());
             }
-            System.out.println("--------Usuario-------");
-            System.out.println(newUser.toString());
-            System.out.println("----------------------");
         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("exp",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-11)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -332,6 +339,9 @@ class CUP$parser$actions {
           case 2: // exp ::= exp ESTU P_A CARNET COMA cadenas COMA cadenas P_C DOT_COMA 
             {
               Object RESULT =null;
+		int objleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).left;
+		int objright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).right;
+		Object obj = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-8)).value;
 		int carnetleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).left;
 		int carnetright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
 		Object carnet = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
@@ -342,16 +352,20 @@ class CUP$parser$actions {
 		int direccionright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Object direccion = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
-            int idCarnet =  Integer.valueOf(((token)carnet).getLexeme());
-            Estudiante newEstudiante = new Estudiante(idCarnet, ((token)nombre).getLexeme(), ((token)direccion).getLexeme());
-            try {
-              datos.getEstudiantes().add(newEstudiante,newEstudiante.hashCode());
-            } catch (CloneNodeException ex) {
-              errores.agregar("Ya existe un estudiante con carnet \""+newEstudiante.getCarnet()+"\" en el sistema, Linea: "+((token)carnet).getLine()+",Columna:"+((token)carnet).getColumn());
+            try{
+                int idCarnet =  Integer.valueOf(((token)carnet).getLexeme());
+                Estudiante newEstudiante = new Estudiante(idCarnet, ((token)nombre).getLexeme(), ((token)direccion).getLexeme());
+                try {
+                datos.getEstudiantes().add(newEstudiante,newEstudiante.hashCode());
+                } catch (CloneNodeException ex) {
+                errores.agregar("Ya existe un estudiante con carnet \""+newEstudiante.getCarnet()+"\" en el sistema, Linea: "+((token)carnet).getLine()+",Columna:"+((token)carnet).getColumn());
+                }
+                System.out.println("------Estudiante------");
+                System.out.println(newEstudiante.toString());
+                System.out.println("----------------------");
+            }catch(Exception ex){
+                errores.agregar("No se puede recuperar el carnet, Linea: "+((token)obj).getLine());
             }
-            System.out.println("------Estudiante------");
-            System.out.println(newEstudiante.toString());
-            System.out.println("----------------------");
         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("exp",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -383,6 +397,9 @@ class CUP$parser$actions {
           case 4: // exp ::= exp CURSO P_A nums COMA cadenas COMA nums COMA nums P_C DOT_COMA 
             {
               Object RESULT =null;
+		int objleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)).left;
+		int objright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)).right;
+		Object obj = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-10)).value;
 		int codigoleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).left;
 		int codigoright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).right;
 		Object codigo = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-8)).value;
@@ -396,24 +413,34 @@ class CUP$parser$actions {
 		int creditosright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Object creditos = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
-            int numSemestre = Integer.valueOf(((token)semestre).getLexeme());
-            
-            if(numSemestre>0&&numSemestre<=10){
-              Curso newCurso = new Curso(Integer.valueOf(((token)codigo).getLexeme()), ((token)nombre).getLexeme(), numSemestre, Integer.valueOf(((token)creditos).getLexeme()));
-              try {
-                datos.getCursos().addOrden(newCurso, String.valueOf(newCurso.getCodigo()));
+            if(semestre != null){
+                int numSemestre = Integer.valueOf(((token)semestre).getLexeme());
+                if(numSemestre>0&&numSemestre<=10){
+                    if(nombre!=null){
+                        if(creditos!=null){
+                            Curso newCurso = new Curso(Integer.valueOf(((token)codigo).getLexeme()), ((token)nombre).getLexeme(), numSemestre, Integer.valueOf(((token)creditos).getLexeme()));
+                            try {
+                                datos.getCursos().addOrden(newCurso, String.valueOf(newCurso.getCodigo()));
 
-                System.out.println("---------Curso--------");
-                System.out.println(newCurso.toString());
-                System.out.println("----------------------");
+                                System.out.println("---------Curso--------");
+                                System.out.println(newCurso.toString());
+                                System.out.println("----------------------");
 
-              } catch (CloneNodeException ex) {
-                errores.agregar("Ya existe un curso con codigo \""+newCurso.getCodigo()+"\" ,Linea: "+((token)codigo).getLine()+" Columna: "+((token)codigo).getColumn());
-              }
+                            } catch (CloneNodeException ex) {
+                                errores.agregar("Ya existe un curso con codigo \""+newCurso.getCodigo()+"\" ,Linea: "+((token)codigo).getLine()+" Columna: "+((token)codigo).getColumn());
+                            }
+                        }else{
+                            errores.agregar("No se puede recuperar la cantidad de creditos del curso, Linea: "+((token)obj).getLine());    
+                        }
+                    }else{
+                        errores.agregar("No se puede recuperar el nombre del curso, Linea: "+((token)obj).getLine());        
+                    }
+                }else{
+                errores.agregar("Error Semantico: el numero asociado al semestre debe ser entre el rango [1 - 10], Linea: "+((token)semestre).getLine()+",Columna: "+((token)semestre).getColumn());
+                }
             }else{
-              errores.agregar("Error Semantico: el numero asociado al semestre debe ser entre el rango [1 - 10], Linea: "+((token)semestre).getLine()+",Columna: "+((token)semestre).getColumn());
+                errores.agregar("No se puede recuperar el semestre del curso, Linea: "+((token)obj).getLine());
             }
-
         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("exp",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-11)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -423,6 +450,9 @@ class CUP$parser$actions {
           case 5: // exp ::= exp CATE P_A nums COMA cadenas COMA cadenas P_C DOT_COMA 
             {
               Object RESULT =null;
+		int objleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).left;
+		int objright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).right;
+		Object obj = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-8)).value;
 		int identificadorleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).left;
 		int identificadorright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
 		Object identificador = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
@@ -433,17 +463,29 @@ class CUP$parser$actions {
 		int direccionright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Object direccion = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
-            int id = Integer.valueOf(((token)identificador).getLexeme());
-            Catedratico newCatedratico = new Catedratico(id, ((token)nombre).getLexeme(),((token)direccion).getLexeme());
-            System.out.println("-----Catedratico------");
-            System.out.println(newCatedratico.toString());
-            System.out.println("----------------------");
-            try {
-              datos.getCatedraticos().agregar(((token)identificador).getLexeme(), newCatedratico);
-            } catch (CloneNodeException ex) {
-              errores.agregar("Ya existe un Catedratico con identificador: "+((token)identificador).getLexeme()+", Linea: "+((token)identificador).getLine()+",Columna: "+((token)identificador).getColumn());
-            }catch(NullTagException ex){
-              errores.agregar("No se esta asignando un identificador al Catedratico, Linea: "+((token)identificador).getLine()+",Columna: "+((token)identificador).getColumn());
+            if(identificador!=null){
+                int id = Integer.valueOf(((token)identificador).getLexeme());
+                if(nombre!=null){
+                    if(direccion!=null){
+                        Catedratico newCatedratico = new Catedratico(id, ((token)nombre).getLexeme(),((token)direccion).getLexeme());
+                        try {
+                            datos.getCatedraticos().agregar(((token)identificador).getLexeme(), newCatedratico);
+                            System.out.println("-----Catedratico------");
+                            System.out.println(newCatedratico.toString());
+                            System.out.println("----------------------");
+                        } catch (CloneNodeException ex) {
+                            errores.agregar("Ya existe un Catedratico con identificador: "+((token)identificador).getLexeme()+", Linea: "+((token)identificador).getLine()+",Columna: "+((token)identificador).getColumn());
+                        }catch(NullTagException ex){
+                            errores.agregar("No se esta asignando un identificador al Catedratico, Linea: "+((token)identificador).getLine()+",Columna: "+((token)identificador).getColumn());
+                        }
+                    }else{
+                        errores.agregar("No se puede recuperar la direccion del catedratico, Linea: "+((token)obj).getLine());
+                    }
+                }else{
+                    errores.agregar("No se puede recuperar el nombre del catedratico, Linea: "+((token)obj).getLine());
+                }
+            }else{
+                errores.agregar("No se puede recuperar el identificador del catedratico, Linea: "+((token)obj).getLine());
             }
         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("exp",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -454,6 +496,9 @@ class CUP$parser$actions {
           case 6: // exp ::= exp SALON P_A STRING COMA nums COMA nums P_C DOT_COMA 
             {
               Object RESULT =null;
+		int objleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).left;
+		int objright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).right;
+		Object obj = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-8)).value;
 		int edificioleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).left;
 		int edificioright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
 		Object edificio = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
@@ -464,38 +509,48 @@ class CUP$parser$actions {
 		int capacidadright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Object capacidad = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
-            int numeroSalon = Integer.valueOf(((token)numero).getLexeme());
-            int cantidadEstudiantes = Integer.valueOf(((token)capacidad).getLexeme());
-            String edi = ((token)edificio).getLexeme();
+            if(numero!=null){
+                int numeroSalon = Integer.valueOf(((token)numero).getLexeme()); 
+                if(capacidad!=null){
+                    int cantidadEstudiantes = Integer.valueOf(((token)capacidad).getLexeme());
+                    String edi = ((token)edificio).getLexeme();
+                    try {
+                        Edificio recuEdificio =  datos.getEdificios().buscar(edi);
+                        if(recuEdificio!=null){
+                            Salon newSalon = new Salon(numeroSalon, cantidadEstudiantes, edi);
+                            recuEdificio.getSalones().agregarOrden(newSalon,String.valueOf(newSalon.getNumeroSalon()));
 
-            try {
-              Edificio recuEdificio =  datos.getEdificios().buscar(edi);
+                            System.out.println("---------Salon--------");
+                            System.out.println(newSalon.toString());
+                            System.out.println("----------------------");
 
-              if(recuEdificio!=null){
-                Salon newSalon = new Salon(numeroSalon, cantidadEstudiantes, edi);
-                recuEdificio.getSalones().agregarOrden(newSalon,String.valueOf(newSalon.getNumeroSalon()));
-
-                System.out.println("---------Salon--------");
-                System.out.println(newSalon.toString());
-                System.out.println("----------------------");
-
-              }else{
-                errores.agregar("No existe un edificio \""+edi+"\", Linea: "+((token)edificio).getLine()+" ,Columna: "+((token)edificio).getColumn());
-              }
-            } catch (CloneNodeException ex) {
-              errores.agregar("Ya existe un salon \""+numeroSalon+"\" en el edificio \""+edi+"\", Linea: "+((token)numero).getLine()+" ,Columna: "+((token)numero).getColumn());
-            }catch(InvalidStructureException ex){
-              errores.agregar("Error al guardar el salon: "+numeroSalon);
+                        }else{
+                            errores.agregar("No existe un edificio \""+edi+"\", Linea: "+((token)edificio).getLine()+" ,Columna: "+((token)edificio).getColumn());
+                        }
+                    } catch (CloneNodeException ex) {
+                        errores.agregar("Ya existe un salon \""+numeroSalon+"\" en el edificio \""+edi+"\", Linea: "+((token)numero).getLine()+" ,Columna: "+((token)numero).getColumn());
+                    }catch(InvalidStructureException ex){
+                        errores.agregar("Error al guardar el salon: "+numeroSalon);
+                    }
+                }else{
+                    errores.agregar("No se puede recuperar la capacidad del salon , Linea: "+((token)obj).getLine());
+                }
+            }else{
+                errores.agregar("No se puede recuperar el numero de salon , Linea: "+((token)obj).getLine());
             }
+
         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("exp",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // exp ::= exp HORARIO P_A nums COMA CADENA_HORARIO COMA CADENA_DIA COMA nums COMA nums COMA cadenas COMA nums P_C DOT_COMA 
+          case 7: // exp ::= exp HORARIO P_A nums COMA CADENA_HORARIO COMA CADENA_DIA COMA nums COMA nums COMA ALFANUMERICO COMA nums P_C DOT_COMA 
             {
               Object RESULT =null;
+		int objleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-16)).left;
+		int objright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-16)).right;
+		Object obj = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-16)).value;
 		int codeleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-14)).left;
 		int coderight = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-14)).right;
 		Object code = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-14)).value;
@@ -518,45 +573,60 @@ class CUP$parser$actions {
 		int catedraticoright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Object catedratico = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
-            int codigo = Integer.valueOf(((token)code).getLexeme());
-            String hour = ((token)horario).getLexeme();
-            String day = ((token)dia).getLexeme();
-            int codeCurso = Integer.valueOf(((token)curso).getLexeme());
-            int numSalon = Integer.valueOf(((token)salon).getLexeme());
-            String edi = ((token)edificio).getLexeme();
-            int idCatedratico = Integer.valueOf(((token)catedratico).getLexeme());
-
-            Horario newHorario = new Horario(codigo, hour, day, codeCurso, numSalon, edi, idCatedratico);
-            try {
-                Edificio tmpEdificio = datos.getEdificios().buscar(edi);
-                if(tmpEdificio!=null){
-                    Curso tmpCurso = datos.getCursos().buscar(String.valueOf(codeCurso));
-                    
-                    if(tmpCurso!=null){
-                        Salon tmpSalon = tmpEdificio.getSalones().buscar(String.valueOf(numSalon));
-                        if(tmpSalon!=null){
-                            Catedratico tmpCatedratico = datos.getCatedraticos().buscar(String.valueOf(idCatedratico));
-                            if(tmpCatedratico!=null){
-                                datos.getHorarios().agregar(String.valueOf(newHorario.getCodigo()), newHorario);
-                                System.out.println("--------Horario-------");
-                                System.out.println(newHorario.toString());
-                                System.out.println("----------------------");
-                            }else{
-                                errores.agregar("No existe el catedratico \""+idCatedratico+"\" en el sistema, Linea: "+(((token)catedratico).getLine())+",Columna: "+(((token)catedratico).getColumn()));
+            if(code!=null){
+                int codigo = Integer.valueOf(((token)code).getLexeme());
+                String hour = ((token)horario).getLexeme();
+                String day = ((token)dia).getLexeme();
+                if(curso!=null){
+                    int codeCurso = Integer.valueOf(((token)curso).getLexeme());
+                    if(salon!=null){
+                        int numSalon = Integer.valueOf(((token)salon).getLexeme());
+                        String edi = ((token)edificio).getLexeme();
+                        if(catedratico!=null){
+                            int idCatedratico = Integer.valueOf(((token)catedratico).getLexeme());
+                            Horario newHorario = new Horario(codigo, hour, day, codeCurso, numSalon, edi, idCatedratico);
+                            try {
+                                Edificio tmpEdificio = datos.getEdificios().buscar(edi);
+                                if(tmpEdificio!=null){
+                                    Curso tmpCurso = datos.getCursos().buscar(String.valueOf(codeCurso));
+                                    
+                                    if(tmpCurso!=null){
+                                        Salon tmpSalon = tmpEdificio.getSalones().buscar(String.valueOf(numSalon));
+                                        if(tmpSalon!=null){
+                                            Catedratico tmpCatedratico = datos.getCatedraticos().buscar(String.valueOf(idCatedratico));
+                                            if(tmpCatedratico!=null){
+                                                datos.getHorarios().agregar(String.valueOf(newHorario.getCodigo()), newHorario);
+                                                System.out.println("--------Horario-------");
+                                                System.out.println(newHorario.toString());
+                                                System.out.println("----------------------");
+                                            }else{
+                                                errores.agregar("No existe el catedratico \""+idCatedratico+"\" en el sistema, Linea: "+(((token)catedratico).getLine())+",Columna: "+(((token)catedratico).getColumn()));
+                                            }
+                                        }else{
+                                            errores.agregar("No existe un salon \""+numSalon+"\" en el edificio \""+edi+"\", Linea: "+(((token)salon).getLine())+",Columna: "+(((token)salon).getColumn()));
+                                        }
+                                    }else{
+                                        errores.agregar("No existe un curso con codigo \""+codeCurso+"\" en el sistema, Linea: "+(((token)curso).getLine())+",Columna: "+(((token)curso).getColumn()));
+                                    }
+                                }else{
+                                    errores.agregar("No existe un edificio \""+edi+"\" en el sistema, Linea: "+(((token)edificio).getLine())+",Columna: "+(((token)edificio).getColumn()));
+                                }
+                            } catch (CloneNodeException ex) {
+                                errores.agregar("Ya existe un horario con el tag \""+codigo+"\" en el sistema, Linea: "+(((token)code).getLine())+",Columna: "+(((token)code).getColumn()));
+                            } catch(NullTagException ex){
+                                errores.agregar("Debe de agregar un codigo de identificacion para el horario");
                             }
                         }else{
-                            errores.agregar("No existe un salon \""+numSalon+"\" en el edificio \""+edi+"\", Linea: "+(((token)salon).getLine())+",Columna: "+(((token)salon).getColumn()));
+                            errores.agregar("No se puede recuperar el identificador del catedratico en el horario, Linea: "+((token)obj).getLine());
                         }
                     }else{
-                        errores.agregar("No existe un curso con codigo \""+codeCurso+"\" en el sistema, Linea: "+(((token)curso).getLine())+",Columna: "+(((token)curso).getColumn()));
+                        errores.agregar("No se puede recuperar el numero de salon del horario , Linea: "+((token)obj).getLine());
                     }
                 }else{
-                    errores.agregar("No existe un edificio \""+edi+"\" en el sistema, Linea: "+(((token)edificio).getLine())+",Columna: "+(((token)edificio).getColumn()));
+                    errores.agregar("No se puede recuperar el codigo del curso del horario , Linea: "+((token)obj).getLine());
                 }
-            } catch (CloneNodeException ex) {
-                errores.agregar("Ya existe un horario con el tag \""+codigo+"\" en el sistema, Linea: "+(((token)code).getLine())+",Columna: "+(((token)code).getColumn()));
-            } catch(NullTagException ex){
-                errores.agregar("Debe de agregar un codigo de identificacion para el horario");
+            }else{
+                errores.agregar("No se puede recuperar el codigo de identificacion del horario , Linea: "+((token)obj).getLine());
             }
 
         
@@ -592,7 +662,6 @@ class CUP$parser$actions {
             tmpEstudiante = datos.getEstudiantes().buscar(tmpEstudiante,tmpEstudiante.hashCode());
             
             if(tmpEstudiante!=null){
-                
                 Horario tmpHorario = datos.getHorarios().buscar(String.valueOf(horario));
                 if(tmpHorario!=null){
                     int calculo = zona +final_;
