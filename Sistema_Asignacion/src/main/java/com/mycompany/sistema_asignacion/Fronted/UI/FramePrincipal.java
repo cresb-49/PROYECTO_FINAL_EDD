@@ -682,71 +682,84 @@ public class FramePrincipal extends javax.swing.JFrame {
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
 
-        String generarDotCode = this.graficadores.getGraficarUsuarios().generarDotCode();
-        try {
-            this.graficadores.getGenerarDotFile().generarArchivo(generarDotCode, "Usuarios");
-            String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Usuarios.dot", "Usuarios.png");
-            MostrarImagenes mostrarImagenes = new MostrarImagenes("Usuarios", pathImagen);
-            Escritorio.add(mostrarImagenes);
-            mostrarImagenes.show();
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            String generarDotCode = this.graficadores.getGraficarUsuarios().generarDotCode();
+            try {
+                this.graficadores.getGenerarDotFile().generarArchivo(generarDotCode, "Usuarios");
+                String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Usuarios.dot", "Usuarios.png");
+                MostrarImagenes mostrarImagenes = new MostrarImagenes("Usuarios", pathImagen);
+                Escritorio.add(mostrarImagenes);
+                mostrarImagenes.show();
 
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
-        } catch (NoDataException ex) {
-            JOptionPane.showMessageDialog(this, "No hay informacion de Usuarios en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+            } catch (NoDataException ex) {
+                JOptionPane.showMessageDialog(this, "No hay informacion de Usuarios en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para realizar realizar graficos", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
         // TODO add your handling code here:
-        String codigoDot = this.graficadores.getGraficarCatedraticos().generarDotCode();
-        try {
-            this.graficadores.getGenerarDotFile().generarArchivo(codigoDot, "Catedraticos");
-            String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Catedraticos.dot", "Catedraticos.png");
-            MostrarImagenes mostrarImagenes = new MostrarImagenes("Catedraticos", pathImagen);
-            Escritorio.add(mostrarImagenes);
-            mostrarImagenes.show();
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            String codigoDot = this.graficadores.getGraficarCatedraticos().generarDotCode();
+            try {
+                this.graficadores.getGenerarDotFile().generarArchivo(codigoDot, "Catedraticos");
+                String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Catedraticos.dot", "Catedraticos.png");
+                MostrarImagenes mostrarImagenes = new MostrarImagenes("Catedraticos", pathImagen);
+                Escritorio.add(mostrarImagenes);
+                mostrarImagenes.show();
 
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
-        } catch (NoDataException ex) {
-            JOptionPane.showMessageDialog(this, "No hay informacion de Catedraticos en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+            } catch (NoDataException ex) {
+                JOptionPane.showMessageDialog(this, "No hay informacion de Catedraticos en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para realizar realizar graficos", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem23ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         // TODO add your handling code here:
-
-        String codigoDot = this.graficadores.getGraficarEstudiantes().generarDotCode();
-        try {
-            this.graficadores.getGenerarDotFile().generarArchivo(codigoDot, "Estudiantes");
-            String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Estudiantes.dot", "Estudiantes.png");
-            MostrarImagenes mostrarImagenes = new MostrarImagenes("Estudiantes", pathImagen);
-            Escritorio.add(mostrarImagenes);
-            mostrarImagenes.show();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
-        } catch (NoDataException ex) {
-            JOptionPane.showMessageDialog(this, "No hay informacion de Estudiantes en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            String codigoDot = this.graficadores.getGraficarEstudiantes().generarDotCode();
+            try {
+                this.graficadores.getGenerarDotFile().generarArchivo(codigoDot, "Estudiantes");
+                String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Estudiantes.dot", "Estudiantes.png");
+                MostrarImagenes mostrarImagenes = new MostrarImagenes("Estudiantes", pathImagen);
+                Escritorio.add(mostrarImagenes);
+                mostrarImagenes.show();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+            } catch (NoDataException ex) {
+                JOptionPane.showMessageDialog(this, "No hay informacion de Estudiantes en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para realizar realizar graficos", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
         }
-
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            String codigoDot = this.graficadores.getGraficarEdificiosSalones().generarDotCode();
 
-        String codigoDot = this.graficadores.getGraficarEdificiosSalones().generarDotCode();
-
-        try {
-            this.graficadores.getGenerarDotFile().generarArchivo(codigoDot, "EdificiosSalones");
-            String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("EdificiosSalones.dot", "EdificiosSalones.png");
-            MostrarImagenes mostrarImagenes = new MostrarImagenes("Edificios Y Salones", pathImagen);
-            Escritorio.add(mostrarImagenes);
-            mostrarImagenes.show();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
-        } catch (NoDataException ex) {
-            JOptionPane.showMessageDialog(this, "No hay informacion de Edificios y Salones en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            try {
+                this.graficadores.getGenerarDotFile().generarArchivo(codigoDot, "EdificiosSalones");
+                String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("EdificiosSalones.dot", "EdificiosSalones.png");
+                MostrarImagenes mostrarImagenes = new MostrarImagenes("Edificios Y Salones", pathImagen);
+                Escritorio.add(mostrarImagenes);
+                mostrarImagenes.show();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+            } catch (NoDataException ex) {
+                JOptionPane.showMessageDialog(this, "No hay informacion de Edificios y Salones en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para realizar realizar graficos", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
@@ -800,26 +813,34 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         // TODO add your handling code here:
-        String codigoDot = this.graficadores.getGraficadorHorario().generarDotCode();
-        try {
-            this.graficadores.getGenerarDotFile().generarArchivo(codigoDot, "Horarios");
-            String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Horarios.dot", "Horarios.png");
-            MostrarImagenes mostrarImagenes = new MostrarImagenes("Horarios", pathImagen);
-            Escritorio.add(mostrarImagenes);
-            mostrarImagenes.show();
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            String codigoDot = this.graficadores.getGraficadorHorario().generarDotCode();
+            try {
+                this.graficadores.getGenerarDotFile().generarArchivo(codigoDot, "Horarios");
+                String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Horarios.dot", "Horarios.png");
+                MostrarImagenes mostrarImagenes = new MostrarImagenes("Horarios", pathImagen);
+                Escritorio.add(mostrarImagenes);
+                mostrarImagenes.show();
 
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
-        } catch (NoDataException ex) {
-            JOptionPane.showMessageDialog(this, "No hay informacion de Horarios en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+            } catch (NoDataException ex) {
+                JOptionPane.showMessageDialog(this, "No hay informacion de Horarios en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para realizar realizar graficos", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         // TODO add your handling code here:
-        GraficarAsignaciones graficarAsignaciones = new GraficarAsignaciones(dataSistema, graficadores);
-        Escritorio.add(graficarAsignaciones);
-        graficarAsignaciones.show();
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            GraficarAsignaciones graficarAsignaciones = new GraficarAsignaciones(dataSistema, graficadores);
+            Escritorio.add(graficarAsignaciones);
+            graficarAsignaciones.show();
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para realizar realizar graficos", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
@@ -901,18 +922,22 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
         // TODO add your handling code here:
-        String generarDotCode = this.graficadores.getGraficarCursos().generarDotCode();
-        try {
-            this.graficadores.getGenerarDotFile().generarArchivo(generarDotCode, "Cursos");
-            String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Cursos.dot", "Cursos.png");
-            MostrarImagenes mostrarImagenes = new MostrarImagenes("Cursos", pathImagen);
-            Escritorio.add(mostrarImagenes);
-            mostrarImagenes.show();
+        if (this.currentUser.getTipo().equals("super") || this.currentUser.getTipo().equals("colaborador")) {
+            String generarDotCode = this.graficadores.getGraficarCursos().generarDotCode();
+            try {
+                this.graficadores.getGenerarDotFile().generarArchivo(generarDotCode, "Cursos");
+                String pathImagen = this.graficadores.getEjecutarGraphviz().ejecutar("Cursos.dot", "Cursos.png");
+                MostrarImagenes mostrarImagenes = new MostrarImagenes("Cursos", pathImagen);
+                Escritorio.add(mostrarImagenes);
+                mostrarImagenes.show();
 
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
-        } catch (NoDataException ex) {
-            JOptionPane.showMessageDialog(this, "No hay informacion de Cursos en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error en la escritura del archivo base .dot:\n" + ex.getMessage(), "Generacion de DOT file", JOptionPane.WARNING_MESSAGE);
+            } catch (NoDataException ex) {
+                JOptionPane.showMessageDialog(this, "No hay informacion de Cursos en el sistema", "Grafica de Informacion", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene los permisos para realizar realizar graficos", "Acceso Denegado", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
