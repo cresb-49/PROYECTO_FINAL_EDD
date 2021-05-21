@@ -126,7 +126,7 @@ public class HashTable<T> {
                     T data = antiguo.getData();
                     int index = hash % this.size;
                     //FIN PARAMETROS PARA EL NUEVO HASH
-                    if (this.array[index] =Rehash ejecutado= null) {
+                    if (this.array[index] == null) {
                         NodeHash<T> nuevo = new NodeHash<>(data);
                         System.out.println("Elemento con hash " + hash + " agregado en posicion: " + index);
                         this.array[index] = nuevo;
